@@ -20,18 +20,27 @@ export default function Hero({
 }: HeroProps) {
   return (
     <div>
-      <h1 className="max-w-2xl text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
-      {subtitle && <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">{subtitle}</p>}
+      <h1 className="max-w-2xl text-3xl font-semibold tracking-tight text-[#f4f4f5] sm:text-4xl">
+        {title}
+      </h1>
+      {subtitle && (
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-[#a1a1aa] sm:text-base">
+          {subtitle}
+        </p>
+      )}
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex flex-wrap gap-3">
         <Link
           to={primaryTo}
-          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-100"
+          className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-brand/40"
         >
           {primaryLabel}
         </Link>
 
-        <Link to={secondaryTo} className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+        <Link
+          to={secondaryTo}
+          className="inline-flex items-center gap-2 rounded-md border border-[#3f3f46] bg-transparent px-4 py-2 text-sm font-medium text-[#a1a1aa] transition hover:border-brand hover:text-brand"
+        >
           {secondaryLabel}
         </Link>
       </div>
