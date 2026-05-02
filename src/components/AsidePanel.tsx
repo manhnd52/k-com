@@ -7,13 +7,21 @@ type AsidePanelProps = {
   features?: { title: string; description?: string }[];
 };
 
-export default function AsidePanel({ focusTitle = "Current focus", focusDesc = "", features = [] }: AsidePanelProps) {
+export default function AsidePanel({
+  focusTitle = "Current focus",
+  focusDesc = "",
+  features = [],
+}: AsidePanelProps) {
   return (
-    <aside className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+    <aside className="rounded-xl border border-[#27272a] bg-[#18181b] p-5">
       <div className="space-y-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">{focusTitle}</p>
-          {focusDesc && <p className="mt-2 text-sm text-slate-700">{focusDesc}</p>}
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#71717a]">
+            {focusTitle}
+          </p>
+          {focusDesc && (
+            <p className="mt-2 text-sm text-[#a1a1aa]">{focusDesc}</p>
+          )}
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">

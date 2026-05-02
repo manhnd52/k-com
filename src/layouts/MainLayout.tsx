@@ -1,22 +1,20 @@
 import { Outlet } from "react-router-dom";
 import Header from "@/components/Header";
-// import { AuthProvider } from "@/context/AuthContext";
 
-const MainLayout = () => {
+export default function MainLayout() {
   return (
-    <div className="min-h-screen bg-background font-sans antialiased">
-    <Header />
+    <div className="flex min-h-screen flex-col bg-[#111113] font-sans antialiased">
+      {/* Top accent line */}
+      <div className="h-[3px] w-full bg-brand" />
 
-    <main className="py-6 flex justify-center">
+      <Header />
+
+      <main className="flex flex-1">
         <Outlet />
-    </main>
-    <footer className="w-full border-t py-6">
-        <div className="text-center text-sm text-muted-foreground">
-        © 2026 Mori. All rights reserved.
-        </div>
-    </footer>
+      </main>
+
+      {/* Bottom accent line */}
+      <div className="h-[3px] w-full bg-brand" />
     </div>
   );
-};
-
-export default MainLayout;
+}
