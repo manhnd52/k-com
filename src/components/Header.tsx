@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-[#27272a] bg-[#111113]/95 backdrop-blur supports-[backdrop-filter]:bg-[#111113]/80">
-        <div className="mx-auto flex h-14 w-full max-w-screen-xl items-center gap-4 px-4 sm:px-6">
+        <div className="mx-auto flex h-14 w-full max-w-screen-xl items-center gap-8 px-4 sm:px-6">
           {/* Mobile burger */}
           <button
             onClick={() => setSidebarOpen(true)}
@@ -29,45 +29,48 @@ export default function Header() {
           </Link>
 
           {/* Search bar */}
-          <div className="flex-1">
-            <div className="relative max-w-md">
-              <svg
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#71717a]"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-4.35-4.35" />
-              </svg>
+          <div className="hidden flex-1 sm:block">
+            <div className="relative mx-auto w-full max-w-xl">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg
+                  className="h-4 w-4 text-[#71717a]"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-4.35-4.35" />
+                </svg>
+              </div>
               <input
                 type="search"
                 placeholder="Search roadmaps, topics..."
-                className="w-full rounded-lg border border-[#3f3f46] bg-[#18181b] py-2 pl-9 pr-4 text-sm text-[#f4f4f5] placeholder:text-[#71717a] transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+                className="block w-full rounded-lg border border-[#3f3f46] bg-[#18181b] py-2 pl-10 pr-4 text-sm text-[#f4f4f5] placeholder:text-[#71717a] transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
               />
             </div>
           </div>
 
           {/* Right actions */}
-          <div className="flex items-center gap-3">
-            <Link
-              to="/roadmaps"
-              className="hidden items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-brand/40 sm:inline-flex"
+          <div className="flex items-center gap-4">
+            <button
+              className="flex items-center gap-2 rounded-lg border border-[#3f3f46] px-3 py-1.5 text-sm font-medium text-[#f4f4f5] transition hover:bg-[#27272a] focus:outline-none focus:ring-2 focus:ring-brand/40"
             >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              <svg className="h-5 w-5 text-brand" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
               </svg>
-              Post
-            </Link>
+              <span className="hidden sm:inline">Post</span>
+            </button>
 
             {/* Avatar */}
             <Link
               to="/login"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#27272a] text-sm font-medium text-[#a1a1aa] ring-1 ring-[#3f3f46] transition hover:ring-brand hover:text-brand"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#3f3f46] bg-[#18181b] text-sm font-medium text-[#a1a1aa] transition hover:border-brand/50 hover:text-[#f4f4f5]"
               aria-label="User profile"
             >
-              U
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
             </Link>
           </div>
         </div>

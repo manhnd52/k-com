@@ -111,14 +111,7 @@ export default function RoadmapsPage() {
     : ROADMAPS;
 
   return (
-    <div className="flex w-full flex-1">
-      {/* Desktop sidebar — hidden on mobile, shown on lg+ */}
-      <aside className="hidden w-56 shrink-0 border-r border-[#27272a] lg:block">
-        <Sidebar />
-      </aside>
-
-      {/* Main content */}
-      <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col">
         {/* Page header */}
         <div className="border-b border-[#27272a] px-4 py-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-screen-xl">
@@ -172,7 +165,6 @@ export default function RoadmapsPage() {
               </div>
             )}
           </div>
-        </div>
       </div>
     </div>
   );
