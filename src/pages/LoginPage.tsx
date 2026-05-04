@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../services/userService";
+import { login } from "../services/UserService";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -25,7 +25,7 @@ export default function Login() {
                 setError(result?.message || "Đăng nhập thất bại");
                 setLoading(false);
             }
-        } catch (err) {
+        } catch {
             setError("Có lỗi xảy ra. Vui lòng thử lại.");
             setLoading(false);
         }

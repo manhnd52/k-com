@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mock-1",
+    "title": "How I plan a frontend roadmap",
+    "content": "I usually start with HTML, CSS, JavaScript fundamentals, then move into React, accessibility, testing, and performance. The hard part is not learning tools, it is building enough small projects to connect the ideas.",
+    "category": "Roadmap",
+    "tags": ["Frontend", "React", "Career"],
+    "visibility": "public",
+    "authorName": "jane_smith",
+    "createdAt": "2026-05-01T09:30:00.000Z"
+  },
+  {
+    "id": "mock-2",
+    "title": "Question about ML Engineer path",
+    "content": "For people who moved from data analyst to ML engineer, what should I focus on first: statistics, Python projects, or model deployment? I want to build a practical plan for the next three months.",
+    "category": "Question",
+    "tags": ["AI", "Career", "ML"],
+    "visibility": "public",
+    "authorName": "john_doe",
+    "createdAt": "2026-05-02T14:15:00.000Z"
+  },
+  {
+    "id": "mock-3",
+    "title": "Small win: finished my first portfolio project",
+    "content": "I completed a dashboard project that fetches local JSON data, filters it, and renders charts. Next step is adding authentication and saving user preferences.",
+    "category": "Project",
+    "tags": ["Project", "Web"],
+    "visibility": "public",
+    "authorName": "minh_dev",
+    "createdAt": "2026-05-03T18:45:00.000Z"
+  }
+]
