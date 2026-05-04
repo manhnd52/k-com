@@ -63,7 +63,7 @@ export default function Header() {
 
             {/* Avatar */}
             <Link
-              to="/login"
+              to="/profile"
               className="flex h-8 w-8 items-center justify-center rounded-full bg-[#27272a] text-sm font-medium text-[#a1a1aa] ring-1 ring-[#3f3f46] transition hover:ring-brand hover:text-brand"
               aria-label="User profile"
             >
