@@ -26,6 +26,7 @@ export default function Login() {
                 setLoading(false);
             }
         } catch (err) {
+            console.log("Login error:", err);
             setError("Có lỗi xảy ra. Vui lòng thử lại.");
             setLoading(false);
         }

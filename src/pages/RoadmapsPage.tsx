@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
 import FilterBar from "@/components/FilterBar";
 import RoadmapCard from "@/components/RoadmapCard";
 

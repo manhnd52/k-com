@@ -8,11 +8,16 @@ export default function RoadmapDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
-  const [selectedStepId, setSelectedStepId] = useState<number | undefined>(undefined);
+  const [selectedStepId, setSelectedStepId] = useState<number | undefined>(
+    undefined,
+  );
 
   const roadmapId = id ? parseInt(id, 10) : null;
   const roadmap = roadmapId ? ROADMAP_DETAILS[roadmapId] : null;
-  const selectedStep = selectedStepId && roadmap ? roadmap.steps.find((s) => s.id === selectedStepId) : null;
+  const selectedStep =
+    selectedStepId && roadmap
+      ? (roadmap.steps.find((s) => s.id === selectedStepId) ?? null)
+      : null;
 
   if (!roadmap) {
     return (
@@ -148,7 +153,9 @@ export default function RoadmapDetailPage() {
 
         {/* Right: Step Detail */}
         <div className="rounded-lg border border-[#E0E0E0] bg-white p-6">
-          <h2 className="mb-6 text-xl font-bold text-[#000000E6]">Step Detail</h2>
+          <h2 className="mb-6 text-xl font-bold text-[#000000E6]">
+            Step Detail
+          </h2>
           <StepDetail step={selectedStep} />
         </div>
       </div>
