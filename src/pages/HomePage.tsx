@@ -64,11 +64,11 @@ function Home() {
       {/* Page Header */}
       <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#f4f4f5]">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#000000E6]">
             New Feeds
           </h1>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-[#71717a]">
+            <span className="text-xs font-medium text-[#9CA3AF]">
               {activeFilters.length > 0 ? "Filtered by:" : "Showing all feeds"}
             </span>
             {activeFilters.map((filter) => (
@@ -90,7 +90,7 @@ function Home() {
             {activeFilters.length > 0 && (
               <button
                 onClick={() => setActiveFilters([])}
-                className="text-[10px] font-medium text-[#71717a] hover:text-[#f4f4f5] underline underline-offset-2"
+                className="text-[10px] font-medium text-[#9CA3AF] hover:text-[#000000E6] underline underline-offset-2"
               >
                 Clear all
               </button>
@@ -100,7 +100,7 @@ function Home() {
 
         <button
           onClick={() => setFilterModalOpen(true)}
-          className="flex items-center gap-2 rounded-lg border border-[#3f3f46] bg-[#18181b] px-4 py-2 text-sm font-semibold text-[#f4f4f5] transition hover:bg-[#27272a] hover:border-[#52525b]"
+          className="flex items-center gap-2 rounded-lg border border-[#E0E0E0] bg-[#FFFFFF] px-4 py-2 text-sm font-semibold text-[#000000E6] transition hover:bg-[#F0F0F0] hover:border-[#D1D5DB]"
         >
           <svg
             className="h-4 w-4"
@@ -132,11 +132,11 @@ function Home() {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <svg className="h-16 w-16 text-[#27272a]" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
+            <svg className="h-16 w-16 text-[#E0E0E0]" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
             </svg>
-            <h3 className="mt-4 text-lg font-bold text-[#f4f4f5]">No results found</h3>
-            <p className="text-sm text-[#71717a]">Try adjusting your filters to find what you're looking for.</p>
+            <h3 className="mt-4 text-lg font-bold text-[#000000E6]">No results found</h3>
+            <p className="text-sm text-[#9CA3AF]">Try adjusting your filters to find what you're looking for.</p>
           </div>
         )}
       </div>

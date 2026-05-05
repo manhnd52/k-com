@@ -33,12 +33,12 @@ export default function Sidebar() {
             `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
               isActive
                 ? "bg-brand/10 text-brand"
-                : "text-[#a1a1aa] hover:bg-[#27272a] hover:text-[#f4f4f5]"
+                : "text-[#6B7280] hover:bg-[#F0F0F0] hover:text-[#000000E6]"
             }`
           }
         >
           <span className={({ isActive }: { isActive: boolean }) =>
-            isActive ? "text-brand" : "text-[#71717a]"
+            isActive ? "text-brand" : "text-[#9CA3AF]"
           }>{icon}</span>
           {label}
         </NavLink>

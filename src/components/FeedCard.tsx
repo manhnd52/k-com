@@ -22,38 +22,38 @@ const FeedCard: React.FC<FeedCardProps> = ({
   imageUrl,
 }) => {
   return (
-    <div className="group relative flex flex-col gap-4 rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition-all hover:border-brand/40 hover:bg-[#1c1c1f] sm:flex-row sm:items-start lg:gap-6">
+    <div className="group relative flex flex-col gap-4 rounded-xl border border-[#E0E0E0] bg-[#FFFFFF] p-5 transition-all hover:border-brand/40 hover:bg-[#F8F9FA] sm:flex-row sm:items-start lg:gap-6">
       <div className="flex flex-1 flex-col gap-3">
         {/* Author Info */}
         <div className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#27272a] text-[10px] font-bold text-[#a1a1aa] ring-1 ring-[#3f3f46]">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#F0F0F0] text-[10px] font-bold text-[#6B7280] ring-1 ring-[#E0E0E0]">
             {author.charAt(0).toUpperCase()}
           </div>
-          <span className="text-xs font-medium text-[#a1a1aa]">{author}</span>
+          <span className="text-xs font-medium text-[#6B7280]\">by {author}</span>
         </div>
 
         {/* Content */}
         <div className="space-y-1">
-          <h3 className="text-lg font-bold leading-tight text-[#f4f4f5] group-hover:text-brand transition-colors">
+          <h3 className="text-lg font-bold leading-tight text-[#000000E6] group-hover:text-brand transition-colors">
             {title}
           </h3>
           <div className="flex flex-wrap gap-2 py-1">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md bg-[#27272a] px-2 py-0.5 text-[10px] font-medium text-[#a1a1aa]"
+                className="rounded-md bg-[#F0F0F0] px-2 py-0.5 text-[10px] font-medium text-[#6B7280]"
               >
                 {tag}
               </span>
             ))}
           </div>
-          <p className="line-clamp-2 text-sm text-[#a1a1aa]">
+          <p className="line-clamp-2 text-sm text-[#6B7280]">
             {subheading}
           </p>
         </div>
 
         {/* Metadata */}
-        <div className="mt-2 flex items-center gap-4 text-xs text-[#71717a]">
+        <div className="mt-2 flex items-center gap-4 text-xs text-[#9CA3AF]">
           <span>{date}</span>
           <div className="flex items-center gap-1">
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -71,12 +71,12 @@ const FeedCard: React.FC<FeedCardProps> = ({
       </div>
 
       {/* Thumbnail */}
-      <div className="aspect-video w-full shrink-0 overflow-hidden rounded-lg border border-[#27272a] bg-[#27272a]/30 sm:w-40 lg:w-48">
+      <div className="aspect-video w-full shrink-0 overflow-hidden rounded-lg border border-[#E0E0E0] bg-[#F0F0F0]/50 sm:w-40 lg:w-48">
         {imageUrl ? (
           <img src={imageUrl} alt={title} className="h-full w-full object-cover transition group-hover:scale-105" />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-             <svg className="h-8 w-8 text-[#3f3f46]" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
+             <svg className="h-8 w-8 text-[#D1D5DB]" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
                <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
              </svg>
           </div>
