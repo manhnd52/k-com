@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 type RoadmapCardProps = {
+  id: number;
   author: string;
   authorAvatar: string;
   title: string;
@@ -12,6 +15,7 @@ type RoadmapCardProps = {
 };
 
 export default function RoadmapCard({
+  id,
   author,
   authorAvatar,
   title,
@@ -23,6 +27,7 @@ export default function RoadmapCard({
   views,
   likes,
 }: RoadmapCardProps) {
+  const navigate = useNavigate();
   return (
     <article className="group flex flex-col rounded-xl border border-[#E0E0E0] bg-[#FFFFFF] transition-all duration-200 hover:border-[#D1D5DB] hover:shadow-lg hover:shadow-brand/5\">
       {/* Card body */}
@@ -99,7 +104,10 @@ export default function RoadmapCard({
         </div>
 
         {/* View button */}
-        <button className="rounded-lg bg-brand px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-hover hover:shadow-md hover:shadow-brand/30">
+        <button
+          onClick={() => navigate(`/roadmaps/${id}`)}
+          className="rounded-lg bg-brand px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-hover hover:shadow-md hover:shadow-brand/30"
+        >
           View
         </button>
       </div>
