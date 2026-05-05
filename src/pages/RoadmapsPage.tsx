@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
 import FilterBar from "@/components/FilterBar";
 import RoadmapCard from "@/components/RoadmapCard";
 
@@ -111,21 +110,14 @@ export default function RoadmapsPage() {
     : ROADMAPS;
 
   return (
-    <div className="flex w-full flex-1">
-      {/* Desktop sidebar — hidden on mobile, shown on lg+ */}
-      <aside className="hidden w-56 shrink-0 border-r border-[#27272a] lg:block">
-        <Sidebar />
-      </aside>
-
-      {/* Main content */}
-      <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col">
         {/* Page header */}
-        <div className="border-b border-[#27272a] px-4 py-8 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-screen-xl">
-            <h1 className="text-3xl font-bold tracking-tight text-[#f4f4f5] sm:text-4xl">
+        <div className="border-b border-[#E0E0E0] px-4 py-8 sm:px-6 lg:px-8\">
+          <div className="mx-auto max-w-screen-xl\">
+            <h1 className="text-3xl font-bold tracking-tight text-[#000000E6] sm:text-4xl\">
               Roadmap List
             </h1>
-            <p className="mt-2 text-sm text-[#71717a] sm:text-base">
+            <p className="mt-2 text-sm text-[#9CA3AF] sm:text-base\">
               Explore career paths and learning journeys
             </p>
           </div>
@@ -153,7 +145,7 @@ export default function RoadmapsPage() {
             ) : (
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <svg
-                  className="mb-4 h-12 w-12 text-[#3f3f46]"
+                  className="mb-4 h-12 w-12 text-[#D1D5DB]"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={1.5}
@@ -165,14 +157,13 @@ export default function RoadmapsPage() {
                     d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                   />
                 </svg>
-                <p className="text-sm font-medium text-[#a1a1aa]">No roadmaps found</p>
-                <p className="mt-1 text-xs text-[#71717a]">
+                <p className="text-sm font-medium text-[#6B7280]">No roadmaps found</p>
+                <p className="mt-1 text-xs text-[#9CA3AF]">
                   Try adjusting your filters to see more results.
                 </p>
               </div>
             )}
           </div>
-        </div>
       </div>
     </div>
   );

@@ -19,11 +19,11 @@ export default function Hero({
 }: HeroProps) {
   return (
     <div>
-      <h1 className="max-w-2xl text-3xl font-semibold tracking-tight text-[#f4f4f5] sm:text-4xl">
+      <h1 className="max-w-2xl text-3xl font-semibold tracking-tight text-[#000000E6] sm:text-4xl">
         {title}
       </h1>
       {subtitle && (
-        <p className="mt-4 max-w-2xl text-sm leading-6 text-[#a1a1aa] sm:text-base">
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-[#6B7280] sm:text-base">
           {subtitle}
         </p>
       )}
@@ -38,7 +38,7 @@ export default function Hero({
 
         <Link
           to={secondaryTo}
-          className="inline-flex items-center gap-2 rounded-md border border-[#3f3f46] bg-transparent px-4 py-2 text-sm font-medium text-[#a1a1aa] transition hover:border-brand hover:text-brand"
+          className="inline-flex items-center gap-2 rounded-md border border-[#E0E0E0] bg-transparent px-4 py-2 text-sm font-medium text-[#6B7280] transition hover:border-brand hover:text-brand"
         >
           {secondaryLabel}
         </Link>

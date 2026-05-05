@@ -12,14 +12,14 @@ export default function AsidePanel({
   features = [],
 }: AsidePanelProps) {
   return (
-    <aside className="rounded-xl border border-[#27272a] bg-[#18181b] p-5">
+    <aside className="rounded-xl border border-[#E0E0E0] bg-[#FFFFFF] p-5">
       <div className="space-y-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#71717a]">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#9CA3AF]">
             {focusTitle}
           </p>
           {focusDesc && (
-            <p className="mt-2 text-sm text-[#a1a1aa]">{focusDesc}</p>
+            <p className="mt-2 text-sm text-[#6B7280]\">{focusDesc}</p>
           )}
         </div>
 

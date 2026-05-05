@@ -32,32 +32,32 @@ export default function Login() {
     };
 
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
+        <main className="min-h-screen bg-[#F3F2EF] text-[#000000E6]">
             <div className="relative px-4 py-12">
-                <div className="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-sky-100/70 to-transparent" />
+                <div className="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-[#E8F3FF]/70 to-transparent" />
 
                 <div className="mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-8 lg:grid-cols-2">
-                    <div className="hidden flex-col gap-6 rounded-2xl bg-gradient-to-b from-white to-slate-50 p-8 lg:flex">
-                        <div className="inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                    <div className="hidden flex-col gap-6 rounded-2xl bg-gradient-to-b from-white to-[#F8F9FA] p-8 lg:flex">
+                        <div className="inline-flex items-center gap-3 rounded-full border border-[#E8F3FF] bg-[#E8F3FF] px-3 py-1 text-xs font-medium text-[#0A66C2]">
                             Welcome back
                         </div>
-                        <h2 className="text-2xl font-semibold text-slate-900">Sign in to K-COM</h2>
-                        <p className="text-sm text-slate-600">Securely access your MVP workspace and local data fixtures.</p>
+                        <h2 className="text-2xl font-semibold text-[#000000E6]">Sign in to K-COM</h2>
+                        <p className="text-sm text-[#6B7280]">Securely access your MVP workspace and local data fixtures.</p>
                     </div>
 
-                    <section className="w-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 sm:p-8">
+                    <section className="w-full rounded-2xl border border-[#E0E0E0] bg-white p-6 shadow-sm shadow-[#E0E0E0]/70 sm:p-8">
                         <div className="mb-6 text-center">
-                            <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Welcome back</h1>
-                            <p className="mt-2 text-sm leading-6 text-slate-600">Sign in to continue with your account.</p>
+                            <h1 className="text-2xl font-semibold tracking-tight text-[#000000E6] sm:text-3xl">Welcome back</h1>
+                            <p className="mt-2 text-sm leading-6 text-[#6B7280]">Sign in to continue with your account.</p>
                         </div>
 
                         {error && (
-                            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>
+                            <div className="mb-4 rounded-lg border border-[#FCA5A5] bg-[#FEE2E2] p-3 text-sm text-[#DC2626]">{error}</div>
                         )}
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label htmlFor="username" className="mb-1 block text-sm font-medium text-slate-700">
+                                <label htmlFor="username" className="mb-1 block text-sm font-medium text-[#000000E6]">
                                     Username
                                 </label>
                                 <input
@@ -66,13 +66,13 @@ export default function Login() {
                                     placeholder="john_doe"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                    className="w-full rounded-lg border border-[#E0E0E0] px-3 py-2 text-[#000000E6] outline-none transition placeholder:text-[#9CA3AF] focus:border-[#0A66C2] focus:ring-2 focus:ring-[#E8F3FF]"
                                     required
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="password" className="mb-1 block text-sm font-medium text-slate-700">
+                                <label htmlFor="password" className="mb-1 block text-sm font-medium text-[#000000E6]">
                                     Password
                                 </label>
                                 <input
@@ -81,7 +81,7 @@ export default function Login() {
                                     placeholder="Enter your password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                    className="w-full rounded-lg border border-[#E0E0E0] px-3 py-2 text-[#000000E6] outline-none transition placeholder:text-[#9CA3AF] focus:border-[#0A66C2] focus:ring-2 focus:ring-[#E8F3FF]"
                                     required
                                 />
                             </div>
@@ -89,7 +89,7 @@ export default function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="w-full rounded-lg bg-[#0A66C2] px-4 py-2.5 font-semibold text-white transition hover:bg-[#004182] focus:outline-none focus:ring-2 focus:ring-[#E8F3FF] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {loading ? "Đang đăng nhập..." : "Login"}
                             </button>
