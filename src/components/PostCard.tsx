@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Post } from "@/services/PostService";
 
 type PostCardProps = {
@@ -17,7 +18,10 @@ export default function PostCard({ post }: PostCardProps) {
   const avatar = post.authorName.charAt(0).toUpperCase();
 
   return (
-    <article className="rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-[#3f3f46]">
+    <Link
+      to={`/posts/${post.id}`}
+      className="block rounded-xl border border-[#27272a] bg-[#18181b] p-5 transition hover:border-[#3f3f46] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#111113]"
+    >
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
@@ -51,6 +55,6 @@ export default function PostCard({ post }: PostCardProps) {
           ))}
         </div>
       )}
-    </article>
+    </Link>
   );
 }

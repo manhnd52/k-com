@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import PostCard from "@/components/PostCard";
 import mockPosts from "@/data/posts.json";
-import { getPosts, type Post } from "@/services/PostService";
+import { getAllPosts, type Post } from "@/services/PostService";
 
 function Home() {
-  const localPosts = getPosts();
-  const posts = [...localPosts, ...(mockPosts as Post[])].filter(
+  const posts = getAllPosts(mockPosts as Post[]).filter(
     (post) => post.visibility === "public"
   );
 

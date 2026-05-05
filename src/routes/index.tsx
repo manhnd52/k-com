@@ -4,6 +4,7 @@ import Login from "../pages/LoginPage.tsx";
 import Roadmaps from "../pages/RoadmapsPage.tsx";
 import Profile from "../pages/ProfilePage.tsx";
 import CreatePost from "../pages/CreatePostPage.tsx";
+import PostDetail from "../pages/PostDetailPage.tsx";
 import MainLayout from "../layouts/MainLayout.tsx";
 
 export default function AppRoutes() {
@@ -15,6 +16,7 @@ export default function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/roadmaps" element={<Roadmaps />} />
           <Route path="/posts/create" element={<CreatePost />} />
+          <Route path="/posts/:postId" element={<PostDetail />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

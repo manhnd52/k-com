@@ -35,6 +35,14 @@ export const getPosts = (): Post[] => {
   return readPosts();
 };
 
+export const getAllPosts = (samplePosts: Post[] = []): Post[] => {
+  return [...readPosts(), ...samplePosts];
+};
+
+export const getPostById = (postId: string, samplePosts: Post[] = []): Post | undefined => {
+  return getAllPosts(samplePosts).find((post) => post.id === postId);
+};
+
 export const createPost = (post: Omit<Post, "id" | "createdAt">): Post => {
   const newPost: Post = {
     ...post,
