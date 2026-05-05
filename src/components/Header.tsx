@@ -64,8 +64,8 @@ export default function Header() {
 
             {/* Avatar */}
             <Link
-              to="/login"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#3f3f46] bg-[#18181b] text-sm font-medium text-[#a1a1aa] transition hover:border-brand/50 hover:text-[#f4f4f5]"
+              to="/profile"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#27272a] text-sm font-medium text-[#a1a1aa] ring-1 ring-[#3f3f46] transition hover:ring-brand hover:text-brand"
               aria-label="User profile"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
