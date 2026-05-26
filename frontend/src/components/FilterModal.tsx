@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface FilterModalProps {
   isOpen: boolean;
@@ -27,25 +27,24 @@ const categoriesColumn2 = [
   "AI Research",
 ];
 
-const FilterModal: React.FC<FilterModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  selectedFilters, 
-  onApply 
+const FilterModal: React.FC<FilterModalProps> = ({
+  isOpen,
+  onClose,
+  selectedFilters,
+  onApply,
 }) => {
   const [localFilters, setLocalFilters] = useState<string[]>(selectedFilters);
 
-  useEffect(() => {
-    if (isOpen) {
-      setLocalFilters(selectedFilters);
-    }
-  }, [isOpen, selectedFilters]);
+  // Rely on initial state from props when the modal mounts (component
+  // is unmounted when closed). Removing setState-in-effect avoids the
+  // eslint `react-hooks/set-state-in-effect` rule and prevents
+  // cascading renders.
 
   const toggleFilter = (filter: string) => {
     setLocalFilters((prev) =>
       prev.includes(filter)
         ? prev.filter((f) => f !== filter)
-        : [...prev, filter]
+        : [...prev, filter],
     );
   };
 
@@ -59,21 +58,31 @@ const FilterModal: React.FC<FilterModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* Modal Content */}
       <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-[#E0E0E0] bg-[#FFFFFF] shadow-2xl">
         <div className="flex items-center justify-between border-b border-[#E0E0E0] px-6 py-4">
           <h2 className="text-xl font-bold text-[#000000E6]">Filter</h2>
-          <button 
+          <button
             onClick={onClose}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-[#6B7280] transition hover:bg-[#F0F0F0] hover:text-[#000000E6]"
           >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -82,17 +91,19 @@ const FilterModal: React.FC<FilterModalProps> = ({
           {/* Column 1 */}
           <div className="space-y-1">
             {categoriesColumn1.map((cat) => (
-              <label 
+              <label
                 key={cat}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-[#F0F0F0]"
               >
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={localFilters.includes(cat)}
                   onChange={() => toggleFilter(cat)}
-                  className="h-4 w-4 rounded border-[#E0E0E0] bg-[#FFFFFF] text-brand focus:ring-brand focus:ring-offset-0" 
+                  className="h-4 w-4 rounded border-[#E0E0E0] bg-[#FFFFFF] text-brand focus:ring-brand focus:ring-offset-0"
                 />
-                <span className={`text-sm font-medium transition-colors ${localFilters.includes(cat) ? 'text-brand' : 'text-[#6B7280] group-hover:text-[#000000E6]'}`}>
+                <span
+                  className={`text-sm font-medium transition-colors ${localFilters.includes(cat) ? "text-brand" : "text-[#6B7280] group-hover:text-[#000000E6]"}`}
+                >
                   {cat}
                 </span>
               </label>
@@ -101,19 +112,23 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
           {/* Column 2 */}
           <div className="space-y-1">
-             <div className="mb-2 px-2 text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">Specializations</div>
+            <div className="mb-2 px-2 text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">
+              Specializations
+            </div>
             {categoriesColumn2.map((cat) => (
-              <label 
+              <label
                 key={cat}
                 className="group flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-[#F0F0F0]"
               >
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={localFilters.includes(cat)}
                   onChange={() => toggleFilter(cat)}
-                  className="h-4 w-4 rounded border-[#E0E0E0] bg-[#FFFFFF] text-brand focus:ring-brand focus:ring-offset-0" 
+                  className="h-4 w-4 rounded border-[#E0E0E0] bg-[#FFFFFF] text-brand focus:ring-brand focus:ring-offset-0"
                 />
-                <span className={`text-sm font-medium transition-colors ${localFilters.includes(cat) ? 'text-brand' : 'text-[#6B7280] group-hover:text-[#000000E6]'}`}>
+                <span
+                  className={`text-sm font-medium transition-colors ${localFilters.includes(cat) ? "text-brand" : "text-[#6B7280] group-hover:text-[#000000E6]"}`}
+                >
                   {cat}
                 </span>
               </label>
@@ -122,7 +137,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
         </div>
 
         <div className="flex justify-end border-t border-[#E0E0E0] bg-[#F8F9FA] px-6 py-4">
-          <button 
+          <button
             onClick={handleSearch}
             className="rounded-lg bg-brand px-6 py-2 text-sm font-bold text-white transition hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-brand/40"
           >
