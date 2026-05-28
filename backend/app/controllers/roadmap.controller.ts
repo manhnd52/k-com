@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import prisma from "../config/prisma";
+import type { Request, Response } from "express";
+import { prisma } from "@/config/prisma.js";
 
 // Lấy danh sách toàn bộ Roadmap
 export const getAllRoadmaps = async (req: Request, res: Response): Promise<void> => {
@@ -28,12 +28,12 @@ export const getAllRoadmaps = async (req: Request, res: Response): Promise<void>
     });
 
     res.json(roadmaps);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Lỗi lấy danh sách roadmap:", error);
     res.status(500).json({
       success: false,
       message: "Không thể lấy danh sách roadmap",
-      error: String(error),
+      error: error.message || String(error),
     });
   }
 };

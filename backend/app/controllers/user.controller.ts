@@ -10,7 +10,10 @@ export const createUser = async (req: Request, res: Response) => {
 
   try {
     const user = await prisma.user.create({
-      data: { email, name },
+      data: { 
+        email, 
+        displayName: name || email.split("@")[0]
+      },
     });
     return res.status(201).json(user);
   } catch (error: any) {
@@ -23,15 +26,14 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const userId = Number.parseInt(id as string, 10);
 
-  if (isNaN(userId)) {
-    return res.status(400).json({ error: 'Invalid user ID format' });
+  if (!id) {
+    return res.status(400).json({ error: 'Invalid user ID' });
   }
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: id as string },
     });
 
     if (!user) {

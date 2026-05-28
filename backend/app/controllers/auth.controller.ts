@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import prisma from "../config/prisma";
+import type { Request, Response } from "express";
+import { prisma } from "@/config/prisma.js";
 
 // Đăng nhập hoặc tự động đăng ký qua Email
 export const login = async (req: Request, res: Response): Promise<void> => {
@@ -34,12 +34,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       user,
       message: "Đăng nhập thành công",
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Lỗi đăng nhập:", error);
     res.status(500).json({
       success: false,
       message: "Lỗi hệ thống",
-      error: String(error),
+      error: error.message || String(error),
     });
   }
 };

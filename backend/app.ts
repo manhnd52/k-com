@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { userRouter } from '@/routes/user.routes.js';
+import { authRouter } from '@/routes/auth.routes.js';
+import { roadmapRouter } from '@/routes/roadmap.routes.js';
 import { prisma } from '@/config/prisma.js';
 
 const app = express();
@@ -13,6 +15,8 @@ const apiRouter = express.Router();
 
 // Register sub-routes on apiRouter
 apiRouter.use('/users', userRouter);
+apiRouter.use('/auth', authRouter);
+apiRouter.use('/roadmaps', roadmapRouter);
 
 // Health check endpoint on apiRouter
 apiRouter.get('/health', async (req, res) => {
