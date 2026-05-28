@@ -1,30 +1,108 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import RoadmapFlow from "@/components/RoadmapFlow";
+import { useEffect, useState } from "react";
+import RoadmapHierarchy from "@/components/RoadmapHierarchy";
 import StepDetail from "@/components/StepDetail";
-import { ROADMAP_DETAILS } from "@/data/roadmaps";
+import type { RoadmapDetail } from "@/data/roadmaps";
+import {
+  getRoadmapById,
+  getRoadmapProgress,
+  updateStepStatus,
+} from "@/services/RoadmapService";
+import type { RoadmapProgress } from "@/services/RoadmapService";
 
 export default function RoadmapDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
+  const [roadmap, setRoadmap] = useState<RoadmapDetail | null>(null);
+  const [progress, setProgress] = useState<RoadmapProgress>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedStepId, setSelectedStepId] = useState<number | undefined>(
     undefined,
   );
 
   const roadmapId = id ? parseInt(id, 10) : null;
-  const roadmap = roadmapId ? ROADMAP_DETAILS[roadmapId] : null;
   const selectedStep =
     selectedStepId && roadmap
       ? (roadmap.steps.find((s) => s.id === selectedStepId) ?? null)
       : null;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadRoadmap = async () => {
+      if (!roadmapId) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      setErrorMessage(null);
+
+      try {
+        const [roadmapResult, progressResult] = await Promise.all([
+          getRoadmapById(roadmapId),
+          getRoadmapProgress(roadmapId),
+        ]);
+
+        if (!isMounted) {
+          return;
+        }
+
+        setRoadmap(roadmapResult);
+        setProgress(progressResult);
+        setSelectedStepId(roadmapResult?.steps[0]?.id);
+      } catch {
+        if (isMounted) {
+          setErrorMessage("Could not load roadmap detail. Please try again.");
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void loadRoadmap();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [roadmapId]);
+
+  const handleStartRoadmap = async () => {
+    if (!roadmapId || !roadmap?.steps[0]) {
+      return;
+    }
+
+    try {
+      const nextProgress = await updateStepStatus(
+        roadmapId,
+        roadmap.steps[0].id,
+        "in-progress",
+      );
+      setProgress(nextProgress);
+      setSelectedStepId(roadmap.steps[0].id);
+    } catch {
+      setErrorMessage("Could not update roadmap progress. Please try again.");
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <p className="text-sm font-medium text-[#00000099]">Loading roadmap...</p>
+      </div>
+    );
+  }
 
   if (!roadmap) {
     return (
       <div className="flex flex-1 items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#000000E6]">
-            Roadmap not found
+            {errorMessage ?? "Roadmap not found"}
           </h2>
           <button
             onClick={() => navigate("/roadmaps")}
@@ -39,6 +117,12 @@ export default function RoadmapDetailPage() {
 
   return (
     <div className="flex flex-1 flex-col gap-6 bg-[#F3F2EF] p-6 sm:p-8">
+      {errorMessage && (
+        <div className="rounded-lg border border-[#FCA5A5] bg-[#FEF2F2] px-4 py-3 text-sm font-medium text-[#991B1B]">
+          {errorMessage}
+        </div>
+      )}
+
       {/* Header with back button and actions */}
       <div className="flex items-center justify-between gap-4">
         <button
@@ -62,7 +146,10 @@ export default function RoadmapDetailPage() {
         </button>
 
         <div className="flex items-center gap-3">
-          <button className="rounded-lg bg-[#0A66C2] px-6 py-2.5 font-semibold text-white hover:bg-[#004182] transition shadow-sm hover:shadow-md">
+          <button
+            onClick={handleStartRoadmap}
+            className="rounded-lg bg-[#0A66C2] px-6 py-2.5 font-semibold text-white hover:bg-[#004182] transition shadow-sm hover:shadow-md"
+          >
             Start Roadmap
           </button>
           <button
@@ -141,17 +228,17 @@ export default function RoadmapDetailPage() {
 
       {/* Roadmap Flow and Step Detail - Two Column Layout */}
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left: Roadmap Flow */}
         <div className="lg:col-span-2 flex flex-col gap-3">
           <h2 className="text-xl font-bold text-[#000000E6]">Learning Path</h2>
-          <RoadmapFlow
+          <RoadmapHierarchy
+            roadmapId={roadmap.id}
             steps={roadmap.steps}
-            selectedStepId={selectedStepId}
+            progress={progress}
+            activeStepId={selectedStepId}
             onSelectStep={setSelectedStepId}
           />
         </div>
 
-        {/* Right: Step Detail */}
         <div className="rounded-lg border border-[#E0E0E0] bg-white p-6">
           <h2 className="mb-6 text-xl font-bold text-[#000000E6]">
             Step Detail

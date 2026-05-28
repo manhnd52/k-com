@@ -25,8 +25,7 @@ export default function Login() {
                 setError(result?.message || "Đăng nhập thất bại");
                 setLoading(false);
             }
-        } catch (err) {
-            console.log("Login error:", err);
+        } catch {
             setError("Có lỗi xảy ra. Vui lòng thử lại.");
             setLoading(false);
         }
