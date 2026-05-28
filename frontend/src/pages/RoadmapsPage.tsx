@@ -5,7 +5,7 @@ import { getAllRoadmaps, type RoadmapCardData } from "@/services/RoadmapService"
 
 export default function RoadmapsPage() {
   const [roadmaps, setRoadmaps] = useState<RoadmapCardData[]>([]);
-  const [activeFilters, setActiveFilters] = useState<string[]>(["Data & AI"]);
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
