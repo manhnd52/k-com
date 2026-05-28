@@ -19,6 +19,7 @@
     "moduleResolution": "nodenext",
     "target": "es2022",
     "types": [],
+    "ignoreDeprecations": "6.0",
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
