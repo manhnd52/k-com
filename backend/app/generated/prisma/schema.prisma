@@ -11,14 +11,14 @@ datasource db {
 // CATEGORIES
 // ─────────────────────────────────────────────
 model Category {
-  id          String    @id @default(uuid())
-  name        String    @unique @db.VarChar(100)
+  id          String   @id @default(uuid())
+  name        String   @unique @db.VarChar(100)
   description String?
-  iconUrl     String?   @db.VarChar(500)
-  createdAt   DateTime  @default(now())
+  iconUrl     String?  @db.VarChar(500)
+  createdAt   DateTime @default(now())
 
-  roadmaps    Roadmap[]
-  posts       Post[]
+  roadmaps Roadmap[]
+  posts    Post[]
 
   @@map("categories")
 }
@@ -27,18 +27,18 @@ model Category {
 // ROADMAPS
 // ─────────────────────────────────────────────
 model Roadmap {
-  id             String          @id @default(uuid())
-  categoryId     String
-  title          String          @db.VarChar(200)
-  description    String?
+  id              String          @id @default(uuid())
+  categoryId      String
+  title           String          @db.VarChar(200)
+  description     String?
   difficultyLevel DifficultyLevel
-  estimatedHours Int
-  isPublished    Boolean         @default(false)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  estimatedHours  Int
+  isPublished     Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
-  category       Category        @relation(fields: [categoryId], references: [id])
-  stages         Stage[]
+  category Category @relation(fields: [categoryId], references: [id])
+  stages   Stage[]
 
   @@map("roadmaps")
 }
@@ -53,14 +53,14 @@ enum DifficultyLevel {
 // STAGES
 // ─────────────────────────────────────────────
 model Stage {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   roadmapId   String
-  title       String   @db.VarChar(200)
+  title       String  @db.VarChar(200)
   description String?
   orderIndex  Int
 
-  roadmap     Roadmap  @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
-  steps       Step[]
+  roadmap Roadmap @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  steps   Step[]
 
   @@unique([roadmapId, orderIndex])
   @@map("stages")
@@ -70,16 +70,16 @@ model Stage {
 // STEPS
 // ─────────────────────────────────────────────
 model Step {
-  id               String        @id @default(uuid())
+  id               String @id @default(uuid())
   stageId          String
-  title            String        @db.VarChar(200)
+  title            String @db.VarChar(200)
   orderIndex       Int
   estimatedMinutes Int?
 
-  stage            Stage         @relation(fields: [stageId], references: [id], onDelete: Cascade)
-  content          StepContent?
-  resources        Resource[]
-  userProgress     UserStepProgress[]
+  stage        Stage              @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  content      StepContent?
+  resources    Resource[]
+  userProgress UserStepProgress[]
 
   @@unique([stageId, orderIndex])
   @@map("steps")
@@ -94,7 +94,7 @@ model StepContent {
   bodyMarkdown String
   updatedAt    DateTime @updatedAt
 
-  step         Step     @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  step Step @relation(fields: [stepId], references: [id], onDelete: Cascade)
 
   @@map("step_contents")
 }
@@ -110,7 +110,7 @@ model Resource {
   url        String       @db.VarChar(2000)
   orderIndex Int
 
-  step       Step         @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  step Step @relation(fields: [stepId], references: [id], onDelete: Cascade)
 
   @@map("resources")
 }
@@ -132,8 +132,8 @@ model User {
   avatarUrl   String?  @db.VarChar(500)
   createdAt   DateTime @default(now())
 
-  progress    UserStepProgress[]
-  posts       Post[]
+  progress UserStepProgress[]
+  posts    Post[]
 
   @@map("users")
 }
@@ -148,8 +148,8 @@ model UserStepProgress {
   status      ProgressStatus
   completedAt DateTime?
 
-  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  step        Step           @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  step Step @relation(fields: [stepId], references: [id], onDelete: Cascade)
 
   @@unique([userId, stepId])
   @@map("user_step_progress")
@@ -173,8 +173,8 @@ model Post {
   publishedAt     DateTime?
   createdAt       DateTime   @default(now())
 
-  author          User       @relation(fields: [authorId], references: [id])
-  category        Category?  @relation(fields: [categoryId], references: [id])
+  author   User      @relation(fields: [authorId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
 
   @@map("posts")
 }
