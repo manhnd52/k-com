@@ -1,96 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterBar from "@/components/FilterBar";
 import RoadmapCard from "@/components/RoadmapCard";
-
-const ROADMAPS = [
-  {
-    id: 1,
-    author: "Nguyen Duc Manh",
-    authorAvatar: "N",
-    title: "ML Engineer Roadmap",
-    tags: ["Data & AI", "Data Engineering"],
-    duration: "6 months",
-    level: "Intermediate",
-    steps: 12,
-    description:
-      "A comprehensive learning path covering mathematics, machine learning algorithms, deep learning frameworks, MLOps practices, and production deployment strategies.",
-    views: 1420,
-    likes: 234,
-  },
-  {
-    id: 2,
-    author: "Tran Thi Huong",
-    authorAvatar: "T",
-    title: "Frontend Developer",
-    tags: ["Web Development", "UI/UX"],
-    duration: "4 months",
-    level: "Beginner",
-    steps: 9,
-    description:
-      "Master HTML, CSS, JavaScript, and modern frameworks like React and Vue. Learn responsive design, accessibility, performance optimization, and testing strategies.",
-    views: 3890,
-    likes: 567,
-  },
-  {
-    id: 3,
-    author: "Le Van Minh",
-    authorAvatar: "L",
-    title: "DevOps Engineer",
-    tags: ["DevOps", "Cloud"],
-    duration: "5 months",
-    level: "Intermediate",
-    steps: 10,
-    description:
-      "From CI/CD pipelines to container orchestration with Kubernetes. Covers infrastructure as code, monitoring, logging, and incident response workflows.",
-    views: 2150,
-    likes: 312,
-  },
-  {
-    id: 4,
-    author: "Pham Quang Hung",
-    authorAvatar: "P",
-    title: "Data Analyst",
-    tags: ["Data & AI", "Analytics"],
-    duration: "3 months",
-    level: "Beginner",
-    steps: 8,
-    description:
-      "Learn SQL, Excel, Python for data analysis, data visualization with Tableau and Power BI, statistical reasoning, and storytelling with data.",
-    views: 960,
-    likes: 178,
-  },
-  {
-    id: 5,
-    author: "Hoang Thi Mai",
-    authorAvatar: "H",
-    title: "Cybersecurity Specialist",
-    tags: ["Security", "DevOps"],
-    duration: "7 months",
-    level: "Advanced",
-    steps: 14,
-    description:
-      "Network security fundamentals, ethical hacking, threat modeling, cryptography, incident handling, and compliance frameworks like ISO 27001 and NIST.",
-    views: 1890,
-    likes: 421,
-  },
-  {
-    id: 6,
-    author: "Dao Anh Tuan",
-    authorAvatar: "D",
-    title: "Mobile Developer (React Native)",
-    tags: ["Mobile", "Web Development"],
-    duration: "5 months",
-    level: "Intermediate",
-    steps: 11,
-    description:
-      "Build cross-platform mobile apps with React Native. Covers navigation, state management, native modules, app store deployment, and offline-first architecture.",
-    views: 1320,
-    likes: 290,
-  },
-];
+import type { RoadmapDetail } from "@/data/roadmaps";
+import { getRoadmaps } from "@/services/RoadmapService";
 
 export default function RoadmapsPage() {
   const [activeFilters, setActiveFilters] = useState<string[]>(["Data & AI"]);
+  const [roadmaps, setRoadmaps] = useState<RoadmapDetail[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadRoadmaps = async () => {
+      const result = await getRoadmaps();
+
+      if (isMounted) {
+        setRoadmaps(result);
+        setIsLoading(false);
+      }
+    };
+
+    void loadRoadmaps();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleRemoveFilter = (filter: string) => {
     setActiveFilters((prev) => prev.filter((f) => f !== filter));
@@ -106,18 +42,18 @@ export default function RoadmapsPage() {
   };
 
   const filteredRoadmaps = activeFilters.length
-    ? ROADMAPS.filter((r) => r.tags.some((t) => activeFilters.includes(t)))
-    : ROADMAPS;
+    ? roadmaps.filter((r) => r.tags.some((t) => activeFilters.includes(t)))
+    : roadmaps;
 
   return (
     <div className="flex flex-1 flex-col">
         {/* Page header */}
-        <div className="border-b border-[#E0E0E0] px-4 py-8 sm:px-6 lg:px-8\">
-          <div className="mx-auto max-w-screen-xl\">
-            <h1 className="text-3xl font-bold tracking-tight text-[#000000E6] sm:text-4xl\">
+        <div className="border-b border-[#E0E0E0] px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-screen-xl">
+            <h1 className="text-3xl font-bold tracking-tight text-[#000000E6] sm:text-4xl">
               Roadmap List
             </h1>
-            <p className="mt-2 text-sm text-[#9CA3AF] sm:text-base\">
+            <p className="mt-2 text-sm text-[#9CA3AF] sm:text-base">
               Explore career paths and learning journeys
             </p>
           </div>
@@ -136,10 +72,18 @@ export default function RoadmapsPage() {
             </div>
 
             {/* Roadmap grid */}
-            {filteredRoadmaps.length > 0 ? (
+            {isLoading ? (
+              <div className="py-20 text-center text-sm font-medium text-[#00000099]">
+                Loading roadmaps...
+              </div>
+            ) : filteredRoadmaps.length > 0 ? (
               <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {filteredRoadmaps.map((roadmap) => (
-                  <RoadmapCard key={roadmap.id} {...roadmap} />
+                  <RoadmapCard
+                    key={roadmap.id}
+                    {...roadmap}
+                    steps={roadmap.steps.length}
+                  />
                 ))}
               </div>
             ) : (

@@ -2,6 +2,8 @@ export type RoadmapStep = {
   id: number;
   title: string;
   description: string;
+  stage?: string;
+  phase?: string;
   content?: string;
   resources?: string[];
   howTo?: string[];
@@ -40,6 +42,7 @@ export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
         id: 1,
         title: "Introduction",
         description: "Understand fundamentals of machine learning",
+        phase: "Foundation",
         content: "Machine learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed. It focuses on developing algorithms that can analyze data, identify patterns, and make decisions with minimal human intervention.",
         resources: [
           "Andrew Ng's Machine Learning Course on Coursera",
@@ -61,6 +64,7 @@ export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
         id: 2,
         title: "Python Basics",
         description: "Learn Python programming language",
+        phase: "Foundation",
         content: "Python is a high-level, interpreted language known for readability, simplicity and versatility. It supports multiple paradigms with rich ecosystem including NumPy, Pandas, TensorFlow/PyTorch (ML), Used for web development, data science, automation, and scripting.",
         resources: [
           "roadmap/visit Dedicated Python Roadmap",
@@ -82,6 +86,7 @@ export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
         id: 3,
         title: "Data Processing",
         description: "Data cleaning and preprocessing techniques",
+        phase: "Data Preparation",
         content: "Data processing is the transformation of raw data into actionable insights. It involves cleaning, structuring, and organizing data to prepare it for analysis and model training. This is typically 70-80% of the work in any ML project.",
         resources: [
           "Pandas Documentation and Tutorials",
@@ -103,6 +108,7 @@ export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
         id: 4,
         title: "Model Training",
         description: "Train and evaluate machine learning models",
+        phase: "Modeling",
         content: "Model training is the process where algorithms learn patterns from data. It involves selecting appropriate algorithms, tuning hyperparameters, and iterating to improve performance. Understanding train/test splits and validation techniques is crucial.",
         resources: [
           "Scikit-learn Model Selection Guide",
@@ -124,6 +130,7 @@ export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
         id: 5,
         title: "Evaluation",
         description: "Assess model performance and metrics",
+        phase: "Modeling",
         content: "Model evaluation measures how well your trained model performs on unseen data. It involves understanding appropriate metrics for your problem (accuracy, precision, recall, F1, MSE, etc.) and avoiding common pitfalls like overfitting.",
         resources: [
           "Metrics and Scoring Explained",
