@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// CATEGORIES
+// ─────────────────────────────────────────────
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique @db.VarChar(100)
+  description String?
+  iconUrl     String?   @db.VarChar(500)
+  createdAt   DateTime  @default(now())
+
+  roadmaps    Roadmap[]
+  posts       Post[]
+
+  @@map("categories")
+}
+
+// ─────────────────────────────────────────────
+// ROADMAPS
+// ─────────────────────────────────────────────
+model Roadmap {
+  id             String          @id @default(uuid())
+  categoryId     String
+  title          String          @db.VarChar(200)
+  description    String?
+  difficultyLevel DifficultyLevel
+  estimatedHours Int
+  isPublished    Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  category       Category        @relation(fields: [categoryId], references: [id])
+  stages         Stage[]
+
+  @@map("roadmaps")
+}
+
+enum DifficultyLevel {
+  beginner
+  intermediate
+  advanced
+}
+
+// ─────────────────────────────────────────────
+// STAGES
+// ─────────────────────────────────────────────
+model Stage {
+  id          String   @id @default(uuid())
+  roadmapId   String
+  title       String   @db.VarChar(200)
+  description String?
+  orderIndex  Int
+
+  roadmap     Roadmap  @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  steps       Step[]
+
+  @@unique([roadmapId, orderIndex])
+  @@map("stages")
+}
+
+// ─────────────────────────────────────────────
+// STEPS
+// ─────────────────────────────────────────────
+model Step {
+  id               String        @id @default(uuid())
+  stageId          String
+  title            String        @db.VarChar(200)
+  orderIndex       Int
+  estimatedMinutes Int?
+
+  stage            Stage         @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  content          StepContent?
+  resources        Resource[]
+  userProgress     UserStepProgress[]
+
+  @@unique([stageId, orderIndex])
+  @@map("steps")
+}
+
+// ─────────────────────────────────────────────
+// STEP_CONTENTS  (1-1 với Step, tách để giảm payload)
+// ─────────────────────────────────────────────
+model StepContent {
+  id           String   @id @default(uuid())
+  stepId       String   @unique
+  bodyMarkdown String
+  updatedAt    DateTime @updatedAt
+
+  step         Step     @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@map("step_contents")
+}
+
+// ─────────────────────────────────────────────
+// RESOURCES
+// ─────────────────────────────────────────────
+model Resource {
+  id         String       @id @default(uuid())
+  stepId     String
+  type       ResourceType
+  title      String       @db.VarChar(300)
+  url        String       @db.VarChar(2000)
+  orderIndex Int
+
+  step       Step         @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@map("resources")
+}
+
+enum ResourceType {
+  video
+  article
+  docs
+  exercise
+}
+
+// ─────────────────────────────────────────────
+// USERS
+// ─────────────────────────────────────────────
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique @db.VarChar(255)
+  displayName String   @db.VarChar(100)
+  avatarUrl   String?  @db.VarChar(500)
+  createdAt   DateTime @default(now())
+
+  progress    UserStepProgress[]
+  posts       Post[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// USER_STEP_PROGRESS
+// ─────────────────────────────────────────────
+model UserStepProgress {
+  id          String         @id @default(uuid())
+  userId      String
+  stepId      String
+  status      ProgressStatus
+  completedAt DateTime?
+
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  step        Step           @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, stepId])
+  @@map("user_step_progress")
+}
+
+enum ProgressStatus {
+  in_progress
+  completed
+}
+
+// ─────────────────────────────────────────────
+// POSTS
+// ─────────────────────────────────────────────
+model Post {
+  id              String     @id @default(uuid())
+  authorId        String
+  categoryId      String?
+  title           String     @db.VarChar(300)
+  contentMarkdown String
+  status          PostStatus @default(draft)
+  publishedAt     DateTime?
+  createdAt       DateTime   @default(now())
+
+  author          User       @relation(fields: [authorId], references: [id])
+  category        Category?  @relation(fields: [categoryId], references: [id])
+
+  @@map("posts")
+}
+
+enum PostStatus {
+  draft
+  published
+  archived
+}
