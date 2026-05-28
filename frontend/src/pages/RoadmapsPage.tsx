@@ -7,6 +7,8 @@ const ROADMAPS = [
     id: 1,
     author: "Nguyen Duc Manh",
     authorAvatar: "N",
+    thumbnailLabel: "ML",
+    thumbnailTone: "ai" as const,
     title: "ML Engineer Roadmap",
     tags: ["Data & AI", "Data Engineering"],
     duration: "6 months",
@@ -21,6 +23,8 @@ const ROADMAPS = [
     id: 2,
     author: "Tran Thi Huong",
     authorAvatar: "T",
+    thumbnailLabel: "FE",
+    thumbnailTone: "frontend" as const,
     title: "Frontend Developer",
     tags: ["Web Development", "UI/UX"],
     duration: "4 months",
@@ -35,6 +39,8 @@ const ROADMAPS = [
     id: 3,
     author: "Le Van Minh",
     authorAvatar: "L",
+    thumbnailLabel: "DO",
+    thumbnailTone: "devops" as const,
     title: "DevOps Engineer",
     tags: ["DevOps", "Cloud"],
     duration: "5 months",
@@ -49,6 +55,8 @@ const ROADMAPS = [
     id: 4,
     author: "Pham Quang Hung",
     authorAvatar: "P",
+    thumbnailLabel: "DA",
+    thumbnailTone: "data" as const,
     title: "Data Analyst",
     tags: ["Data & AI", "Analytics"],
     duration: "3 months",
@@ -63,6 +71,8 @@ const ROADMAPS = [
     id: 5,
     author: "Hoang Thi Mai",
     authorAvatar: "H",
+    thumbnailLabel: "CS",
+    thumbnailTone: "security" as const,
     title: "Cybersecurity Specialist",
     tags: ["Security", "DevOps"],
     duration: "7 months",
@@ -77,6 +87,8 @@ const ROADMAPS = [
     id: 6,
     author: "Dao Anh Tuan",
     authorAvatar: "D",
+    thumbnailLabel: "RN",
+    thumbnailTone: "mobile" as const,
     title: "Mobile Developer (React Native)",
     tags: ["Mobile", "Web Development"],
     duration: "5 months",
@@ -112,12 +124,12 @@ export default function RoadmapsPage() {
   return (
     <div className="flex flex-1 flex-col">
         {/* Page header */}
-        <div className="border-b border-[#E0E0E0] px-4 py-8 sm:px-6 lg:px-8\">
-          <div className="mx-auto max-w-screen-xl\">
-            <h1 className="text-3xl font-bold tracking-tight text-[#000000E6] sm:text-4xl\">
+        <div className="border-b border-[#E0E0E0] px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-screen-xl">
+            <h1 className="text-3xl font-bold tracking-tight text-[#000000E6] sm:text-4xl">
               Roadmap List
             </h1>
-            <p className="mt-2 text-sm text-[#9CA3AF] sm:text-base\">
+            <p className="mt-2 text-sm text-[#9CA3AF] sm:text-base">
               Explore career paths and learning journeys
             </p>
           </div>
