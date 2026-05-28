@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 type RoadmapCardProps = {
-  id: number;
+  id: string | number;
   author: string;
   authorAvatar: string;
   title: string;
