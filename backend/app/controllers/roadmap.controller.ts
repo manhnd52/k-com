@@ -158,4 +158,149 @@ export const getRoadmapById = async (req: Request, res: Response): Promise<void>
   }
 };
 
+// Lấy danh sách Stages theo Roadmap ID
+export const getStagesByRoadmapId = async (req: Request, res: Response): Promise<void> => {
+  const { roadmapId } = req.params;
+
+  if (!roadmapId) {
+    res.status(400).json({
+      success: false,
+      message: "ID lộ trình là bắt buộc",
+    });
+    return;
+  }
+
+  try {
+    // Kiểm tra roadmap tồn tại
+    const roadmap = await prisma.roadmap.findUnique({
+      where: { id: roadmapId },
+    });
+
+    if (!roadmap) {
+      res.status(404).json({
+        success: false,
+        message: "Không tìm thấy lộ trình học tập",
+      });
+      return;
+    }
+
+    // Lấy tất cả stages của roadmap
+    const stages = await prisma.stage.findMany({
+      where: { roadmapId },
+      include: {
+        steps: {
+          select: {
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        orderIndex: "asc",
+      },
+    });
+
+    // Format response
+    const formattedStages = stages.map((stage) => ({
+      id: stage.id,
+      roadmapId: stage.roadmapId,
+      title: stage.title,
+      description: stage.description || "",
+      orderIndex: stage.orderIndex,
+      stepsCount: stage.steps.length,
+    }));
+
+    res.json({
+      success: true,
+      roadmapId,
+      roadmapTitle: roadmap.title,
+      stagesCount: formattedStages.length,
+      stages: formattedStages,
+    });
+  } catch (error: any) {
+    console.error("Lỗi lấy danh sách stage:", error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi hệ thống",
+      error: error.message || String(error),
+    });
+  }
+};
+
+// Lấy danh sách Steps theo Stage ID
+export const getStepsByStageId = async (req: Request, res: Response): Promise<void> => {
+  const { stageId } = req.params;
+
+  if (!stageId) {
+    res.status(400).json({
+      success: false,
+      message: "ID giai đoạn là bắt buộc",
+    });
+    return;
+  }
+
+  try {
+    // Kiểm tra stage tồn tại
+    const stage = await prisma.stage.findUnique({
+      where: { id: stageId },
+    });
+
+    if (!stage) {
+      res.status(404).json({
+        success: false,
+        message: "Không tìm thấy giai đoạn học tập",
+      });
+      return;
+    }
+
+    // Lấy tất cả steps của stage kèm content và resources
+    const steps = await prisma.step.findMany({
+      where: { stageId },
+      include: {
+        content: true,
+        resources: {
+          orderBy: {
+            orderIndex: "asc",
+          },
+        },
+      },
+      orderBy: {
+        orderIndex: "asc",
+      },
+    });
+
+    // Format response
+    const formattedSteps = steps.map((step) => ({
+      id: step.id,
+      stageId: step.stageId,
+      title: step.title,
+      orderIndex: step.orderIndex,
+      estimatedMinutes: step.estimatedMinutes || 0,
+      content: step.content?.bodyMarkdown || "Chưa có nội dung chi tiết",
+      resourcesCount: step.resources.length,
+      resources: step.resources.map((res) => ({
+        id: res.id,
+        type: res.type,
+        title: res.title,
+        url: res.url,
+        orderIndex: res.orderIndex,
+      })),
+    }));
+
+    res.json({
+      success: true,
+      stageId,
+      stageTitle: stage.title,
+      stepsCount: formattedSteps.length,
+      steps: formattedSteps,
+    });
+  } catch (error: any) {
+    console.error("Lỗi lấy danh sách step:", error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi hệ thống",
+      error: error.message || String(error),
+    });
+  }
+};
+
 
