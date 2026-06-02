@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { RoadmapDetail } from "@/data/roadmaps";
 
 export type ThumbnailTone =
   | "ai"
@@ -8,32 +9,12 @@ export type ThumbnailTone =
   | "security"
   | "mobile";
 
-type ApiRoadmap = {
-  id: number;
-  author: string;
-  authorAvatar: string;
-  thumbnailLabel: string;
-  thumbnailTone: ThumbnailTone;
-  title: string;
-  tags: string[];
-  duration: string;
-  level: string;
-  steps: number;
-  description: string;
-  views: number;
-  likes: number;
-};
-
-type RoadmapsResponse = {
-  data: ApiRoadmap[];
-};
-
 export type RoadmapCardData = {
-  id: number;
+  id: string | number;
   author: string;
   authorAvatar: string;
-  thumbnailLabel: string;
-  thumbnailTone: ThumbnailTone;
+  thumbnailLabel?: string;
+  thumbnailTone?: ThumbnailTone;
   title: string;
   tags: string[];
   duration: string;
@@ -43,6 +24,8 @@ export type RoadmapCardData = {
   views: number;
   likes: number;
 };
+
+type RoadmapsResponse = RoadmapCardData[] | { data: RoadmapCardData[] };
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000/api";
@@ -51,23 +34,17 @@ const api = axios.create({
   baseURL: API_BASE_URL.replace(/\/$/, ""),
 });
 
-const mapRoadmapToCardData = (roadmap: ApiRoadmap): RoadmapCardData => ({
-  id: roadmap.id,
-  author: roadmap.author,
-  authorAvatar: roadmap.authorAvatar,
-  thumbnailLabel: roadmap.thumbnailLabel,
-  thumbnailTone: roadmap.thumbnailTone,
-  title: roadmap.title,
-  tags: roadmap.tags,
-  duration: roadmap.duration,
-  level: roadmap.level,
-  steps: roadmap.steps,
-  description: roadmap.description,
-  views: roadmap.views,
-  likes: roadmap.likes,
-});
+const unwrapRoadmaps = (response: RoadmapsResponse) =>
+  Array.isArray(response) ? response : response.data;
 
 export const getRoadmaps = async (): Promise<RoadmapCardData[]> => {
   const response = await api.get<RoadmapsResponse>("/roadmaps");
-  return response.data.data.map(mapRoadmapToCardData);
+  return unwrapRoadmaps(response.data);
+};
+
+export const getAllRoadmaps = getRoadmaps;
+
+export const getRoadmapById = async (id: string): Promise<RoadmapDetail> => {
+  const response = await api.get<RoadmapDetail>(`/roadmaps/${id}`);
+  return response.data;
 };

@@ -9,7 +9,7 @@ type ThumbnailTone =
   | "mobile";
 
 type RoadmapCardProps = {
-  id: number;
+  id: string | number;
   author: string;
   authorAvatar: string;
   thumbnailLabel?: string;

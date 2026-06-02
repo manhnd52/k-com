@@ -1,5 +1,5 @@
 export type RoadmapStep = {
-  id: number;
+  id: string | number;
   title: string;
   description: string;
   content?: string;
@@ -9,7 +9,7 @@ export type RoadmapStep = {
 };
 
 export type RoadmapDetail = {
-  id: number;
+  id: string | number;
   author: string;
   authorAvatar: string;
   title: string;

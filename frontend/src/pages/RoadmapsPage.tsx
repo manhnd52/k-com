@@ -37,29 +37,8 @@ export default function RoadmapsPage() {
   }, []);
 
   useEffect(() => {
-    let isActive = true;
-
-    getRoadmaps()
-      .then((roadmapData) => {
-        if (isActive) {
-          setRoadmaps(roadmapData);
-        }
-      })
-      .catch(() => {
-        if (isActive) {
-          setError("Unable to load roadmaps. Please check the backend API.");
-        }
-      })
-      .finally(() => {
-        if (isActive) {
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
+    void loadRoadmaps();
+  }, [loadRoadmaps]);
 
   const handleRemoveFilter = (filter: string) => {
     setActiveFilters((prev) => prev.filter((f) => f !== filter));
