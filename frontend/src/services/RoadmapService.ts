@@ -1,13 +1,20 @@
 import axios from "axios";
 import type { RoadmapDetail } from "@/data/roadmaps";
 
-const API_BASE_URL = "http://localhost:3000/api/roadmaps";
+export type ThumbnailTone =
+  | "ai"
+  | "frontend"
+  | "devops"
+  | "data"
+  | "security"
+  | "mobile";
 
-// Định nghĩa kiểu dữ liệu cho Roadmap rút gọn hiển thị ở Card
-export interface RoadmapCardData {
+export type RoadmapCardData = {
   id: string | number;
   author: string;
   authorAvatar: string;
+  thumbnailLabel?: string;
+  thumbnailTone?: ThumbnailTone;
   title: string;
   tags: string[];
   duration: string;
@@ -16,14 +23,28 @@ export interface RoadmapCardData {
   description: string;
   views: number;
   likes: number;
-}
-
-export const getAllRoadmaps = async (): Promise<RoadmapCardData[]> => {
-  const response = await axios.get<RoadmapCardData[]>(`${API_BASE_URL}/getAllRoadmap`);
-  return response.data;
 };
 
+type RoadmapsResponse = RoadmapCardData[] | { data: RoadmapCardData[] };
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000/api";
+
+const api = axios.create({
+  baseURL: API_BASE_URL.replace(/\/$/, ""),
+});
+
+const unwrapRoadmaps = (response: RoadmapsResponse) =>
+  Array.isArray(response) ? response : response.data;
+
+export const getRoadmaps = async (): Promise<RoadmapCardData[]> => {
+  const response = await api.get<RoadmapsResponse>("/roadmaps");
+  return unwrapRoadmaps(response.data);
+};
+
+export const getAllRoadmaps = getRoadmaps;
+
 export const getRoadmapById = async (id: string): Promise<RoadmapDetail> => {
-  const response = await axios.get<RoadmapDetail>(`${API_BASE_URL}/${id}`);
+  const response = await api.get<RoadmapDetail>(`/roadmaps/${id}`);
   return response.data;
 };
