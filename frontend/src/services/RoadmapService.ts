@@ -25,8 +25,6 @@ export type RoadmapCardData = {
   likes: number;
 };
 
-type RoadmapsResponse = RoadmapCardData[] | { data: RoadmapCardData[] };
-
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000/api";
 
@@ -34,11 +32,18 @@ const api = axios.create({
   baseURL: API_BASE_URL.replace(/\/$/, ""),
 });
 
-const unwrapRoadmaps = (response: RoadmapsResponse) =>
-  Array.isArray(response) ? response : response.data;
+const unwrapRoadmaps = (response: any): RoadmapCardData[] => {
+  if (Array.isArray(response)) {
+    return response;
+  }
+  if (response && Array.isArray(response.data)) {
+    return response.data;
+  }
+  return [];
+};
 
 export const getRoadmaps = async (): Promise<RoadmapCardData[]> => {
-  const response = await api.get<RoadmapsResponse>("/roadmaps");
+  const response = await api.get<any>("/roadmaps");
   return unwrapRoadmaps(response.data);
 };
 

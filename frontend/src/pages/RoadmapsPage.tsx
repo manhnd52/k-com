@@ -28,9 +28,10 @@ export default function RoadmapsPage() {
 
     try {
       const roadmapData = await getRoadmaps();
-      setRoadmaps(roadmapData);
+      setRoadmaps(Array.isArray(roadmapData) ? roadmapData : []);
     } catch {
       setError("Unable to load roadmaps. Please check the backend API.");
+      setRoadmaps([]);
     } finally {
       setIsLoading(false);
     }
@@ -53,12 +54,13 @@ export default function RoadmapsPage() {
   };
 
   const filteredRoadmaps = useMemo(() => {
+    const list = Array.isArray(roadmaps) ? roadmaps : [];
     if (!activeFilters.length) {
-      return roadmaps;
+      return list;
     }
 
-    return roadmaps.filter((roadmap) =>
-      roadmap.tags.some((tag) => activeFilters.includes(tag)),
+    return list.filter((roadmap) =>
+      roadmap && roadmap.tags && Array.isArray(roadmap.tags) && roadmap.tags.some((tag) => activeFilters.includes(tag)),
     );
   }, [activeFilters, roadmaps]);
 
