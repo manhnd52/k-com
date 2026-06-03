@@ -1,0 +1,49 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+dist-ssr/
+*.local
+
+# Prisma
+# Note: Keep schema.prisma, seed.ts, and migrations. Ignore only the generated client.
+backend/app/generated/
+/src/generated/prisma/
+
+# Cache directories
+.npm-cache/
+.eslintcache
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/.temp/
+.cache/
+
+# Editor and OS settings
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# SQLite databases (if any are used locally)
+*.db
+*.db-journal
