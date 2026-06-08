@@ -1,30 +1,62 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RoadmapFlow from "@/components/RoadmapFlow";
 import StepDetail from "@/components/StepDetail";
-import { ROADMAP_DETAILS } from "@/data/roadmaps";
+import { getRoadmapById } from "@/services/RoadmapService";
+import type { RoadmapDetail } from "@/data/roadmaps";
 
 export default function RoadmapDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
-  const [selectedStepId, setSelectedStepId] = useState<number | undefined>(
+  const [roadmap, setRoadmap] = useState<RoadmapDetail | null>(null);
+  const [selectedStepId, setSelectedStepId] = useState<string | number | undefined>(
     undefined,
   );
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const roadmapId = id ? parseInt(id, 10) : null;
-  const roadmap = roadmapId ? ROADMAP_DETAILS[roadmapId] : null;
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    getRoadmapById(id)
+      .then((data) => {
+        setRoadmap(data);
+        setError(null);
+        setLoading(false);
+        if (data.steps && data.steps.length > 0) {
+          setSelectedStepId(data.steps[0]!.id);
+        }
+      })
+      .catch((err) => {
+        console.error("Lỗi lấy chi tiết roadmap:", err);
+        setError("Roadmap not found or server error");
+        setLoading(false);
+      });
+  }, [id]);
+
   const selectedStep =
     selectedStepId && roadmap
       ? (roadmap.steps.find((s) => s.id === selectedStepId) ?? null)
       : null;
 
-  if (!roadmap) {
+  if (loading) {
     return (
-      <div className="flex flex-1 items-center justify-center">
+      <div className="flex flex-1 items-center justify-center bg-[#F3F2EF]">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#0A66C2] border-t-transparent mx-auto"></div>
+          <p className="mt-4 text-sm text-[#6B7280]">Loading roadmap detail...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !roadmap) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-[#F3F2EF]">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#000000E6]">
-            Roadmap not found
+            {error || "Roadmap not found"}
           </h2>
           <button
             onClick={() => navigate("/roadmaps")}

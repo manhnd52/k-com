@@ -1651,13 +1651,13 @@ export namespace Prisma {
    */
 
   export type CategoryCountOutputType = {
-    roadmaps: number
     posts: number
+    roadmaps: number
   }
 
   export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    roadmaps?: boolean | CategoryCountOutputTypeCountRoadmapsArgs
     posts?: boolean | CategoryCountOutputTypeCountPostsArgs
+    roadmaps?: boolean | CategoryCountOutputTypeCountRoadmapsArgs
   }
 
   // Custom InputTypes
@@ -1674,15 +1674,15 @@ export namespace Prisma {
   /**
    * CategoryCountOutputType without action
    */
-  export type CategoryCountOutputTypeCountRoadmapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RoadmapWhereInput
+  export type CategoryCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
   }
 
   /**
    * CategoryCountOutputType without action
    */
-  export type CategoryCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PostWhereInput
+  export type CategoryCountOutputTypeCountRoadmapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoadmapWhereInput
   }
 
 
@@ -1793,13 +1793,13 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    progress: number
     posts: number
+    progress: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    progress?: boolean | UserCountOutputTypeCountProgressArgs
     posts?: boolean | UserCountOutputTypeCountPostsArgs
+    progress?: boolean | UserCountOutputTypeCountProgressArgs
   }
 
   // Custom InputTypes
@@ -1816,15 +1816,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserStepProgressWhereInput
+  export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PostWhereInput
+  export type UserCountOutputTypeCountProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserStepProgressWhereInput
   }
 
 
@@ -1996,8 +1996,8 @@ export namespace Prisma {
     description?: boolean
     iconUrl?: boolean
     createdAt?: boolean
-    roadmaps?: boolean | Category$roadmapsArgs<ExtArgs>
     posts?: boolean | Category$postsArgs<ExtArgs>
+    roadmaps?: boolean | Category$roadmapsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -2027,8 +2027,8 @@ export namespace Prisma {
 
   export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "iconUrl" | "createdAt", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    roadmaps?: boolean | Category$roadmapsArgs<ExtArgs>
     posts?: boolean | Category$postsArgs<ExtArgs>
+    roadmaps?: boolean | Category$roadmapsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2037,8 +2037,8 @@ export namespace Prisma {
   export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Category"
     objects: {
-      roadmaps: Prisma.$RoadmapPayload<ExtArgs>[]
       posts: Prisma.$PostPayload<ExtArgs>[]
+      roadmaps: Prisma.$RoadmapPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2440,8 +2440,8 @@ export namespace Prisma {
    */
   export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    roadmaps<T extends Category$roadmapsArgs<ExtArgs> = {}>(args?: Subset<T, Category$roadmapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoadmapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     posts<T extends Category$postsArgs<ExtArgs> = {}>(args?: Subset<T, Category$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roadmaps<T extends Category$roadmapsArgs<ExtArgs> = {}>(args?: Subset<T, Category$roadmapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoadmapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2869,30 +2869,6 @@ export namespace Prisma {
   }
 
   /**
-   * Category.roadmaps
-   */
-  export type Category$roadmapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Roadmap
-     */
-    select?: RoadmapSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Roadmap
-     */
-    omit?: RoadmapOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoadmapInclude<ExtArgs> | null
-    where?: RoadmapWhereInput
-    orderBy?: RoadmapOrderByWithRelationInput | RoadmapOrderByWithRelationInput[]
-    cursor?: RoadmapWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RoadmapScalarFieldEnum | RoadmapScalarFieldEnum[]
-  }
-
-  /**
    * Category.posts
    */
   export type Category$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2914,6 +2890,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * Category.roadmaps
+   */
+  export type Category$roadmapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Roadmap
+     */
+    select?: RoadmapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Roadmap
+     */
+    omit?: RoadmapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoadmapInclude<ExtArgs> | null
+    where?: RoadmapWhereInput
+    orderBy?: RoadmapOrderByWithRelationInput | RoadmapOrderByWithRelationInput[]
+    cursor?: RoadmapWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RoadmapScalarFieldEnum | RoadmapScalarFieldEnum[]
   }
 
   /**
@@ -5443,9 +5443,9 @@ export namespace Prisma {
     title?: boolean
     orderIndex?: boolean
     estimatedMinutes?: boolean
-    stage?: boolean | StageDefaultArgs<ExtArgs>
-    content?: boolean | Step$contentArgs<ExtArgs>
     resources?: boolean | Step$resourcesArgs<ExtArgs>
+    content?: boolean | Step$contentArgs<ExtArgs>
+    stage?: boolean | StageDefaultArgs<ExtArgs>
     userProgress?: boolean | Step$userProgressArgs<ExtArgs>
     _count?: boolean | StepCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["step"]>
@@ -5478,9 +5478,9 @@ export namespace Prisma {
 
   export type StepOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "stageId" | "title" | "orderIndex" | "estimatedMinutes", ExtArgs["result"]["step"]>
   export type StepInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stage?: boolean | StageDefaultArgs<ExtArgs>
-    content?: boolean | Step$contentArgs<ExtArgs>
     resources?: boolean | Step$resourcesArgs<ExtArgs>
+    content?: boolean | Step$contentArgs<ExtArgs>
+    stage?: boolean | StageDefaultArgs<ExtArgs>
     userProgress?: boolean | Step$userProgressArgs<ExtArgs>
     _count?: boolean | StepCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -5494,9 +5494,9 @@ export namespace Prisma {
   export type $StepPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Step"
     objects: {
-      stage: Prisma.$StagePayload<ExtArgs>
-      content: Prisma.$StepContentPayload<ExtArgs> | null
       resources: Prisma.$ResourcePayload<ExtArgs>[]
+      content: Prisma.$StepContentPayload<ExtArgs> | null
+      stage: Prisma.$StagePayload<ExtArgs>
       userProgress: Prisma.$UserStepProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5899,9 +5899,9 @@ export namespace Prisma {
    */
   export interface Prisma__StepClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    stage<T extends StageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StageDefaultArgs<ExtArgs>>): Prisma__StageClient<$Result.GetResult<Prisma.$StagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    content<T extends Step$contentArgs<ExtArgs> = {}>(args?: Subset<T, Step$contentArgs<ExtArgs>>): Prisma__StepContentClient<$Result.GetResult<Prisma.$StepContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     resources<T extends Step$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, Step$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    content<T extends Step$contentArgs<ExtArgs> = {}>(args?: Subset<T, Step$contentArgs<ExtArgs>>): Prisma__StepContentClient<$Result.GetResult<Prisma.$StepContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    stage<T extends StageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StageDefaultArgs<ExtArgs>>): Prisma__StageClient<$Result.GetResult<Prisma.$StagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     userProgress<T extends Step$userProgressArgs<ExtArgs> = {}>(args?: Subset<T, Step$userProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserStepProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6338,25 +6338,6 @@ export namespace Prisma {
   }
 
   /**
-   * Step.content
-   */
-  export type Step$contentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the StepContent
-     */
-    select?: StepContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the StepContent
-     */
-    omit?: StepContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StepContentInclude<ExtArgs> | null
-    where?: StepContentWhereInput
-  }
-
-  /**
    * Step.resources
    */
   export type Step$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6378,6 +6359,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * Step.content
+   */
+  export type Step$contentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StepContent
+     */
+    select?: StepContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StepContent
+     */
+    omit?: StepContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StepContentInclude<ExtArgs> | null
+    where?: StepContentWhereInput
   }
 
   /**
@@ -8747,8 +8747,8 @@ export namespace Prisma {
     displayName?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
-    progress?: boolean | User$progressArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
+    progress?: boolean | User$progressArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -8778,8 +8778,8 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "displayName" | "avatarUrl" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    progress?: boolean | User$progressArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
+    progress?: boolean | User$progressArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8788,8 +8788,8 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      progress: Prisma.$UserStepProgressPayload<ExtArgs>[]
       posts: Prisma.$PostPayload<ExtArgs>[]
+      progress: Prisma.$UserStepProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9191,8 +9191,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    progress<T extends User$progressArgs<ExtArgs> = {}>(args?: Subset<T, User$progressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserStepProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    progress<T extends User$progressArgs<ExtArgs> = {}>(args?: Subset<T, User$progressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserStepProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9620,30 +9620,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.progress
-   */
-  export type User$progressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserStepProgress
-     */
-    select?: UserStepProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserStepProgress
-     */
-    omit?: UserStepProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserStepProgressInclude<ExtArgs> | null
-    where?: UserStepProgressWhereInput
-    orderBy?: UserStepProgressOrderByWithRelationInput | UserStepProgressOrderByWithRelationInput[]
-    cursor?: UserStepProgressWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserStepProgressScalarFieldEnum | UserStepProgressScalarFieldEnum[]
-  }
-
-  /**
    * User.posts
    */
   export type User$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9665,6 +9641,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * User.progress
+   */
+  export type User$progressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserStepProgress
+     */
+    select?: UserStepProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserStepProgress
+     */
+    omit?: UserStepProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserStepProgressInclude<ExtArgs> | null
+    where?: UserStepProgressWhereInput
+    orderBy?: UserStepProgressOrderByWithRelationInput | UserStepProgressOrderByWithRelationInput[]
+    cursor?: UserStepProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserStepProgressScalarFieldEnum | UserStepProgressScalarFieldEnum[]
   }
 
   /**
@@ -9850,8 +9850,8 @@ export namespace Prisma {
     stepId?: boolean
     status?: boolean
     completedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     step?: boolean | StepDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userStepProgress"]>
 
   export type UserStepProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9860,8 +9860,8 @@ export namespace Prisma {
     stepId?: boolean
     status?: boolean
     completedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     step?: boolean | StepDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userStepProgress"]>
 
   export type UserStepProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9870,8 +9870,8 @@ export namespace Prisma {
     stepId?: boolean
     status?: boolean
     completedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     step?: boolean | StepDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userStepProgress"]>
 
   export type UserStepProgressSelectScalar = {
@@ -9884,23 +9884,23 @@ export namespace Prisma {
 
   export type UserStepProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "stepId" | "status" | "completedAt", ExtArgs["result"]["userStepProgress"]>
   export type UserStepProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     step?: boolean | StepDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type UserStepProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     step?: boolean | StepDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type UserStepProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     step?: boolean | StepDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $UserStepProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserStepProgress"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       step: Prisma.$StepPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10302,8 +10302,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserStepProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     step<T extends StepDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StepDefaultArgs<ExtArgs>>): Prisma__StepClient<$Result.GetResult<Prisma.$StepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12166,8 +12166,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"Category"> | string | null
     iconUrl?: StringNullableFilter<"Category"> | string | null
     createdAt?: DateTimeFilter<"Category"> | Date | string
-    roadmaps?: RoadmapListRelationFilter
     posts?: PostListRelationFilter
+    roadmaps?: RoadmapListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
@@ -12176,8 +12176,8 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     iconUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    roadmaps?: RoadmapOrderByRelationAggregateInput
     posts?: PostOrderByRelationAggregateInput
+    roadmaps?: RoadmapOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -12189,8 +12189,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"Category"> | string | null
     iconUrl?: StringNullableFilter<"Category"> | string | null
     createdAt?: DateTimeFilter<"Category"> | Date | string
-    roadmaps?: RoadmapListRelationFilter
     posts?: PostListRelationFilter
+    roadmaps?: RoadmapListRelationFilter
   }, "id" | "name">
 
   export type CategoryOrderByWithAggregationInput = {
@@ -12365,9 +12365,9 @@ export namespace Prisma {
     title?: StringFilter<"Step"> | string
     orderIndex?: IntFilter<"Step"> | number
     estimatedMinutes?: IntNullableFilter<"Step"> | number | null
-    stage?: XOR<StageScalarRelationFilter, StageWhereInput>
-    content?: XOR<StepContentNullableScalarRelationFilter, StepContentWhereInput> | null
     resources?: ResourceListRelationFilter
+    content?: XOR<StepContentNullableScalarRelationFilter, StepContentWhereInput> | null
+    stage?: XOR<StageScalarRelationFilter, StageWhereInput>
     userProgress?: UserStepProgressListRelationFilter
   }
 
@@ -12377,9 +12377,9 @@ export namespace Prisma {
     title?: SortOrder
     orderIndex?: SortOrder
     estimatedMinutes?: SortOrderInput | SortOrder
-    stage?: StageOrderByWithRelationInput
-    content?: StepContentOrderByWithRelationInput
     resources?: ResourceOrderByRelationAggregateInput
+    content?: StepContentOrderByWithRelationInput
+    stage?: StageOrderByWithRelationInput
     userProgress?: UserStepProgressOrderByRelationAggregateInput
   }
 
@@ -12393,9 +12393,9 @@ export namespace Prisma {
     title?: StringFilter<"Step"> | string
     orderIndex?: IntFilter<"Step"> | number
     estimatedMinutes?: IntNullableFilter<"Step"> | number | null
-    stage?: XOR<StageScalarRelationFilter, StageWhereInput>
-    content?: XOR<StepContentNullableScalarRelationFilter, StepContentWhereInput> | null
     resources?: ResourceListRelationFilter
+    content?: XOR<StepContentNullableScalarRelationFilter, StepContentWhereInput> | null
+    stage?: XOR<StageScalarRelationFilter, StageWhereInput>
     userProgress?: UserStepProgressListRelationFilter
   }, "id" | "stageId_orderIndex">
 
@@ -12544,8 +12544,8 @@ export namespace Prisma {
     displayName?: StringFilter<"User"> | string
     avatarUrl?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
-    progress?: UserStepProgressListRelationFilter
     posts?: PostListRelationFilter
+    progress?: UserStepProgressListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12554,8 +12554,8 @@ export namespace Prisma {
     displayName?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    progress?: UserStepProgressOrderByRelationAggregateInput
     posts?: PostOrderByRelationAggregateInput
+    progress?: UserStepProgressOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -12567,8 +12567,8 @@ export namespace Prisma {
     displayName?: StringFilter<"User"> | string
     avatarUrl?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
-    progress?: UserStepProgressListRelationFilter
     posts?: PostListRelationFilter
+    progress?: UserStepProgressListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -12602,8 +12602,8 @@ export namespace Prisma {
     stepId?: StringFilter<"UserStepProgress"> | string
     status?: EnumProgressStatusFilter<"UserStepProgress"> | $Enums.ProgressStatus
     completedAt?: DateTimeNullableFilter<"UserStepProgress"> | Date | string | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     step?: XOR<StepScalarRelationFilter, StepWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type UserStepProgressOrderByWithRelationInput = {
@@ -12612,8 +12612,8 @@ export namespace Prisma {
     stepId?: SortOrder
     status?: SortOrder
     completedAt?: SortOrderInput | SortOrder
-    user?: UserOrderByWithRelationInput
     step?: StepOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type UserStepProgressWhereUniqueInput = Prisma.AtLeast<{
@@ -12626,8 +12626,8 @@ export namespace Prisma {
     stepId?: StringFilter<"UserStepProgress"> | string
     status?: EnumProgressStatusFilter<"UserStepProgress"> | $Enums.ProgressStatus
     completedAt?: DateTimeNullableFilter<"UserStepProgress"> | Date | string | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     step?: XOR<StepScalarRelationFilter, StepWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId_stepId">
 
   export type UserStepProgressOrderByWithAggregationInput = {
@@ -12731,8 +12731,8 @@ export namespace Prisma {
     description?: string | null
     iconUrl?: string | null
     createdAt?: Date | string
-    roadmaps?: RoadmapCreateNestedManyWithoutCategoryInput
     posts?: PostCreateNestedManyWithoutCategoryInput
+    roadmaps?: RoadmapCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
@@ -12741,8 +12741,8 @@ export namespace Prisma {
     description?: string | null
     iconUrl?: string | null
     createdAt?: Date | string
-    roadmaps?: RoadmapUncheckedCreateNestedManyWithoutCategoryInput
     posts?: PostUncheckedCreateNestedManyWithoutCategoryInput
+    roadmaps?: RoadmapUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
@@ -12751,8 +12751,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    roadmaps?: RoadmapUpdateManyWithoutCategoryNestedInput
     posts?: PostUpdateManyWithoutCategoryNestedInput
+    roadmaps?: RoadmapUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
@@ -12761,8 +12761,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     iconUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    roadmaps?: RoadmapUncheckedUpdateManyWithoutCategoryNestedInput
     posts?: PostUncheckedUpdateManyWithoutCategoryNestedInput
+    roadmaps?: RoadmapUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -12940,9 +12940,9 @@ export namespace Prisma {
     title: string
     orderIndex: number
     estimatedMinutes?: number | null
-    stage: StageCreateNestedOneWithoutStepsInput
-    content?: StepContentCreateNestedOneWithoutStepInput
     resources?: ResourceCreateNestedManyWithoutStepInput
+    content?: StepContentCreateNestedOneWithoutStepInput
+    stage: StageCreateNestedOneWithoutStepsInput
     userProgress?: UserStepProgressCreateNestedManyWithoutStepInput
   }
 
@@ -12952,8 +12952,8 @@ export namespace Prisma {
     title: string
     orderIndex: number
     estimatedMinutes?: number | null
-    content?: StepContentUncheckedCreateNestedOneWithoutStepInput
     resources?: ResourceUncheckedCreateNestedManyWithoutStepInput
+    content?: StepContentUncheckedCreateNestedOneWithoutStepInput
     userProgress?: UserStepProgressUncheckedCreateNestedManyWithoutStepInput
   }
 
@@ -12962,9 +12962,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     orderIndex?: IntFieldUpdateOperationsInput | number
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
-    content?: StepContentUpdateOneWithoutStepNestedInput
     resources?: ResourceUpdateManyWithoutStepNestedInput
+    content?: StepContentUpdateOneWithoutStepNestedInput
+    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
     userProgress?: UserStepProgressUpdateManyWithoutStepNestedInput
   }
 
@@ -12974,8 +12974,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     orderIndex?: IntFieldUpdateOperationsInput | number
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutStepNestedInput
+    content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
     userProgress?: UserStepProgressUncheckedUpdateManyWithoutStepNestedInput
   }
 
@@ -13118,8 +13118,8 @@ export namespace Prisma {
     displayName: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    progress?: UserStepProgressCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutAuthorInput
+    progress?: UserStepProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13128,8 +13128,8 @@ export namespace Prisma {
     displayName: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    progress?: UserStepProgressUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    progress?: UserStepProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13138,8 +13138,8 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: UserStepProgressUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
+    progress?: UserStepProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13148,8 +13148,8 @@ export namespace Prisma {
     displayName?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: UserStepProgressUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    progress?: UserStepProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -13180,8 +13180,8 @@ export namespace Prisma {
     id?: string
     status: $Enums.ProgressStatus
     completedAt?: Date | string | null
-    user: UserCreateNestedOneWithoutProgressInput
     step: StepCreateNestedOneWithoutUserProgressInput
+    user: UserCreateNestedOneWithoutProgressInput
   }
 
   export type UserStepProgressUncheckedCreateInput = {
@@ -13196,8 +13196,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    user?: UserUpdateOneRequiredWithoutProgressNestedInput
     step?: StepUpdateOneRequiredWithoutUserProgressNestedInput
+    user?: UserUpdateOneRequiredWithoutProgressNestedInput
   }
 
   export type UserStepProgressUncheckedUpdateInput = {
@@ -13346,16 +13346,16 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type RoadmapListRelationFilter = {
-    every?: RoadmapWhereInput
-    some?: RoadmapWhereInput
-    none?: RoadmapWhereInput
-  }
-
   export type PostListRelationFilter = {
     every?: PostWhereInput
     some?: PostWhereInput
     none?: PostWhereInput
+  }
+
+  export type RoadmapListRelationFilter = {
+    every?: RoadmapWhereInput
+    some?: RoadmapWhereInput
+    none?: RoadmapWhereInput
   }
 
   export type SortOrderInput = {
@@ -13363,11 +13363,11 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type RoadmapOrderByRelationAggregateInput = {
+  export type PostOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type PostOrderByRelationAggregateInput = {
+  export type RoadmapOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13624,9 +13624,10 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type StageScalarRelationFilter = {
-    is?: StageWhereInput
-    isNot?: StageWhereInput
+  export type ResourceListRelationFilter = {
+    every?: ResourceWhereInput
+    some?: ResourceWhereInput
+    none?: ResourceWhereInput
   }
 
   export type StepContentNullableScalarRelationFilter = {
@@ -13634,10 +13635,9 @@ export namespace Prisma {
     isNot?: StepContentWhereInput | null
   }
 
-  export type ResourceListRelationFilter = {
-    every?: ResourceWhereInput
-    some?: ResourceWhereInput
-    none?: ResourceWhereInput
+  export type StageScalarRelationFilter = {
+    is?: StageWhereInput
+    isNot?: StageWhereInput
   }
 
   export type UserStepProgressListRelationFilter = {
@@ -13942,13 +13942,6 @@ export namespace Prisma {
     _max?: NestedEnumPostStatusFilter<$PrismaModel>
   }
 
-  export type RoadmapCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<RoadmapCreateWithoutCategoryInput, RoadmapUncheckedCreateWithoutCategoryInput> | RoadmapCreateWithoutCategoryInput[] | RoadmapUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: RoadmapCreateOrConnectWithoutCategoryInput | RoadmapCreateOrConnectWithoutCategoryInput[]
-    createMany?: RoadmapCreateManyCategoryInputEnvelope
-    connect?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
-  }
-
   export type PostCreateNestedManyWithoutCategoryInput = {
     create?: XOR<PostCreateWithoutCategoryInput, PostUncheckedCreateWithoutCategoryInput> | PostCreateWithoutCategoryInput[] | PostUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: PostCreateOrConnectWithoutCategoryInput | PostCreateOrConnectWithoutCategoryInput[]
@@ -13956,7 +13949,7 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type RoadmapUncheckedCreateNestedManyWithoutCategoryInput = {
+  export type RoadmapCreateNestedManyWithoutCategoryInput = {
     create?: XOR<RoadmapCreateWithoutCategoryInput, RoadmapUncheckedCreateWithoutCategoryInput> | RoadmapCreateWithoutCategoryInput[] | RoadmapUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: RoadmapCreateOrConnectWithoutCategoryInput | RoadmapCreateOrConnectWithoutCategoryInput[]
     createMany?: RoadmapCreateManyCategoryInputEnvelope
@@ -13970,6 +13963,13 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
+  export type RoadmapUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<RoadmapCreateWithoutCategoryInput, RoadmapUncheckedCreateWithoutCategoryInput> | RoadmapCreateWithoutCategoryInput[] | RoadmapUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RoadmapCreateOrConnectWithoutCategoryInput | RoadmapCreateOrConnectWithoutCategoryInput[]
+    createMany?: RoadmapCreateManyCategoryInputEnvelope
+    connect?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -13980,20 +13980,6 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type RoadmapUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<RoadmapCreateWithoutCategoryInput, RoadmapUncheckedCreateWithoutCategoryInput> | RoadmapCreateWithoutCategoryInput[] | RoadmapUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: RoadmapCreateOrConnectWithoutCategoryInput | RoadmapCreateOrConnectWithoutCategoryInput[]
-    upsert?: RoadmapUpsertWithWhereUniqueWithoutCategoryInput | RoadmapUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: RoadmapCreateManyCategoryInputEnvelope
-    set?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
-    disconnect?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
-    delete?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
-    connect?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
-    update?: RoadmapUpdateWithWhereUniqueWithoutCategoryInput | RoadmapUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: RoadmapUpdateManyWithWhereWithoutCategoryInput | RoadmapUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: RoadmapScalarWhereInput | RoadmapScalarWhereInput[]
   }
 
   export type PostUpdateManyWithoutCategoryNestedInput = {
@@ -14010,7 +13996,7 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
-  export type RoadmapUncheckedUpdateManyWithoutCategoryNestedInput = {
+  export type RoadmapUpdateManyWithoutCategoryNestedInput = {
     create?: XOR<RoadmapCreateWithoutCategoryInput, RoadmapUncheckedCreateWithoutCategoryInput> | RoadmapCreateWithoutCategoryInput[] | RoadmapUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: RoadmapCreateOrConnectWithoutCategoryInput | RoadmapCreateOrConnectWithoutCategoryInput[]
     upsert?: RoadmapUpsertWithWhereUniqueWithoutCategoryInput | RoadmapUpsertWithWhereUniqueWithoutCategoryInput[]
@@ -14036,6 +14022,20 @@ export namespace Prisma {
     update?: PostUpdateWithWhereUniqueWithoutCategoryInput | PostUpdateWithWhereUniqueWithoutCategoryInput[]
     updateMany?: PostUpdateManyWithWhereWithoutCategoryInput | PostUpdateManyWithWhereWithoutCategoryInput[]
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type RoadmapUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<RoadmapCreateWithoutCategoryInput, RoadmapUncheckedCreateWithoutCategoryInput> | RoadmapCreateWithoutCategoryInput[] | RoadmapUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RoadmapCreateOrConnectWithoutCategoryInput | RoadmapCreateOrConnectWithoutCategoryInput[]
+    upsert?: RoadmapUpsertWithWhereUniqueWithoutCategoryInput | RoadmapUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: RoadmapCreateManyCategoryInputEnvelope
+    set?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
+    disconnect?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
+    delete?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
+    connect?: RoadmapWhereUniqueInput | RoadmapWhereUniqueInput[]
+    update?: RoadmapUpdateWithWhereUniqueWithoutCategoryInput | RoadmapUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: RoadmapUpdateManyWithWhereWithoutCategoryInput | RoadmapUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: RoadmapScalarWhereInput | RoadmapScalarWhereInput[]
   }
 
   export type CategoryCreateNestedOneWithoutRoadmapsInput = {
@@ -14166,10 +14166,11 @@ export namespace Prisma {
     deleteMany?: StepScalarWhereInput | StepScalarWhereInput[]
   }
 
-  export type StageCreateNestedOneWithoutStepsInput = {
-    create?: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
-    connectOrCreate?: StageCreateOrConnectWithoutStepsInput
-    connect?: StageWhereUniqueInput
+  export type ResourceCreateNestedManyWithoutStepInput = {
+    create?: XOR<ResourceCreateWithoutStepInput, ResourceUncheckedCreateWithoutStepInput> | ResourceCreateWithoutStepInput[] | ResourceUncheckedCreateWithoutStepInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutStepInput | ResourceCreateOrConnectWithoutStepInput[]
+    createMany?: ResourceCreateManyStepInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
   export type StepContentCreateNestedOneWithoutStepInput = {
@@ -14178,11 +14179,10 @@ export namespace Prisma {
     connect?: StepContentWhereUniqueInput
   }
 
-  export type ResourceCreateNestedManyWithoutStepInput = {
-    create?: XOR<ResourceCreateWithoutStepInput, ResourceUncheckedCreateWithoutStepInput> | ResourceCreateWithoutStepInput[] | ResourceUncheckedCreateWithoutStepInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutStepInput | ResourceCreateOrConnectWithoutStepInput[]
-    createMany?: ResourceCreateManyStepInputEnvelope
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  export type StageCreateNestedOneWithoutStepsInput = {
+    create?: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
+    connectOrCreate?: StageCreateOrConnectWithoutStepsInput
+    connect?: StageWhereUniqueInput
   }
 
   export type UserStepProgressCreateNestedManyWithoutStepInput = {
@@ -14192,17 +14192,17 @@ export namespace Prisma {
     connect?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
   }
 
-  export type StepContentUncheckedCreateNestedOneWithoutStepInput = {
-    create?: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
-    connectOrCreate?: StepContentCreateOrConnectWithoutStepInput
-    connect?: StepContentWhereUniqueInput
-  }
-
   export type ResourceUncheckedCreateNestedManyWithoutStepInput = {
     create?: XOR<ResourceCreateWithoutStepInput, ResourceUncheckedCreateWithoutStepInput> | ResourceCreateWithoutStepInput[] | ResourceUncheckedCreateWithoutStepInput[]
     connectOrCreate?: ResourceCreateOrConnectWithoutStepInput | ResourceCreateOrConnectWithoutStepInput[]
     createMany?: ResourceCreateManyStepInputEnvelope
     connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type StepContentUncheckedCreateNestedOneWithoutStepInput = {
+    create?: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
+    connectOrCreate?: StepContentCreateOrConnectWithoutStepInput
+    connect?: StepContentWhereUniqueInput
   }
 
   export type UserStepProgressUncheckedCreateNestedManyWithoutStepInput = {
@@ -14220,24 +14220,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type StageUpdateOneRequiredWithoutStepsNestedInput = {
-    create?: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
-    connectOrCreate?: StageCreateOrConnectWithoutStepsInput
-    upsert?: StageUpsertWithoutStepsInput
-    connect?: StageWhereUniqueInput
-    update?: XOR<XOR<StageUpdateToOneWithWhereWithoutStepsInput, StageUpdateWithoutStepsInput>, StageUncheckedUpdateWithoutStepsInput>
-  }
-
-  export type StepContentUpdateOneWithoutStepNestedInput = {
-    create?: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
-    connectOrCreate?: StepContentCreateOrConnectWithoutStepInput
-    upsert?: StepContentUpsertWithoutStepInput
-    disconnect?: StepContentWhereInput | boolean
-    delete?: StepContentWhereInput | boolean
-    connect?: StepContentWhereUniqueInput
-    update?: XOR<XOR<StepContentUpdateToOneWithWhereWithoutStepInput, StepContentUpdateWithoutStepInput>, StepContentUncheckedUpdateWithoutStepInput>
-  }
-
   export type ResourceUpdateManyWithoutStepNestedInput = {
     create?: XOR<ResourceCreateWithoutStepInput, ResourceUncheckedCreateWithoutStepInput> | ResourceCreateWithoutStepInput[] | ResourceUncheckedCreateWithoutStepInput[]
     connectOrCreate?: ResourceCreateOrConnectWithoutStepInput | ResourceCreateOrConnectWithoutStepInput[]
@@ -14250,6 +14232,24 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutStepInput | ResourceUpdateWithWhereUniqueWithoutStepInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutStepInput | ResourceUpdateManyWithWhereWithoutStepInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type StepContentUpdateOneWithoutStepNestedInput = {
+    create?: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
+    connectOrCreate?: StepContentCreateOrConnectWithoutStepInput
+    upsert?: StepContentUpsertWithoutStepInput
+    disconnect?: StepContentWhereInput | boolean
+    delete?: StepContentWhereInput | boolean
+    connect?: StepContentWhereUniqueInput
+    update?: XOR<XOR<StepContentUpdateToOneWithWhereWithoutStepInput, StepContentUpdateWithoutStepInput>, StepContentUncheckedUpdateWithoutStepInput>
+  }
+
+  export type StageUpdateOneRequiredWithoutStepsNestedInput = {
+    create?: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
+    connectOrCreate?: StageCreateOrConnectWithoutStepsInput
+    upsert?: StageUpsertWithoutStepsInput
+    connect?: StageWhereUniqueInput
+    update?: XOR<XOR<StageUpdateToOneWithWhereWithoutStepsInput, StageUpdateWithoutStepsInput>, StageUncheckedUpdateWithoutStepsInput>
   }
 
   export type UserStepProgressUpdateManyWithoutStepNestedInput = {
@@ -14266,16 +14266,6 @@ export namespace Prisma {
     deleteMany?: UserStepProgressScalarWhereInput | UserStepProgressScalarWhereInput[]
   }
 
-  export type StepContentUncheckedUpdateOneWithoutStepNestedInput = {
-    create?: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
-    connectOrCreate?: StepContentCreateOrConnectWithoutStepInput
-    upsert?: StepContentUpsertWithoutStepInput
-    disconnect?: StepContentWhereInput | boolean
-    delete?: StepContentWhereInput | boolean
-    connect?: StepContentWhereUniqueInput
-    update?: XOR<XOR<StepContentUpdateToOneWithWhereWithoutStepInput, StepContentUpdateWithoutStepInput>, StepContentUncheckedUpdateWithoutStepInput>
-  }
-
   export type ResourceUncheckedUpdateManyWithoutStepNestedInput = {
     create?: XOR<ResourceCreateWithoutStepInput, ResourceUncheckedCreateWithoutStepInput> | ResourceCreateWithoutStepInput[] | ResourceUncheckedCreateWithoutStepInput[]
     connectOrCreate?: ResourceCreateOrConnectWithoutStepInput | ResourceCreateOrConnectWithoutStepInput[]
@@ -14288,6 +14278,16 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutStepInput | ResourceUpdateWithWhereUniqueWithoutStepInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutStepInput | ResourceUpdateManyWithWhereWithoutStepInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type StepContentUncheckedUpdateOneWithoutStepNestedInput = {
+    create?: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
+    connectOrCreate?: StepContentCreateOrConnectWithoutStepInput
+    upsert?: StepContentUpsertWithoutStepInput
+    disconnect?: StepContentWhereInput | boolean
+    delete?: StepContentWhereInput | boolean
+    connect?: StepContentWhereUniqueInput
+    update?: XOR<XOR<StepContentUpdateToOneWithWhereWithoutStepInput, StepContentUpdateWithoutStepInput>, StepContentUncheckedUpdateWithoutStepInput>
   }
 
   export type UserStepProgressUncheckedUpdateManyWithoutStepNestedInput = {
@@ -14336,13 +14336,6 @@ export namespace Prisma {
     update?: XOR<XOR<StepUpdateToOneWithWhereWithoutResourcesInput, StepUpdateWithoutResourcesInput>, StepUncheckedUpdateWithoutResourcesInput>
   }
 
-  export type UserStepProgressCreateNestedManyWithoutUserInput = {
-    create?: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput> | UserStepProgressCreateWithoutUserInput[] | UserStepProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UserStepProgressCreateOrConnectWithoutUserInput | UserStepProgressCreateOrConnectWithoutUserInput[]
-    createMany?: UserStepProgressCreateManyUserInputEnvelope
-    connect?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
-  }
-
   export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -14350,7 +14343,7 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type UserStepProgressUncheckedCreateNestedManyWithoutUserInput = {
+  export type UserStepProgressCreateNestedManyWithoutUserInput = {
     create?: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput> | UserStepProgressCreateWithoutUserInput[] | UserStepProgressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserStepProgressCreateOrConnectWithoutUserInput | UserStepProgressCreateOrConnectWithoutUserInput[]
     createMany?: UserStepProgressCreateManyUserInputEnvelope
@@ -14364,18 +14357,11 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type UserStepProgressUpdateManyWithoutUserNestedInput = {
+  export type UserStepProgressUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput> | UserStepProgressCreateWithoutUserInput[] | UserStepProgressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserStepProgressCreateOrConnectWithoutUserInput | UserStepProgressCreateOrConnectWithoutUserInput[]
-    upsert?: UserStepProgressUpsertWithWhereUniqueWithoutUserInput | UserStepProgressUpsertWithWhereUniqueWithoutUserInput[]
     createMany?: UserStepProgressCreateManyUserInputEnvelope
-    set?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
-    disconnect?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
-    delete?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
     connect?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
-    update?: UserStepProgressUpdateWithWhereUniqueWithoutUserInput | UserStepProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: UserStepProgressUpdateManyWithWhereWithoutUserInput | UserStepProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: UserStepProgressScalarWhereInput | UserStepProgressScalarWhereInput[]
   }
 
   export type PostUpdateManyWithoutAuthorNestedInput = {
@@ -14392,7 +14378,7 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
-  export type UserStepProgressUncheckedUpdateManyWithoutUserNestedInput = {
+  export type UserStepProgressUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput> | UserStepProgressCreateWithoutUserInput[] | UserStepProgressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserStepProgressCreateOrConnectWithoutUserInput | UserStepProgressCreateOrConnectWithoutUserInput[]
     upsert?: UserStepProgressUpsertWithWhereUniqueWithoutUserInput | UserStepProgressUpsertWithWhereUniqueWithoutUserInput[]
@@ -14420,16 +14406,30 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutProgressInput = {
-    create?: XOR<UserCreateWithoutProgressInput, UserUncheckedCreateWithoutProgressInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProgressInput
-    connect?: UserWhereUniqueInput
+  export type UserStepProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput> | UserStepProgressCreateWithoutUserInput[] | UserStepProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserStepProgressCreateOrConnectWithoutUserInput | UserStepProgressCreateOrConnectWithoutUserInput[]
+    upsert?: UserStepProgressUpsertWithWhereUniqueWithoutUserInput | UserStepProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserStepProgressCreateManyUserInputEnvelope
+    set?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
+    disconnect?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
+    delete?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
+    connect?: UserStepProgressWhereUniqueInput | UserStepProgressWhereUniqueInput[]
+    update?: UserStepProgressUpdateWithWhereUniqueWithoutUserInput | UserStepProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserStepProgressUpdateManyWithWhereWithoutUserInput | UserStepProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserStepProgressScalarWhereInput | UserStepProgressScalarWhereInput[]
   }
 
   export type StepCreateNestedOneWithoutUserProgressInput = {
     create?: XOR<StepCreateWithoutUserProgressInput, StepUncheckedCreateWithoutUserProgressInput>
     connectOrCreate?: StepCreateOrConnectWithoutUserProgressInput
     connect?: StepWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutProgressInput = {
+    create?: XOR<UserCreateWithoutProgressInput, UserUncheckedCreateWithoutProgressInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProgressInput
+    connect?: UserWhereUniqueInput
   }
 
   export type EnumProgressStatusFieldUpdateOperationsInput = {
@@ -14440,20 +14440,20 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type UserUpdateOneRequiredWithoutProgressNestedInput = {
-    create?: XOR<UserCreateWithoutProgressInput, UserUncheckedCreateWithoutProgressInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProgressInput
-    upsert?: UserUpsertWithoutProgressInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProgressInput, UserUpdateWithoutProgressInput>, UserUncheckedUpdateWithoutProgressInput>
-  }
-
   export type StepUpdateOneRequiredWithoutUserProgressNestedInput = {
     create?: XOR<StepCreateWithoutUserProgressInput, StepUncheckedCreateWithoutUserProgressInput>
     connectOrCreate?: StepCreateOrConnectWithoutUserProgressInput
     upsert?: StepUpsertWithoutUserProgressInput
     connect?: StepWhereUniqueInput
     update?: XOR<XOR<StepUpdateToOneWithWhereWithoutUserProgressInput, StepUpdateWithoutUserProgressInput>, StepUncheckedUpdateWithoutUserProgressInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutProgressNestedInput = {
+    create?: XOR<UserCreateWithoutProgressInput, UserUncheckedCreateWithoutProgressInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProgressInput
+    upsert?: UserUpsertWithoutProgressInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProgressInput, UserUpdateWithoutProgressInput>, UserUncheckedUpdateWithoutProgressInput>
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -14759,6 +14759,36 @@ export namespace Prisma {
     _max?: NestedEnumPostStatusFilter<$PrismaModel>
   }
 
+  export type PostCreateWithoutCategoryInput = {
+    id?: string
+    title: string
+    contentMarkdown: string
+    status?: $Enums.PostStatus
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    author: UserCreateNestedOneWithoutPostsInput
+  }
+
+  export type PostUncheckedCreateWithoutCategoryInput = {
+    id?: string
+    authorId: string
+    title: string
+    contentMarkdown: string
+    status?: $Enums.PostStatus
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type PostCreateOrConnectWithoutCategoryInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutCategoryInput, PostUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type PostCreateManyCategoryInputEnvelope = {
+    data: PostCreateManyCategoryInput | PostCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
   export type RoadmapCreateWithoutCategoryInput = {
     id?: string
     title: string
@@ -14793,34 +14823,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PostCreateWithoutCategoryInput = {
-    id?: string
-    title: string
-    contentMarkdown: string
-    status?: $Enums.PostStatus
-    publishedAt?: Date | string | null
-    createdAt?: Date | string
-    author: UserCreateNestedOneWithoutPostsInput
-  }
-
-  export type PostUncheckedCreateWithoutCategoryInput = {
-    id?: string
-    authorId: string
-    title: string
-    contentMarkdown: string
-    status?: $Enums.PostStatus
-    publishedAt?: Date | string | null
-    createdAt?: Date | string
-  }
-
-  export type PostCreateOrConnectWithoutCategoryInput = {
+  export type PostUpsertWithWhereUniqueWithoutCategoryInput = {
     where: PostWhereUniqueInput
+    update: XOR<PostUpdateWithoutCategoryInput, PostUncheckedUpdateWithoutCategoryInput>
     create: XOR<PostCreateWithoutCategoryInput, PostUncheckedCreateWithoutCategoryInput>
   }
 
-  export type PostCreateManyCategoryInputEnvelope = {
-    data: PostCreateManyCategoryInput | PostCreateManyCategoryInput[]
-    skipDuplicates?: boolean
+  export type PostUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: PostWhereUniqueInput
+    data: XOR<PostUpdateWithoutCategoryInput, PostUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type PostUpdateManyWithWhereWithoutCategoryInput = {
+    where: PostScalarWhereInput
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type PostScalarWhereInput = {
+    AND?: PostScalarWhereInput | PostScalarWhereInput[]
+    OR?: PostScalarWhereInput[]
+    NOT?: PostScalarWhereInput | PostScalarWhereInput[]
+    id?: StringFilter<"Post"> | string
+    authorId?: StringFilter<"Post"> | string
+    categoryId?: StringNullableFilter<"Post"> | string | null
+    title?: StringFilter<"Post"> | string
+    contentMarkdown?: StringFilter<"Post"> | string
+    status?: EnumPostStatusFilter<"Post"> | $Enums.PostStatus
+    publishedAt?: DateTimeNullableFilter<"Post"> | Date | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
   }
 
   export type RoadmapUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -14852,36 +14882,6 @@ export namespace Prisma {
     isPublished?: BoolFilter<"Roadmap"> | boolean
     createdAt?: DateTimeFilter<"Roadmap"> | Date | string
     updatedAt?: DateTimeFilter<"Roadmap"> | Date | string
-  }
-
-  export type PostUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: PostWhereUniqueInput
-    update: XOR<PostUpdateWithoutCategoryInput, PostUncheckedUpdateWithoutCategoryInput>
-    create: XOR<PostCreateWithoutCategoryInput, PostUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type PostUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: PostWhereUniqueInput
-    data: XOR<PostUpdateWithoutCategoryInput, PostUncheckedUpdateWithoutCategoryInput>
-  }
-
-  export type PostUpdateManyWithWhereWithoutCategoryInput = {
-    where: PostScalarWhereInput
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutCategoryInput>
-  }
-
-  export type PostScalarWhereInput = {
-    AND?: PostScalarWhereInput | PostScalarWhereInput[]
-    OR?: PostScalarWhereInput[]
-    NOT?: PostScalarWhereInput | PostScalarWhereInput[]
-    id?: StringFilter<"Post"> | string
-    authorId?: StringFilter<"Post"> | string
-    categoryId?: StringNullableFilter<"Post"> | string | null
-    title?: StringFilter<"Post"> | string
-    contentMarkdown?: StringFilter<"Post"> | string
-    status?: EnumPostStatusFilter<"Post"> | $Enums.PostStatus
-    publishedAt?: DateTimeNullableFilter<"Post"> | Date | string | null
-    createdAt?: DateTimeFilter<"Post"> | Date | string
   }
 
   export type CategoryCreateWithoutRoadmapsInput = {
@@ -15023,8 +15023,8 @@ export namespace Prisma {
     title: string
     orderIndex: number
     estimatedMinutes?: number | null
-    content?: StepContentCreateNestedOneWithoutStepInput
     resources?: ResourceCreateNestedManyWithoutStepInput
+    content?: StepContentCreateNestedOneWithoutStepInput
     userProgress?: UserStepProgressCreateNestedManyWithoutStepInput
   }
 
@@ -15033,8 +15033,8 @@ export namespace Prisma {
     title: string
     orderIndex: number
     estimatedMinutes?: number | null
-    content?: StepContentUncheckedCreateNestedOneWithoutStepInput
     resources?: ResourceUncheckedCreateNestedManyWithoutStepInput
+    content?: StepContentUncheckedCreateNestedOneWithoutStepInput
     userProgress?: UserStepProgressUncheckedCreateNestedManyWithoutStepInput
   }
 
@@ -15110,44 +15110,6 @@ export namespace Prisma {
     estimatedMinutes?: IntNullableFilter<"Step"> | number | null
   }
 
-  export type StageCreateWithoutStepsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    orderIndex: number
-    roadmap: RoadmapCreateNestedOneWithoutStagesInput
-  }
-
-  export type StageUncheckedCreateWithoutStepsInput = {
-    id?: string
-    roadmapId: string
-    title: string
-    description?: string | null
-    orderIndex: number
-  }
-
-  export type StageCreateOrConnectWithoutStepsInput = {
-    where: StageWhereUniqueInput
-    create: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
-  }
-
-  export type StepContentCreateWithoutStepInput = {
-    id?: string
-    bodyMarkdown: string
-    updatedAt?: Date | string
-  }
-
-  export type StepContentUncheckedCreateWithoutStepInput = {
-    id?: string
-    bodyMarkdown: string
-    updatedAt?: Date | string
-  }
-
-  export type StepContentCreateOrConnectWithoutStepInput = {
-    where: StepContentWhereUniqueInput
-    create: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
-  }
-
   export type ResourceCreateWithoutStepInput = {
     id?: string
     type: $Enums.ResourceType
@@ -15174,6 +15136,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StepContentCreateWithoutStepInput = {
+    id?: string
+    bodyMarkdown: string
+    updatedAt?: Date | string
+  }
+
+  export type StepContentUncheckedCreateWithoutStepInput = {
+    id?: string
+    bodyMarkdown: string
+    updatedAt?: Date | string
+  }
+
+  export type StepContentCreateOrConnectWithoutStepInput = {
+    where: StepContentWhereUniqueInput
+    create: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
+  }
+
+  export type StageCreateWithoutStepsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    orderIndex: number
+    roadmap: RoadmapCreateNestedOneWithoutStagesInput
+  }
+
+  export type StageUncheckedCreateWithoutStepsInput = {
+    id?: string
+    roadmapId: string
+    title: string
+    description?: string | null
+    orderIndex: number
+  }
+
+  export type StageCreateOrConnectWithoutStepsInput = {
+    where: StageWhereUniqueInput
+    create: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
+  }
+
   export type UserStepProgressCreateWithoutStepInput = {
     id?: string
     status: $Enums.ProgressStatus
@@ -15196,56 +15196,6 @@ export namespace Prisma {
   export type UserStepProgressCreateManyStepInputEnvelope = {
     data: UserStepProgressCreateManyStepInput | UserStepProgressCreateManyStepInput[]
     skipDuplicates?: boolean
-  }
-
-  export type StageUpsertWithoutStepsInput = {
-    update: XOR<StageUpdateWithoutStepsInput, StageUncheckedUpdateWithoutStepsInput>
-    create: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
-    where?: StageWhereInput
-  }
-
-  export type StageUpdateToOneWithWhereWithoutStepsInput = {
-    where?: StageWhereInput
-    data: XOR<StageUpdateWithoutStepsInput, StageUncheckedUpdateWithoutStepsInput>
-  }
-
-  export type StageUpdateWithoutStepsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    orderIndex?: IntFieldUpdateOperationsInput | number
-    roadmap?: RoadmapUpdateOneRequiredWithoutStagesNestedInput
-  }
-
-  export type StageUncheckedUpdateWithoutStepsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roadmapId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    orderIndex?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type StepContentUpsertWithoutStepInput = {
-    update: XOR<StepContentUpdateWithoutStepInput, StepContentUncheckedUpdateWithoutStepInput>
-    create: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
-    where?: StepContentWhereInput
-  }
-
-  export type StepContentUpdateToOneWithWhereWithoutStepInput = {
-    where?: StepContentWhereInput
-    data: XOR<StepContentUpdateWithoutStepInput, StepContentUncheckedUpdateWithoutStepInput>
-  }
-
-  export type StepContentUpdateWithoutStepInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    bodyMarkdown?: StringFieldUpdateOperationsInput | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type StepContentUncheckedUpdateWithoutStepInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    bodyMarkdown?: StringFieldUpdateOperationsInput | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ResourceUpsertWithWhereUniqueWithoutStepInput = {
@@ -15274,6 +15224,56 @@ export namespace Prisma {
     title?: StringFilter<"Resource"> | string
     url?: StringFilter<"Resource"> | string
     orderIndex?: IntFilter<"Resource"> | number
+  }
+
+  export type StepContentUpsertWithoutStepInput = {
+    update: XOR<StepContentUpdateWithoutStepInput, StepContentUncheckedUpdateWithoutStepInput>
+    create: XOR<StepContentCreateWithoutStepInput, StepContentUncheckedCreateWithoutStepInput>
+    where?: StepContentWhereInput
+  }
+
+  export type StepContentUpdateToOneWithWhereWithoutStepInput = {
+    where?: StepContentWhereInput
+    data: XOR<StepContentUpdateWithoutStepInput, StepContentUncheckedUpdateWithoutStepInput>
+  }
+
+  export type StepContentUpdateWithoutStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodyMarkdown?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StepContentUncheckedUpdateWithoutStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodyMarkdown?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StageUpsertWithoutStepsInput = {
+    update: XOR<StageUpdateWithoutStepsInput, StageUncheckedUpdateWithoutStepsInput>
+    create: XOR<StageCreateWithoutStepsInput, StageUncheckedCreateWithoutStepsInput>
+    where?: StageWhereInput
+  }
+
+  export type StageUpdateToOneWithWhereWithoutStepsInput = {
+    where?: StageWhereInput
+    data: XOR<StageUpdateWithoutStepsInput, StageUncheckedUpdateWithoutStepsInput>
+  }
+
+  export type StageUpdateWithoutStepsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    orderIndex?: IntFieldUpdateOperationsInput | number
+    roadmap?: RoadmapUpdateOneRequiredWithoutStagesNestedInput
+  }
+
+  export type StageUncheckedUpdateWithoutStepsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roadmapId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    orderIndex?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserStepProgressUpsertWithWhereUniqueWithoutStepInput = {
@@ -15308,8 +15308,8 @@ export namespace Prisma {
     title: string
     orderIndex: number
     estimatedMinutes?: number | null
-    stage: StageCreateNestedOneWithoutStepsInput
     resources?: ResourceCreateNestedManyWithoutStepInput
+    stage: StageCreateNestedOneWithoutStepsInput
     userProgress?: UserStepProgressCreateNestedManyWithoutStepInput
   }
 
@@ -15344,8 +15344,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     orderIndex?: IntFieldUpdateOperationsInput | number
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
     resources?: ResourceUpdateManyWithoutStepNestedInput
+    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
     userProgress?: UserStepProgressUpdateManyWithoutStepNestedInput
   }
 
@@ -15364,8 +15364,8 @@ export namespace Prisma {
     title: string
     orderIndex: number
     estimatedMinutes?: number | null
-    stage: StageCreateNestedOneWithoutStepsInput
     content?: StepContentCreateNestedOneWithoutStepInput
+    stage: StageCreateNestedOneWithoutStepsInput
     userProgress?: UserStepProgressCreateNestedManyWithoutStepInput
   }
 
@@ -15400,8 +15400,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     orderIndex?: IntFieldUpdateOperationsInput | number
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
     content?: StepContentUpdateOneWithoutStepNestedInput
+    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
     userProgress?: UserStepProgressUpdateManyWithoutStepNestedInput
   }
 
@@ -15413,30 +15413,6 @@ export namespace Prisma {
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
     content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
     userProgress?: UserStepProgressUncheckedUpdateManyWithoutStepNestedInput
-  }
-
-  export type UserStepProgressCreateWithoutUserInput = {
-    id?: string
-    status: $Enums.ProgressStatus
-    completedAt?: Date | string | null
-    step: StepCreateNestedOneWithoutUserProgressInput
-  }
-
-  export type UserStepProgressUncheckedCreateWithoutUserInput = {
-    id?: string
-    stepId: string
-    status: $Enums.ProgressStatus
-    completedAt?: Date | string | null
-  }
-
-  export type UserStepProgressCreateOrConnectWithoutUserInput = {
-    where: UserStepProgressWhereUniqueInput
-    create: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput>
-  }
-
-  export type UserStepProgressCreateManyUserInputEnvelope = {
-    data: UserStepProgressCreateManyUserInput | UserStepProgressCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type PostCreateWithoutAuthorInput = {
@@ -15469,20 +15445,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserStepProgressUpsertWithWhereUniqueWithoutUserInput = {
+  export type UserStepProgressCreateWithoutUserInput = {
+    id?: string
+    status: $Enums.ProgressStatus
+    completedAt?: Date | string | null
+    step: StepCreateNestedOneWithoutUserProgressInput
+  }
+
+  export type UserStepProgressUncheckedCreateWithoutUserInput = {
+    id?: string
+    stepId: string
+    status: $Enums.ProgressStatus
+    completedAt?: Date | string | null
+  }
+
+  export type UserStepProgressCreateOrConnectWithoutUserInput = {
     where: UserStepProgressWhereUniqueInput
-    update: XOR<UserStepProgressUpdateWithoutUserInput, UserStepProgressUncheckedUpdateWithoutUserInput>
     create: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput>
   }
 
-  export type UserStepProgressUpdateWithWhereUniqueWithoutUserInput = {
-    where: UserStepProgressWhereUniqueInput
-    data: XOR<UserStepProgressUpdateWithoutUserInput, UserStepProgressUncheckedUpdateWithoutUserInput>
-  }
-
-  export type UserStepProgressUpdateManyWithWhereWithoutUserInput = {
-    where: UserStepProgressScalarWhereInput
-    data: XOR<UserStepProgressUpdateManyMutationInput, UserStepProgressUncheckedUpdateManyWithoutUserInput>
+  export type UserStepProgressCreateManyUserInputEnvelope = {
+    data: UserStepProgressCreateManyUserInput | UserStepProgressCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -15499,6 +15483,47 @@ export namespace Prisma {
   export type PostUpdateManyWithWhereWithoutAuthorInput = {
     where: PostScalarWhereInput
     data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type UserStepProgressUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserStepProgressWhereUniqueInput
+    update: XOR<UserStepProgressUpdateWithoutUserInput, UserStepProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<UserStepProgressCreateWithoutUserInput, UserStepProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserStepProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserStepProgressWhereUniqueInput
+    data: XOR<UserStepProgressUpdateWithoutUserInput, UserStepProgressUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserStepProgressUpdateManyWithWhereWithoutUserInput = {
+    where: UserStepProgressScalarWhereInput
+    data: XOR<UserStepProgressUpdateManyMutationInput, UserStepProgressUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type StepCreateWithoutUserProgressInput = {
+    id?: string
+    title: string
+    orderIndex: number
+    estimatedMinutes?: number | null
+    resources?: ResourceCreateNestedManyWithoutStepInput
+    content?: StepContentCreateNestedOneWithoutStepInput
+    stage: StageCreateNestedOneWithoutStepsInput
+  }
+
+  export type StepUncheckedCreateWithoutUserProgressInput = {
+    id?: string
+    stageId: string
+    title: string
+    orderIndex: number
+    estimatedMinutes?: number | null
+    resources?: ResourceUncheckedCreateNestedManyWithoutStepInput
+    content?: StepContentUncheckedCreateNestedOneWithoutStepInput
+  }
+
+  export type StepCreateOrConnectWithoutUserProgressInput = {
+    where: StepWhereUniqueInput
+    create: XOR<StepCreateWithoutUserProgressInput, StepUncheckedCreateWithoutUserProgressInput>
   }
 
   export type UserCreateWithoutProgressInput = {
@@ -15524,29 +15549,35 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutProgressInput, UserUncheckedCreateWithoutProgressInput>
   }
 
-  export type StepCreateWithoutUserProgressInput = {
-    id?: string
-    title: string
-    orderIndex: number
-    estimatedMinutes?: number | null
-    stage: StageCreateNestedOneWithoutStepsInput
-    content?: StepContentCreateNestedOneWithoutStepInput
-    resources?: ResourceCreateNestedManyWithoutStepInput
-  }
-
-  export type StepUncheckedCreateWithoutUserProgressInput = {
-    id?: string
-    stageId: string
-    title: string
-    orderIndex: number
-    estimatedMinutes?: number | null
-    content?: StepContentUncheckedCreateNestedOneWithoutStepInput
-    resources?: ResourceUncheckedCreateNestedManyWithoutStepInput
-  }
-
-  export type StepCreateOrConnectWithoutUserProgressInput = {
-    where: StepWhereUniqueInput
+  export type StepUpsertWithoutUserProgressInput = {
+    update: XOR<StepUpdateWithoutUserProgressInput, StepUncheckedUpdateWithoutUserProgressInput>
     create: XOR<StepCreateWithoutUserProgressInput, StepUncheckedCreateWithoutUserProgressInput>
+    where?: StepWhereInput
+  }
+
+  export type StepUpdateToOneWithWhereWithoutUserProgressInput = {
+    where?: StepWhereInput
+    data: XOR<StepUpdateWithoutUserProgressInput, StepUncheckedUpdateWithoutUserProgressInput>
+  }
+
+  export type StepUpdateWithoutUserProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    orderIndex?: IntFieldUpdateOperationsInput | number
+    estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: ResourceUpdateManyWithoutStepNestedInput
+    content?: StepContentUpdateOneWithoutStepNestedInput
+    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
+  }
+
+  export type StepUncheckedUpdateWithoutUserProgressInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stageId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    orderIndex?: IntFieldUpdateOperationsInput | number
+    estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: ResourceUncheckedUpdateManyWithoutStepNestedInput
+    content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
   }
 
   export type UserUpsertWithoutProgressInput = {
@@ -15576,37 +15607,6 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-  }
-
-  export type StepUpsertWithoutUserProgressInput = {
-    update: XOR<StepUpdateWithoutUserProgressInput, StepUncheckedUpdateWithoutUserProgressInput>
-    create: XOR<StepCreateWithoutUserProgressInput, StepUncheckedCreateWithoutUserProgressInput>
-    where?: StepWhereInput
-  }
-
-  export type StepUpdateToOneWithWhereWithoutUserProgressInput = {
-    where?: StepWhereInput
-    data: XOR<StepUpdateWithoutUserProgressInput, StepUncheckedUpdateWithoutUserProgressInput>
-  }
-
-  export type StepUpdateWithoutUserProgressInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    orderIndex?: IntFieldUpdateOperationsInput | number
-    estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    stage?: StageUpdateOneRequiredWithoutStepsNestedInput
-    content?: StepContentUpdateOneWithoutStepNestedInput
-    resources?: ResourceUpdateManyWithoutStepNestedInput
-  }
-
-  export type StepUncheckedUpdateWithoutUserProgressInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    stageId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    orderIndex?: IntFieldUpdateOperationsInput | number
-    estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
-    resources?: ResourceUncheckedUpdateManyWithoutStepNestedInput
   }
 
   export type UserCreateWithoutPostsInput = {
@@ -15713,6 +15713,16 @@ export namespace Prisma {
     roadmaps?: RoadmapUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
+  export type PostCreateManyCategoryInput = {
+    id?: string
+    authorId: string
+    title: string
+    contentMarkdown: string
+    status?: $Enums.PostStatus
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
   export type RoadmapCreateManyCategoryInput = {
     id?: string
     title: string
@@ -15724,14 +15734,34 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type PostCreateManyCategoryInput = {
-    id?: string
-    authorId: string
-    title: string
-    contentMarkdown: string
-    status?: $Enums.PostStatus
-    publishedAt?: Date | string | null
-    createdAt?: Date | string
+  export type PostUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    contentMarkdown?: StringFieldUpdateOperationsInput | string
+    status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutPostsNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    contentMarkdown?: StringFieldUpdateOperationsInput | string
+    status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostUncheckedUpdateManyWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    contentMarkdown?: StringFieldUpdateOperationsInput | string
+    status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RoadmapUpdateWithoutCategoryInput = {
@@ -15767,36 +15797,6 @@ export namespace Prisma {
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostUpdateWithoutCategoryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    contentMarkdown?: StringFieldUpdateOperationsInput | string
-    status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: UserUpdateOneRequiredWithoutPostsNestedInput
-  }
-
-  export type PostUncheckedUpdateWithoutCategoryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    authorId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    contentMarkdown?: StringFieldUpdateOperationsInput | string
-    status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostUncheckedUpdateManyWithoutCategoryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    authorId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    contentMarkdown?: StringFieldUpdateOperationsInput | string
-    status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StageCreateManyRoadmapInput = {
@@ -15841,8 +15841,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     orderIndex?: IntFieldUpdateOperationsInput | number
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    content?: StepContentUpdateOneWithoutStepNestedInput
     resources?: ResourceUpdateManyWithoutStepNestedInput
+    content?: StepContentUpdateOneWithoutStepNestedInput
     userProgress?: UserStepProgressUpdateManyWithoutStepNestedInput
   }
 
@@ -15851,8 +15851,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     orderIndex?: IntFieldUpdateOperationsInput | number
     estimatedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutStepNestedInput
+    content?: StepContentUncheckedUpdateOneWithoutStepNestedInput
     userProgress?: UserStepProgressUncheckedUpdateManyWithoutStepNestedInput
   }
 
@@ -15923,13 +15923,6 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type UserStepProgressCreateManyUserInput = {
-    id?: string
-    stepId: string
-    status: $Enums.ProgressStatus
-    completedAt?: Date | string | null
-  }
-
   export type PostCreateManyAuthorInput = {
     id?: string
     categoryId?: string | null
@@ -15940,25 +15933,11 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type UserStepProgressUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    step?: StepUpdateOneRequiredWithoutUserProgressNestedInput
-  }
-
-  export type UserStepProgressUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    stepId?: StringFieldUpdateOperationsInput | string
-    status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type UserStepProgressUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    stepId?: StringFieldUpdateOperationsInput | string
-    status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type UserStepProgressCreateManyUserInput = {
+    id?: string
+    stepId: string
+    status: $Enums.ProgressStatus
+    completedAt?: Date | string | null
   }
 
   export type PostUpdateWithoutAuthorInput = {
@@ -15989,6 +15968,27 @@ export namespace Prisma {
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserStepProgressUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    step?: StepUpdateOneRequiredWithoutUserProgressNestedInput
+  }
+
+  export type UserStepProgressUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stepId?: StringFieldUpdateOperationsInput | string
+    status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserStepProgressUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stepId?: StringFieldUpdateOperationsInput | string
+    status?: EnumProgressStatusFieldUpdateOperationsInput | $Enums.ProgressStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

@@ -45,17 +45,39 @@ Server sẽ chạy mặc định tại cổng `3000` (hoặc cổng cấu hình 
 ### 1. Cơ chế kết nối DB trong Prisma 7
 Dự án sử dụng **Prisma v7**. Trong phiên bản này, cấu trúc quản lý kết nối cơ sở dữ liệu có các điểm quan trọng:
 - **`prisma.config.ts`**: Đây là nơi tập trung cấu hình kết nối của CLI (chạy migrate, generate). URL kết nối được lấy từ hàm `env("DATABASE_URL")`.
-- **Driver Adapter**: Prisma 7 không tích hợp sẵn driver Rust cho database. Khi ứng dụng chạy, chúng ta sử dụng driver adapter JavaScript (`@prisma/adapter-pg` và thư viện `pg`) được tiêm (inject) trực tiếp vào constructor `PrismaClient` tại file [app/config/prisma.tsx](file:///d:/Programming/k-com/backend/app/config/prisma.tsx).
+- **Driver Adapter**: Prisma 7 không tích hợp sẵn driver Rust cho database. Khi ứng dụng chạy, chúng ta sử dụng driver adapter JavaScript (`@prisma/adapter-pg` và thư viện `pg`) được tiêm (inject) trực tiếp vào constructor `PrismaClient` tại file [app/config/prisma.tsx](file:///d:/Pj%20Hust/k-com/backend/app/config/prisma.tsx).
 
 ### 2. Quy trình sửa đổi Database (Workflow Dev)
 Mỗi khi cần thay đổi cấu trúc bảng cơ sở dữ liệu:
-1. Sửa đổi/Thêm mới các model trong file [prisma/schema.prisma](file:///d:/Programming/k-com/backend/prisma/schema.prisma).
+1. Sửa đổi/Thêm mới các model trong file [prisma/schema.prisma](file:///d:/Pj%20Hust/k-com/backend/prisma/schema.prisma).
 2. Tạo và áp dụng bản thiết kế migration mới bằng lệnh:
    ```bash
    npx prisma migrate dev --name <ten_migration_goi_nho>
    ```
-3. Lệnh trên cũng sẽ tự động chạy `npx prisma generate` để cập nhật kiểu dữ liệu (Types) của Prisma Client nằm tại thư mục [app/generated/prisma](file:///d:/Programming/k-com/backend/app/generated/prisma).
-4. Sử dụng đối tượng `prisma` được export từ [app/config/prisma.tsx](file:///d:/Programming/k-com/backend/app/config/prisma.tsx) để truy vấn trong các controller.
+3. Lệnh trên cũng sẽ tự động chạy `npx prisma generate` để cập nhật kiểu dữ liệu (Types) của Prisma Client nằm tại thư mục `app/generated/prisma`.
+4. Sử dụng đối tượng `prisma` được export từ `app/config/prisma.tsx` để truy vấn trong các controller.
+
+---
+
+## 🛠️ Các API Endpoints hiện tại
+
+Tất cả các API được mount dưới tiền tố `/api`:
+
+### 1. Xác thực (Authentication)
+- **`POST /api/auth/login`**: Đăng nhập hoặc đăng ký tự động bằng email.
+  - **Request Body**: `{ "email": "user@example.com", "displayName": "User Name" }`
+  - **Response**: Trả về thông tin của `User`.
+
+### 2. Người dùng (Users)
+- **`POST /api/users`**: Tạo tài khoản người dùng mới thủ công.
+  - **Request Body**: `{ "email": "user@example.com", "name": "User Name" }`
+- **`GET /api/users/:id`**: Lấy thông tin chi tiết của người dùng bằng UUID `id`.
+
+### 3. Lộ trình học tập (Roadmaps)
+- **`GET /api/roadmaps`**: Lấy danh sách toàn bộ lộ trình học tập, tự động đi kèm theo `Category` (Danh mục) và `Stages` (Các giai đoạn) / `Steps` (Các bước học) được sắp xếp theo thứ tự `orderIndex`.
+
+### 4. Hệ thống (System)
+- **`GET /api/health`**: Kiểm tra trạng thái máy chủ và kết nối trực tiếp đến cơ sở dữ liệu PostgreSQL.
 
 ---
 
@@ -68,8 +90,12 @@ backend/
 │   ├── config/                 # Các file cấu hình hệ thống
 │   │   └── prisma.tsx          # Khởi tạo Prisma Client kèm Driver Adapter
 │   ├── controllers/            # Xử lý logic nghiệp vụ và phản hồi HTTP
+│   │   ├── auth.controller.ts
+│   │   ├── roadmap.controller.ts
 │   │   └── user.controller.ts
 │   ├── routes/                 # Định nghĩa các endpoints và định tuyến route
+│   │   ├── auth.routes.ts
+│   │   ├── roadmap.routes.ts
 │   │   └── user.routes.ts
 │   ├── generated/              # Mã nguồn Prisma Client tự động sinh ra
 │   │   └── prisma/

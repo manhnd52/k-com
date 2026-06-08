@@ -2,8 +2,8 @@ import type { RoadmapStep } from "@/data/roadmaps";
 
 type RoadmapFlowProps = {
   steps: RoadmapStep[];
-  selectedStepId?: number;
-  onSelectStep?: (stepId: number) => void;
+  selectedStepId?: string | number;
+  onSelectStep?: (stepId: string | number) => void;
 };
 
 export default function RoadmapFlow({
