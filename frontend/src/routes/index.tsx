@@ -15,6 +15,7 @@ export default function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/roadmaps" element={<Roadmaps />} />
           <Route path="/roadmaps/:id" element={<RoadmapDetail />} />
+          <Route path="/learning-path/:roadmapId" element={<RoadmapDetail />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

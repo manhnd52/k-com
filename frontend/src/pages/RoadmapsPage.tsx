@@ -38,7 +38,11 @@ export default function RoadmapsPage() {
   }, []);
 
   useEffect(() => {
-    void loadRoadmaps();
+    const timer = window.setTimeout(() => {
+      void loadRoadmaps();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [loadRoadmaps]);
 
   const handleRemoveFilter = (filter: string) => {
