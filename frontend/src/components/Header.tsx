@@ -1,10 +1,45 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import logo from "@/assets/logo.png";
 
 export default function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isRoadmapsPage = location.pathname === "/roadmaps";
+  const searchQuery = isRoadmapsPage ? searchParams.get("search") ?? "" : "";
+
+  const handleSearchChange = (value: string) => {
+    const nextParams = isRoadmapsPage
+      ? new URLSearchParams(searchParams)
+      : new URLSearchParams();
+    const trimmedValue = value.trim();
+
+    if (trimmedValue) {
+      nextParams.set("search", value);
+    } else {
+      nextParams.delete("search");
+    }
+
+    const nextSearch = nextParams.toString();
+    navigate({
+      pathname: "/roadmaps",
+      search: nextSearch ? `?${nextSearch}` : "",
+    });
+  };
+
+  const handleClearSearch = () => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete("search");
+    const nextSearch = nextParams.toString();
+
+    navigate({
+      pathname: "/roadmaps",
+      search: nextSearch ? `?${nextSearch}` : "",
+    });
+  };
 
   return (
     <>
@@ -22,7 +57,7 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <Link to="/roadmaps" className="flex items-center gap-2.5 shrink-0">
             <img src={logo} alt="KCOM Logo" className="h-8 w-8" />
             <span className="text-base font-bold text-brand">K-COM</span>
           </Link>
@@ -44,9 +79,33 @@ export default function Header() {
               </div>
               <input
                 type="search"
+                value={searchQuery}
+                onChange={(event) => handleSearchChange(event.target.value)}
                 placeholder="Search roadmaps, topics..."
-                className="block w-full rounded-lg border border-[#E0E0E0] bg-[#FFFFFF] py-2 pl-10 pr-4 text-sm text-[#000000E6] placeholder:text-[#9CA3AF] transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                className="block w-full rounded-lg border border-[#E0E0E0] bg-[#FFFFFF] py-2 pl-10 pr-10 text-sm text-[#000000E6] placeholder:text-[#9CA3AF] transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
               />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={handleClearSearch}
+                  className="absolute inset-y-0 right-0 flex w-9 items-center justify-center text-[#9CA3AF] transition hover:text-[#111827]"
+                  aria-label="Clear roadmap search"
+                >
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
 
@@ -77,7 +136,7 @@ export default function Header() {
           />
           <div className="fixed inset-y-0 left-0 z-50 w-64 bg-[#FFFFFF] border-r border-[#E0E0E0] shadow-2xl lg:hidden">
             <div className="flex items-center justify-between border-b border-[#E0E0E0] px-4 h-14">
-              <Link to="/" className="flex items-center gap-2.5" onClick={() => setSidebarOpen(false)}>
+              <Link to="/roadmaps" className="flex items-center gap-2.5" onClick={() => setSidebarOpen(false)}>
                 <img src={logo} alt="KCOM Logo" className="h-8 w-8" />
                 <span className="text-base font-bold text-brand">K-COM</span>
               </Link>
