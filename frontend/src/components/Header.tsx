@@ -1,10 +1,45 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import logo from "@/assets/logo.png";
 
 export default function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isRoadmapsPage = location.pathname === "/roadmaps";
+  const searchQuery = isRoadmapsPage ? searchParams.get("search") ?? "" : "";
+
+  const handleSearchChange = (value: string) => {
+    const nextParams = isRoadmapsPage
+      ? new URLSearchParams(searchParams)
+      : new URLSearchParams();
+    const trimmedValue = value.trim();
+
+    if (trimmedValue) {
+      nextParams.set("search", value);
+    } else {
+      nextParams.delete("search");
+    }
+
+    const nextSearch = nextParams.toString();
+    navigate({
+      pathname: "/roadmaps",
+      search: nextSearch ? `?${nextSearch}` : "",
+    });
+  };
+
+  const handleClearSearch = () => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete("search");
+    const nextSearch = nextParams.toString();
+
+    navigate({
+      pathname: "/roadmaps",
+      search: nextSearch ? `?${nextSearch}` : "",
+    });
+  };
 
   return (
     <>
@@ -22,7 +57,7 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <Link to="/roadmaps" className="flex items-center gap-2.5 shrink-0">
             <img src={logo} alt="KCOM Logo" className="h-8 w-8" />
             <span className="text-base font-bold text-brand">K-COM</span>
           </Link>
@@ -44,22 +79,39 @@ export default function Header() {
               </div>
               <input
                 type="search"
+                value={searchQuery}
+                onChange={(event) => handleSearchChange(event.target.value)}
                 placeholder="Search roadmaps, topics..."
-                className="block w-full rounded-lg border border-[#E0E0E0] bg-[#FFFFFF] py-2 pl-10 pr-4 text-sm text-[#000000E6] placeholder:text-[#9CA3AF] transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                className="block w-full rounded-lg border border-[#E0E0E0] bg-[#FFFFFF] py-2 pl-10 pr-10 text-sm text-[#000000E6] placeholder:text-[#9CA3AF] transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
               />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={handleClearSearch}
+                  className="absolute inset-y-0 right-0 flex w-9 items-center justify-center text-[#9CA3AF] transition hover:text-[#111827]"
+                  aria-label="Clear roadmap search"
+                >
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
 
           {/* Right actions */}
           <div className="flex items-center gap-4">
-            <button
-              className="flex items-center gap-2 rounded-lg border border-[#E0E0E0] bg-[#F2F2F2] px-3 py-1.5 text-sm font-medium text-[#000000E6] transition hover:bg-[#F8F9FA] focus:outline-none focus:ring-2 focus:ring-brand/40"
-            >
-              <svg className="h-5 w-5 text-brand" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-              </svg>
-              <span className="hidden sm:inline">Post</span>
-            </button>
+            
 
             {/* Avatar */}
             <Link
@@ -84,7 +136,7 @@ export default function Header() {
           />
           <div className="fixed inset-y-0 left-0 z-50 w-64 bg-[#FFFFFF] border-r border-[#E0E0E0] shadow-2xl lg:hidden">
             <div className="flex items-center justify-between border-b border-[#E0E0E0] px-4 h-14">
-              <Link to="/" className="flex items-center gap-2.5" onClick={() => setSidebarOpen(false)}>
+              <Link to="/roadmaps" className="flex items-center gap-2.5" onClick={() => setSidebarOpen(false)}>
                 <img src={logo} alt="KCOM Logo" className="h-8 w-8" />
                 <span className="text-base font-bold text-brand">K-COM</span>
               </Link>

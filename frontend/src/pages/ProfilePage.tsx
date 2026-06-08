@@ -36,9 +36,9 @@ const educationItems = [
 
 export default function ProfilePage() {
   return (
-    <main className="min-h-screen bg-[#F3F2EF] text-[#000000E6]\">
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14\">
-        <div className="mb-6 flex items-center gap-3 text-sm text-[#6B7280]\">
+    <main className="min-h-screen bg-[#F3F2EF] text-[#000000E6]">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
+        <div className="mb-6 flex items-center gap-3 text-sm text-[#6B7280]">
           <Link
             to="/roadmaps"
             className="inline-flex items-center gap-2 rounded-full border border-[#E0E0E0] bg-[#FFFFFF] px-3 py-2 text-sm text-[#6B7280] transition hover:border-brand hover:text-brand"
@@ -56,10 +56,10 @@ export default function ProfilePage() {
           </Link>
         </div>
 
-        <div className="rounded-[30px] border border-[#E0E0E0] bg-[#FFFFFF] p-6 sm:p-8\">
+        <div className="rounded-[30px] border border-[#E0E0E0] bg-[#FFFFFF] p-6 sm:p-8">
           <div className="grid gap-10 lg:grid-cols-[240px_1fr] lg:items-center">
-            <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#E0E0E0] bg-[#F8F9FA] p-6 text-center\">
-              <div className="flex h-28 w-28 items-center justify-center rounded-3xl bg-[#F0F0F0] text-4xl font-semibold text-[#000000E6]\">
+            <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#E0E0E0] bg-[#F8F9FA] p-6 text-center">
+              <div className="flex h-28 w-28 items-center justify-center rounded-3xl bg-[#F0F0F0] text-4xl font-semibold text-[#000000E6]">
                 AN
               </div>
               <div>
@@ -71,7 +71,7 @@ export default function ProfilePage() {
             <div className="space-y-6">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-3xl font-semibold tracking-tight text-[#000000E6]\">
+                  <h1 className="text-3xl font-semibold tracking-tight text-[#000000E6]">
                     Nguyen Van A
                   </h1>
                   <span className="rounded-full border border-[#E0E0E0] bg-[#F0F0F0] px-3 py-1 text-sm text-[#6B7280]">
