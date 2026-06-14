@@ -1,3 +1,5 @@
+export type RoadmapStatus = "pending" | "learning" | "done";
+
 export type RoadmapStep = {
   id: string | number;
   title: string;
@@ -6,6 +8,13 @@ export type RoadmapStep = {
   resources?: string[];
   howTo?: string[];
   rule?: string;
+  stage?: string;
+  status?: RoadmapStatus;
+  position?: {
+    x: number;
+    y: number;
+  };
+  dependsOn?: Array<string | number>;
 };
 
 export type RoadmapDetail = {
@@ -22,7 +31,7 @@ export type RoadmapDetail = {
   steps: RoadmapStep[];
 };
 
-export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
+export const LEGACY_ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
   1: {
     id: 1,
     author: "Nguyen Duc Manh",
@@ -316,8 +325,90 @@ export const ROADMAP_DETAILS: Record<number, RoadmapDetail> = {
     ],
   },
 };
-<<<<<<< Updated upstream
-=======
+const dataEngineeringRoadmap: RoadmapDetail = {
+  id: "data-engineering",
+  author: "Nguyen Duc Manh",
+  authorAvatar: "N",
+  title: "Data Engineering Roadmap",
+  tags: ["Data & AI", "Data Engineering", "Intermediate"],
+  duration: "6 months",
+  level: "Intermediate",
+  description:
+    "Build a practical path from SQL and data modeling to batch pipelines, streaming, orchestration, and cloud data platforms.",
+  views: 2140,
+  likes: 486,
+  steps: [
+    {
+      id: "de-foundations",
+      title: "Programming Foundations",
+      description: "Python, shell basics, Git, and clean project structure.",
+      stage: "Foundation",
+      status: "done",
+      position: { x: 32, y: 220 },
+      resources: ["Python for Everybody", "Git Handbook", "Automate the Boring Stuff"],
+    },
+    {
+      id: "de-sql",
+      title: "SQL and Databases",
+      description: "Query relational data, design schemas, and reason about indexes.",
+      stage: "Foundation",
+      status: "learning",
+      position: { x: 300, y: 220 },
+      dependsOn: ["de-foundations"],
+      resources: ["Mode SQL Tutorial", "PostgreSQL Documentation", "Use The Index, Luke"],
+    },
+    {
+      id: "de-modeling",
+      title: "Data Modeling",
+      description: "Star schemas, normalization, dimensions, facts, and analytics-ready tables.",
+      stage: "Core",
+      status: "pending",
+      position: { x: 568, y: 118 },
+      dependsOn: ["de-sql"],
+      resources: ["Kimball dimensional modeling notes", "dbt modeling best practices"],
+    },
+    {
+      id: "de-python",
+      title: "Python for Data",
+      description: "Pandas, file formats, validation, and reusable data utilities.",
+      stage: "Core",
+      status: "pending",
+      position: { x: 568, y: 322 },
+      dependsOn: ["de-sql"],
+      resources: ["Pandas user guide", "Polars documentation", "Great Expectations docs"],
+    },
+    {
+      id: "de-warehouse",
+      title: "Data Warehouse",
+      description: "Load, transform, partition, and optimize warehouse tables.",
+      stage: "Platform",
+      status: "pending",
+      position: { x: 836, y: 118 },
+      dependsOn: ["de-modeling"],
+      resources: ["BigQuery docs", "Snowflake guides", "Redshift best practices"],
+    },
+    {
+      id: "de-batch",
+      title: "Batch Pipelines",
+      description: "Design reliable ETL/ELT pipelines with retries, idempotency, and tests.",
+      stage: "Platform",
+      status: "pending",
+      position: { x: 836, y: 322 },
+      dependsOn: ["de-python", "de-modeling"],
+      resources: ["Apache Airflow docs", "dbt Learn", "Dagster University"],
+    },
+    {
+      id: "de-quality",
+      title: "Quality and Observability",
+      description: "Add tests, lineage, freshness checks, alerts, and incident workflows.",
+      stage: "Advanced",
+      status: "pending",
+      position: { x: 1104, y: 220 },
+      dependsOn: ["de-warehouse", "de-batch"],
+      resources: ["OpenLineage docs", "Great Expectations docs"],
+    },
+  ],
+};
 
 const mlopsRoadmap: RoadmapDetail = {
   id: "mlops",
@@ -994,4 +1085,3 @@ export const getMockRoadmapCards = () =>
     views: roadmap.views,
     likes: roadmap.likes,
   }));
->>>>>>> Stashed changes
