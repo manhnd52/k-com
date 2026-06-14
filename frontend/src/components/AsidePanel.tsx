@@ -19,7 +19,7 @@ export default function AsidePanel({
             {focusTitle}
           </p>
           {focusDesc && (
-            <p className="mt-2 text-sm text-[#6B7280]\">{focusDesc}</p>
+            <p className="mt-2 text-sm text-[#6B7280]">{focusDesc}</p>
           )}
         </div>
 

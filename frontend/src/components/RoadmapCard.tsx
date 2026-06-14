@@ -50,7 +50,7 @@ export default function RoadmapCard({
 }: RoadmapCardProps) {
   return (
     <Link
-      to={`/roadmaps/${id}`}
+      to={`/learning-path/${id}`}
       aria-label={`View ${title} roadmap`}
       className="group flex h-full flex-col overflow-hidden rounded-xl border border-[#E0E0E0] bg-[#FFFFFF] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D5DB] hover:shadow-lg hover:shadow-brand/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >

@@ -1,59 +1,17 @@
 import { useState } from "react";
 import FeedCard from "../components/FeedCard";
 import FilterModal from "../components/FilterModal";
-
-const MOCK_FEEDS = [
-  {
-    id: 1,
-    author: "Nguyen Duc Manh",
-    title: "Mastering Data Engineering in 2026",
-    subheading: "A comprehensive guide to modern data pipelines, cloud architecture, and real-time processing.",
-    tags: ["Data & AI", "Data Engineering"],
-    date: "March 28",
-    views: 1200,
-    likes: 450,
-  },
-  {
-    id: 2,
-    author: "Tran Thi B",
-    title: "The Future of Web Development with React 20",
-    subheading: "Exploring the latest features in React and how they change the way we build applications.",
-    tags: ["Web Development", "React"],
-    date: "April 02",
-    views: 850,
-    likes: 210,
-  },
-  {
-    id: 3,
-    author: "Le Van C",
-    title: "Cybersecurity Essentials for Cloud Native",
-    subheading: "Protecting your infrastructure from modern threats in a serverless and containerized world.",
-    tags: ["Cybersecurity", "Cloud"],
-    date: "April 05",
-    views: 2400,
-    likes: 890,
-  },
-  {
-    id: 4,
-    author: "Pham Duc D",
-    title: "Introduction to Machine Learning Ops",
-    subheading: "Bridging the gap between data science and production systems with MLOps best practices.",
-    tags: ["Data & AI", "ML Engineer"],
-    date: "April 10",
-    views: 1500,
-    likes: 320,
-  },
-];
+import { FEED_POSTS } from "@/data/feeds";
 
 function Home() {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<string[]>(["Data & AI"]);
 
   const filteredFeeds = activeFilters.length > 0
-    ? MOCK_FEEDS.filter((feed) =>
+    ? FEED_POSTS.filter((feed) =>
         feed.tags.some((tag) => activeFilters.includes(tag))
       )
-    : MOCK_FEEDS;
+    : FEED_POSTS;
 
   const handleApplyFilters = (filters: string[]) => {
     setActiveFilters(filters);

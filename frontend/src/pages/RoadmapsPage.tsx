@@ -1,26 +1,37 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import FilterBar from "@/components/FilterBar";
 import RoadmapCard from "@/components/RoadmapCard";
+import {
+  createEmptyRoadmapFilters,
+  roadmapMatchesFilters,
+  ROADMAP_FILTER_GROUPS,
+  type RoadmapFilterGroupId,
+} from "@/data/roadmapFilters";
 import {
   getRoadmaps,
   type RoadmapCardData,
 } from "@/services/RoadmapService";
 
-const ALL_FILTERS = [
-  "Data & AI",
-  "Web Development",
-  "Mobile",
-  "DevOps",
-  "Security",
-  "Design",
-  "Cloud",
-];
-
 export default function RoadmapsPage() {
   const [roadmaps, setRoadmaps] = useState<RoadmapCardData[]>([]);
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchQuery = searchParams.get("search")?.trim() ?? "";
+  const activeFilters = useMemo(() => {
+    const filters = createEmptyRoadmapFilters();
+
+    ROADMAP_FILTER_GROUPS.forEach((group) => {
+      const allowedValues = new Set(group.options.map((option) => option.value));
+      filters[group.id] = searchParams
+        .getAll(group.id)
+        .filter((value) => allowedValues.has(value));
+    });
+
+    return filters;
+  }, [searchParams]);
 
   const loadRoadmaps = useCallback(async () => {
     setIsLoading(true);
@@ -28,39 +39,82 @@ export default function RoadmapsPage() {
 
     try {
       const roadmapData = await getRoadmaps();
-      setRoadmaps(roadmapData);
+      setRoadmaps(Array.isArray(roadmapData) ? roadmapData : []);
     } catch {
       setError("Unable to load roadmaps. Please check the backend API.");
+      setRoadmaps([]);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    void loadRoadmaps();
+    const timer = window.setTimeout(() => {
+      void loadRoadmaps();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [loadRoadmaps]);
 
-  const handleRemoveFilter = (filter: string) => {
-    setActiveFilters((prev) => prev.filter((f) => f !== filter));
+  const updateSearchParams = useCallback(
+    (updater: (nextParams: URLSearchParams) => void) => {
+      const nextParams = new URLSearchParams(searchParams);
+      updater(nextParams);
+      setSearchParams(nextParams);
+    },
+    [searchParams, setSearchParams],
+  );
+
+  const handleToggleFilter = (
+    groupId: RoadmapFilterGroupId,
+    value: string,
+  ) => {
+    updateSearchParams((nextParams) => {
+      const currentValues = nextParams.getAll(groupId);
+      const nextValues = currentValues.includes(value)
+        ? currentValues.filter((currentValue) => currentValue !== value)
+        : [...currentValues, value];
+
+      nextParams.delete(groupId);
+      nextValues.forEach((nextValue) => nextParams.append(groupId, nextValue));
+    });
   };
 
-  const handleOpenFilterPanel = () => {
-    const next = ALL_FILTERS.find((filter) => !activeFilters.includes(filter));
+  const handleClearFilter = (groupId: RoadmapFilterGroupId, value: string) => {
+    updateSearchParams((nextParams) => {
+      const nextValues = nextParams
+        .getAll(groupId)
+        .filter((currentValue) => currentValue !== value);
 
-    if (next) {
-      setActiveFilters((prev) => [...prev, next]);
-    }
+      nextParams.delete(groupId);
+      nextValues.forEach((nextValue) => nextParams.append(groupId, nextValue));
+    });
+  };
+
+  const handleClearAllFilters = () => {
+    updateSearchParams((nextParams) => {
+      ROADMAP_FILTER_GROUPS.forEach((group) => nextParams.delete(group.id));
+    });
+  };
+
+  const handleClearSearch = () => {
+    updateSearchParams((nextParams) => {
+      nextParams.delete("search");
+    });
   };
 
   const filteredRoadmaps = useMemo(() => {
-    if (!activeFilters.length) {
-      return roadmaps;
-    }
+    const list = Array.isArray(roadmaps) ? roadmaps : [];
+    const normalizedSearch = searchQuery.toLocaleLowerCase();
 
-    return roadmaps.filter((roadmap) =>
-      roadmap.tags.some((tag) => activeFilters.includes(tag)),
-    );
-  }, [activeFilters, roadmaps]);
+    return list.filter((roadmap) => {
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        roadmap.title.toLocaleLowerCase().includes(normalizedSearch);
+
+      return roadmapMatchesFilters(roadmap, activeFilters) && matchesSearch;
+    });
+  }, [activeFilters, roadmaps, searchQuery]);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -79,11 +133,29 @@ export default function RoadmapsPage() {
         <div className="mx-auto max-w-screen-xl">
           <div className="mb-6">
             <FilterBar
+              filterGroups={ROADMAP_FILTER_GROUPS}
               activeFilters={activeFilters}
-              onRemoveFilter={handleRemoveFilter}
-              onOpenFilterPanel={handleOpenFilterPanel}
+              onToggleFilter={handleToggleFilter}
+              onClearFilter={handleClearFilter}
+              onClearAllFilters={handleClearAllFilters}
             />
           </div>
+
+          {searchQuery && (
+            <div className="mb-6 flex flex-wrap items-center gap-3 rounded-lg border border-[#DCEBFF] bg-[#F8FBFF] px-4 py-3 text-sm text-[#4B5563]">
+              <span>
+                Search:
+                <strong className="ml-1 text-[#111827]">{searchQuery}</strong>
+              </span>
+              <button
+                type="button"
+                onClick={handleClearSearch}
+                className="rounded-md border border-[#BFD7FF] bg-white px-3 py-1 text-xs font-semibold text-[#0A66C2] transition hover:bg-[#E8F3FF]"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
 
           {isLoading && (
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -117,11 +189,16 @@ export default function RoadmapsPage() {
           )}
 
           {!isLoading && !error && filteredRoadmaps.length > 0 && (
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {filteredRoadmaps.map((roadmap) => (
-                <RoadmapCard key={roadmap.id} {...roadmap} />
-              ))}
-            </div>
+            <>
+              <p className="mb-4 text-sm text-[#6B7280]">
+                Showing {filteredRoadmaps.length} of {roadmaps.length} roadmaps
+              </p>
+              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredRoadmaps.map((roadmap) => (
+                  <RoadmapCard key={roadmap.id} {...roadmap} />
+                ))}
+              </div>
+            </>
           )}
 
           {!isLoading && !error && filteredRoadmaps.length === 0 && (

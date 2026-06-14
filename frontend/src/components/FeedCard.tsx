@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface FeedCardProps {
   author: string;
@@ -9,6 +10,7 @@ interface FeedCardProps {
   views: number;
   likes: number;
   imageUrl?: string;
+  roadmapId?: string;
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({
@@ -20,16 +22,17 @@ const FeedCard: React.FC<FeedCardProps> = ({
   views,
   likes,
   imageUrl,
+  roadmapId,
 }) => {
-  return (
-    <div className="group relative flex flex-col gap-4 rounded-xl border border-[#E0E0E0] bg-[#FFFFFF] p-5 transition-all hover:border-brand/40 hover:bg-[#F8F9FA] sm:flex-row sm:items-start lg:gap-6">
+  const content = (
+    <>
       <div className="flex flex-1 flex-col gap-3">
         {/* Author Info */}
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#F0F0F0] text-[10px] font-bold text-[#6B7280] ring-1 ring-[#E0E0E0]">
             {author.charAt(0).toUpperCase()}
           </div>
-          <span className="text-xs font-medium text-[#6B7280]\">by {author}</span>
+          <span className="text-xs font-medium text-[#6B7280]">by {author}</span>
         </div>
 
         {/* Content */}
@@ -82,7 +85,28 @@ const FeedCard: React.FC<FeedCardProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </>
+  );
+
+  const className =
+    "group relative flex flex-col gap-4 rounded-xl border border-[#E0E0E0] bg-[#FFFFFF] p-5 transition-all hover:border-brand/40 hover:bg-[#F8F9FA] sm:flex-row sm:items-start lg:gap-6";
+
+  if (roadmapId) {
+    return (
+      <Link
+        to={`/learning-path/${roadmapId}`}
+        aria-label={`Open ${title} learning path`}
+        className={className}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <article className={className}>
+      {content}
+    </article>
   );
 };
 
