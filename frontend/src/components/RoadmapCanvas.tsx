@@ -81,17 +81,17 @@ export default function RoadmapCanvas({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-[#C7D2FE] bg-[#F8FBFF]">
-      <div className="flex items-center justify-between gap-3 border-b border-[#DCEBFF] bg-white px-4 py-3">
+    <div className="overflow-hidden rounded-xl border-2 border-black bg-[#f8fafc] shadow-[4px_4px_0_0_#000]">
+      <div className="flex items-center justify-between gap-3 border-b-2 border-black bg-white px-4 py-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-normal text-[#111827]">
+          <h2 className="text-sm font-bold uppercase tracking-normal text-black">
             Roadmap Canvas
           </h2>
-          <p className="mt-1 text-xs text-[#6B7280]">
+          <p className="mt-1 text-xs text-gray-500">
             Click any topic to inspect the learning details.
           </p>
         </div>
-        <span className="rounded-full border border-[#BFD7FF] bg-[#E8F3FF] px-3 py-1 text-xs font-semibold text-[#0A66C2]">
+        <span className="rounded-full border-2 border-black bg-white px-3 py-1 text-xs font-bold uppercase text-black">
           {steps.length} topics
         </span>
       </div>
@@ -102,9 +102,8 @@ export default function RoadmapCanvas({
           style={{
             width: canvasWidth,
             height: canvasHeight,
-            backgroundImage:
-              "linear-gradient(#E5EEF9 1px, transparent 1px), linear-gradient(90deg, #E5EEF9 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
+            backgroundImage: "radial-gradient(#CBD5E1 2px, transparent 2px)",
+            backgroundSize: "24px 24px",
           }}
         >
           <svg
@@ -114,35 +113,25 @@ export default function RoadmapCanvas({
             viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}
             aria-hidden="true"
           >
-            <defs>
-              <marker
-                id="roadmap-arrow"
-                markerWidth="10"
-                markerHeight="10"
-                refX="8"
-                refY="5"
-                orient="auto"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0A66C2" />
-              </marker>
-            </defs>
-
             {edges.map(({ source, target }) => {
               const startX = source.x + NODE_WIDTH;
               const startY = source.y + NODE_HEIGHT / 2;
               const endX = target.x;
               const endY = target.y + NODE_HEIGHT / 2;
-              const curve = Math.max(70, Math.abs(endX - startX) / 2);
+              
+              // Calculate orthogonal path
+              const midX = startX + (endX - startX) / 2;
+              const d = `M ${startX} ${startY} L ${midX} ${startY} L ${midX} ${endY} L ${endX} ${endY}`;
 
               return (
                 <path
                   key={`${source.id}-${target.id}`}
-                  d={`M ${startX} ${startY} C ${startX + curve} ${startY}, ${endX - curve} ${endY}, ${endX} ${endY}`}
+                  d={d}
                   fill="none"
-                  stroke="#0A66C2"
-                  strokeLinecap="round"
+                  stroke="#000000"
+                  strokeLinecap="square"
+                  strokeLinejoin="miter"
                   strokeWidth="3"
-                  markerEnd="url(#roadmap-arrow)"
                 />
               );
             })}

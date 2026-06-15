@@ -113,16 +113,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             
 
-            {/* Avatar */}
-            <Link
-              to="/profile"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F0F0F0] text-sm font-medium text-[#6B7280] ring-1 ring-[#E0E0E0] transition hover:ring-brand hover:text-brand"
-              aria-label="User profile"
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-              </svg>
-            </Link>
+            {/* Avatar moved to RoadmapHeader */}
           </div>
         </div>
       </header>

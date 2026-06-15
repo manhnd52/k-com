@@ -1,231 +1,179 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import FilterBar from "@/components/FilterBar";
-import RoadmapCard from "@/components/RoadmapCard";
-import {
-  createEmptyRoadmapFilters,
-  roadmapMatchesFilters,
-  ROADMAP_FILTER_GROUPS,
-  type RoadmapFilterGroupId,
-} from "@/data/roadmapFilters";
-import {
-  getRoadmaps,
-  type RoadmapCardData,
-} from "@/services/RoadmapService";
+import { useState, useEffect, useMemo } from "react";
+import RoadmapHeader from "@/components/RoadmapHeader";
+import RoadmapView from "@/components/RoadmapView";
+import SidebarDrawer from "@/components/SidebarDrawer";
+import HomeView from "@/components/HomeView";
+import { getAllRoadmaps, getRoadmapById, fetchUserProgress, updateUserProgress, type RoadmapCardData } from "@/services/RoadmapService";
+import type { RoadmapNode } from "@/data/roadmapData";
+
+type BackendResource = string | { type: string; title: string; url: string };
+
+interface BackendStep {
+  id: string;
+  title: string;
+  description?: string;
+  content?: { bodyMarkdown?: string };
+  resources?: BackendResource[];
+  howTo?: string[];
+}
+
+interface BackendStage {
+  id: string;
+  title: string;
+  steps: BackendStep[];
+}
+
+interface RoadmapDetailResponse {
+  title: string;
+  stages: BackendStage[];
+}
+
+const MOCK_USER_ID = "user-1"; // Assuming a default user for demonstration
 
 export default function RoadmapsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [difficultyFilter, setDifficultyFilter] = useState("all");
+  
   const [roadmaps, setRoadmaps] = useState<RoadmapCardData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedRoadmapId, setSelectedRoadmapId] = useState<string | null>(null);
+  const [selectedRoadmapTitle, setSelectedRoadmapTitle] = useState<string>("");
+  
+  const [currentNodes, setCurrentNodes] = useState<RoadmapNode[]>([]);
+  const [currentCategories, setCurrentCategories] = useState<{id: string; name: string}[]>([]);
+  
+  const [nodeStatuses, setNodeStatuses] = useState<Record<string, 'not_started' | 'in_progress' | 'completed'>>({});
+  const [selectedNode, setSelectedNode] = useState<RoadmapNode | null>(null);
 
-  const searchQuery = searchParams.get("search")?.trim() ?? "";
-  const activeFilters = useMemo(() => {
-    const filters = createEmptyRoadmapFilters();
-
-    ROADMAP_FILTER_GROUPS.forEach((group) => {
-      const allowedValues = new Set(group.options.map((option) => option.value));
-      filters[group.id] = searchParams
-        .getAll(group.id)
-        .filter((value) => allowedValues.has(value));
-    });
-
-    return filters;
-  }, [searchParams]);
-
-  const loadRoadmaps = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const roadmapData = await getRoadmaps();
-      setRoadmaps(Array.isArray(roadmapData) ? roadmapData : []);
-    } catch {
-      setError("Unable to load roadmaps. Please check the backend API.");
-      setRoadmaps([]);
-    } finally {
-      setIsLoading(false);
-    }
+  // Load available roadmaps
+  useEffect(() => {
+    getAllRoadmaps().then(setRoadmaps).catch(console.error);
   }, []);
 
+  // Load roadmap detail and progress when a roadmap is selected
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      void loadRoadmaps();
-    }, 0);
+    if (!selectedRoadmapId) return;
 
-    return () => window.clearTimeout(timer);
-  }, [loadRoadmaps]);
+    getRoadmapById(selectedRoadmapId).then(raw => {
+      const data = raw as unknown as RoadmapDetailResponse;
+      setSelectedRoadmapTitle(data.title);
+      
+      const cats = data.stages.map(stage => ({ id: stage.id, name: stage.title }));
+      setCurrentCategories(cats);
 
-  const updateSearchParams = useCallback(
-    (updater: (nextParams: URLSearchParams) => void) => {
-      const nextParams = new URLSearchParams(searchParams);
-      updater(nextParams);
-      setSearchParams(nextParams);
-    },
-    [searchParams, setSearchParams],
-  );
+      // Map backend data to frontend RoadmapNode format
+      const nodes: RoadmapNode[] = [];
+      data.stages.forEach(stage => {
+        stage.steps.forEach(step => {
+          nodes.push({
+            id: step.id,
+            category: stage.title,
+            categoryVi: stage.title,
+            title: step.title,
+            titleVi: step.title,
+            difficulty: 'Beginner',
+            shortDesc: step.content?.bodyMarkdown?.substring(0, 100) || step.description || '',
+            shortDescVi: step.content?.bodyMarkdown?.substring(0, 100) || step.description || '',
+            description: step.content?.bodyMarkdown || 'No content provided.',
+            descriptionVi: step.content?.bodyMarkdown || 'No content provided.',
+            tools: (step.resources ?? []).map((r: BackendResource) => {
+              // Parse backend resource format "TYPE: Title (url)"
+              const parts = typeof r === 'string' ? r.split(': ') : [r.type, r.title];
+              return {
+                name: typeof r === 'string' ? parts[1]?.split(' (')[0] || r : r.title,
+                desc: typeof r === 'string' ? r : r.url,
+                descVi: typeof r === 'string' ? r : r.url,
+                type: typeof r === 'string' ? parts[0] : r.type.toUpperCase()
+              };
+            }),
+            example: step.howTo?.join('\n') || ''
+          });
+        });
+      });
+      setCurrentNodes(nodes);
+    }).catch(console.error);
 
-  const handleToggleFilter = (
-    groupId: RoadmapFilterGroupId,
-    value: string,
-  ) => {
-    updateSearchParams((nextParams) => {
-      const currentValues = nextParams.getAll(groupId);
-      const nextValues = currentValues.includes(value)
-        ? currentValues.filter((currentValue) => currentValue !== value)
-        : [...currentValues, value];
+    fetchUserProgress(MOCK_USER_ID, selectedRoadmapId).then(setNodeStatuses).catch(console.error);
+  }, [selectedRoadmapId]);
 
-      nextParams.delete(groupId);
-      nextValues.forEach((nextValue) => nextParams.append(groupId, nextValue));
-    });
+  const completedCount = useMemo(() => {
+    if (!selectedRoadmapId) return 0;
+    return currentNodes.filter(n => nodeStatuses[n.id] === 'completed').length;
+  }, [nodeStatuses, currentNodes, selectedRoadmapId]);
+  
+  const learningCount = useMemo(() => {
+    if (!selectedRoadmapId) return 0;
+    return currentNodes.filter(n => nodeStatuses[n.id] === 'in_progress').length;
+  }, [nodeStatuses, currentNodes, selectedRoadmapId]);
+
+  const totalCount = selectedRoadmapId ? currentNodes.length : 0;
+
+  const handleStatusChange = async (nodeId: string, status: 'not_started' | 'in_progress' | 'completed') => {
+    // Optimistic UI update
+    setNodeStatuses(prev => ({
+      ...prev,
+      [nodeId]: status
+    }));
+
+    // Persist to backend
+    await updateUserProgress(MOCK_USER_ID, nodeId, status);
   };
 
-  const handleClearFilter = (groupId: RoadmapFilterGroupId, value: string) => {
-    updateSearchParams((nextParams) => {
-      const nextValues = nextParams
-        .getAll(groupId)
-        .filter((currentValue) => currentValue !== value);
-
-      nextParams.delete(groupId);
-      nextValues.forEach((nextValue) => nextParams.append(groupId, nextValue));
-    });
+  const handleResetAll = () => {
+    // Optional: implement backend reset or just clear local state
+    setNodeStatuses({});
   };
 
-  const handleClearAllFilters = () => {
-    updateSearchParams((nextParams) => {
-      ROADMAP_FILTER_GROUPS.forEach((group) => nextParams.delete(group.id));
-    });
+  const handleBackToHome = () => {
+    setSelectedRoadmapId(null);
+    setSelectedRoadmapTitle("");
+    setSelectedNode(null);
   };
-
-  const handleClearSearch = () => {
-    updateSearchParams((nextParams) => {
-      nextParams.delete("search");
-    });
-  };
-
-  const filteredRoadmaps = useMemo(() => {
-    const list = Array.isArray(roadmaps) ? roadmaps : [];
-    const normalizedSearch = searchQuery.toLocaleLowerCase();
-
-    return list.filter((roadmap) => {
-      const matchesSearch =
-        normalizedSearch.length === 0 ||
-        roadmap.title.toLocaleLowerCase().includes(normalizedSearch);
-
-      return roadmapMatchesFilters(roadmap, activeFilters) && matchesSearch;
-    });
-  }, [activeFilters, roadmaps, searchQuery]);
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="border-b border-[#E0E0E0] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-screen-xl">
-          <h1 className="text-3xl font-bold tracking-tight text-[#000000E6] sm:text-4xl">
-            Roadmap List
-          </h1>
-          <p className="mt-2 text-sm text-[#9CA3AF] sm:text-base">
-            Explore career paths and learning journeys
-          </p>
-        </div>
+    <div className="min-h-screen bg-white font-sans text-slate-900 pb-20 relative flex flex-col">
+      <RoadmapHeader
+        selectedRoadmapId={selectedRoadmapId}
+        selectedRoadmapTitle={selectedRoadmapTitle}
+        onBackToHome={handleBackToHome}
+        completedCount={completedCount}
+        totalCount={totalCount}
+        learningCount={learningCount}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        difficultyFilter={difficultyFilter}
+        setDifficultyFilter={setDifficultyFilter}
+        onResetAll={handleResetAll}
+      />
+
+      <div className="flex-1 bg-slate-50">
+        {!selectedRoadmapId ? (
+          <HomeView
+            roadmaps={roadmaps}
+            onSelectRoadmap={(id) => {
+              setSelectedRoadmapId(id);
+            }}
+          />
+        ) : (
+          <RoadmapView
+            nodes={currentNodes}
+            categories={currentCategories}
+            selectedNodeId={selectedNode?.id || null}
+            onSelectNode={setSelectedNode}
+            nodeStatuses={nodeStatuses}
+            searchQuery={searchQuery}
+            difficultyFilter={difficultyFilter}
+          />
+        )}
       </div>
 
-      <div className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-screen-xl">
-          <div className="mb-6">
-            <FilterBar
-              filterGroups={ROADMAP_FILTER_GROUPS}
-              activeFilters={activeFilters}
-              onToggleFilter={handleToggleFilter}
-              onClearFilter={handleClearFilter}
-              onClearAllFilters={handleClearAllFilters}
-            />
-          </div>
-
-          {searchQuery && (
-            <div className="mb-6 flex flex-wrap items-center gap-3 rounded-lg border border-[#DCEBFF] bg-[#F8FBFF] px-4 py-3 text-sm text-[#4B5563]">
-              <span>
-                Search:
-                <strong className="ml-1 text-[#111827]">{searchQuery}</strong>
-              </span>
-              <button
-                type="button"
-                onClick={handleClearSearch}
-                className="rounded-md border border-[#BFD7FF] bg-white px-3 py-1 text-xs font-semibold text-[#0A66C2] transition hover:bg-[#E8F3FF]"
-              >
-                Clear search
-              </button>
-            </div>
-          )}
-
-          {isLoading && (
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="h-[420px] animate-pulse overflow-hidden rounded-xl border border-[#E0E0E0] bg-white"
-                >
-                  <div className="aspect-[16/9] bg-[#E5E7EB]" />
-                  <div className="space-y-4 p-5">
-                    <div className="h-4 w-1/2 rounded bg-[#E5E7EB]" />
-                    <div className="h-6 w-3/4 rounded bg-[#E5E7EB]" />
-                    <div className="h-4 w-full rounded bg-[#E5E7EB]" />
-                    <div className="h-4 w-5/6 rounded bg-[#E5E7EB]" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {!isLoading && error && (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-[#FCA5A5] bg-[#FEF2F2] px-6 py-16 text-center">
-              <p className="text-sm font-semibold text-[#B91C1C]">{error}</p>
-              <button
-                onClick={loadRoadmaps}
-                className="mt-4 rounded-lg bg-brand px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-hover"
-              >
-                Retry
-              </button>
-            </div>
-          )}
-
-          {!isLoading && !error && filteredRoadmaps.length > 0 && (
-            <>
-              <p className="mb-4 text-sm text-[#6B7280]">
-                Showing {filteredRoadmaps.length} of {roadmaps.length} roadmaps
-              </p>
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {filteredRoadmaps.map((roadmap) => (
-                  <RoadmapCard key={roadmap.id} {...roadmap} />
-                ))}
-              </div>
-            </>
-          )}
-
-          {!isLoading && !error && filteredRoadmaps.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <svg
-                className="mb-4 h-12 w-12 text-[#D1D5DB]"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.5}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              <p className="text-sm font-medium text-[#6B7280]">
-                No roadmaps found
-              </p>
-              <p className="mt-1 text-xs text-[#9CA3AF]">
-                Try adjusting your filters to see more results.
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
+      {selectedNode && (
+        <SidebarDrawer
+          node={selectedNode}
+          onClose={() => setSelectedNode(null)}
+          status={nodeStatuses[selectedNode.id] || 'not_started'}
+          onStatusChange={handleStatusChange}
+        />
+      )}
     </div>
   );
 }

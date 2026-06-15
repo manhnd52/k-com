@@ -1,9 +1,4 @@
 import axios from "axios";
-import {
-  getMockRoadmapById,
-  getMockRoadmapCards,
-  type RoadmapDetail,
-} from "@/data/roadmaps";
 
 export type ThumbnailTone =
   | "ai"
@@ -55,23 +50,37 @@ const unwrapRoadmaps = (response: RoadmapsApiResponse): RoadmapCardData[] => {
 export const getRoadmaps = async (): Promise<RoadmapCardData[]> => {
   try {
     const response = await api.get<RoadmapsApiResponse>("/roadmaps");
-    const roadmaps = unwrapRoadmaps(response.data);
-
-    return roadmaps.length > 0 ? roadmaps : getMockRoadmapCards();
-  } catch {
-    return getMockRoadmapCards();
+    return unwrapRoadmaps(response.data);
+  } catch (error) {
+    console.error("Failed to fetch roadmaps from DB:", error);
+    return [];
   }
 };
 
 export const getAllRoadmaps = getRoadmaps;
 
-export const getRoadmapById = async (id: string): Promise<RoadmapDetail> => {
-  const localRoadmap = getMockRoadmapById(id);
-
-  if (localRoadmap) {
-    return localRoadmap;
-  }
-
-  const response = await api.get<RoadmapDetail>(`/roadmaps/${id}`);
+export const getRoadmapById = async (id: string): Promise<Record<string, unknown>> => {
+  const response = await api.get(`/roadmaps/${id}`);
   return response.data;
 };
+
+export const fetchUserProgress = async (userId: string, roadmapId: string): Promise<Record<string, 'not_started' | 'in_progress' | 'completed'>> => {
+  try {
+    const response = await api.get(`/users/${userId}/progress/${roadmapId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch user progress:", error);
+    return {};
+  }
+};
+
+export const updateUserProgress = async (userId: string, stepId: string, status: 'not_started' | 'in_progress' | 'completed'): Promise<boolean> => {
+  try {
+    await api.put(`/users/${userId}/progress/${stepId}`, { status });
+    return true;
+  } catch (error) {
+    console.error("Failed to update user progress:", error);
+    return false;
+  }
+};
+

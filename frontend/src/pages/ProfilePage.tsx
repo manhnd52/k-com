@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ArrowLeft, Briefcase, GraduationCap, CheckCircle2, MessageSquare, Plus } from "lucide-react";
 
 const experienceItems = [
   {
@@ -36,124 +37,142 @@ const educationItems = [
 
 export default function ProfilePage() {
   return (
-    <main className="min-h-screen bg-[#F3F2EF] text-[#000000E6]">
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
-        <div className="mb-6 flex items-center gap-3 text-sm text-[#6B7280]">
-          <Link
-            to="/roadmaps"
-            className="inline-flex items-center gap-2 rounded-full border border-[#E0E0E0] bg-[#FFFFFF] px-3 py-2 text-sm text-[#6B7280] transition hover:border-brand hover:text-brand"
-          >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
+    <main className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
+      {/* Blocky Header Bar */}
+      <header className="border-b-2 border-slate-900 bg-white sticky top-0 z-40 px-6 py-4 shadow-sm">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link
+              to="/roadmaps"
+              className="p-2 bg-yellow-400 hover:bg-yellow-300 text-slate-900 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 transition-all hover:-translate-y-0.5 cursor-pointer flex items-center justify-center"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Return
-          </Link>
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
+            <div>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-slate-900">
+                User Profile
+              </h1>
+            </div>
+          </div>
         </div>
+      </header>
 
-        <div className="rounded-[30px] border border-[#E0E0E0] bg-[#FFFFFF] p-6 sm:p-8">
-          <div className="grid gap-10 lg:grid-cols-[240px_1fr] lg:items-center">
-            <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#E0E0E0] bg-[#F8F9FA] p-6 text-center">
-              <div className="flex h-28 w-28 items-center justify-center rounded-3xl bg-[#F0F0F0] text-4xl font-semibold text-[#000000E6]">
+      <section className="mx-auto max-w-5xl px-4 py-8 lg:py-12">
+        {/* Profile Info Card */}
+        <div className="rounded-xl border-2 border-slate-900 bg-white p-6 sm:p-8 shadow-[6px_6px_0px_rgba(0,0,0,1)] mb-8 transition-transform">
+          <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
+            
+            {/* Avatar Block */}
+            <div className="flex flex-col items-center gap-4 p-6 rounded-xl border-2 border-slate-900 bg-blue-50 w-full md:w-64 shadow-[4px_4px_0px_rgba(0,0,0,1)] shrink-0 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-3 bg-blue-500 border-b-2 border-slate-900"></div>
+              
+              <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-slate-900 bg-yellow-400 text-4xl font-black text-slate-900 shadow-[2px_2px_0px_rgba(0,0,0,1)] relative z-10 mt-2">
                 AN
               </div>
-              <div>
-                <p className="text-sm font-semibold text-[#000000E6]">Nguyen Van A</p>
-                <p className="mt-1 text-xs text-[#9CA3AF]">Senior Machine Learning Engineer</p>
+              <div className="text-center relative z-10">
+                <p className="text-lg font-black text-slate-900">Nguyen Van A</p>
+                <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 border-2 border-slate-900 font-mono shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                  Senior ML Engineer
+                </span>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-3xl font-semibold tracking-tight text-[#000000E6]">
-                    Nguyen Van A
-                  </h1>
-                  <span className="rounded-full border border-[#E0E0E0] bg-[#F0F0F0] px-3 py-1 text-sm text-[#6B7280]">
-                    @alex.nguyen
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-[#E0E0E0] bg-[#F0F0F0] px-3 py-1 text-sm text-[#6B7280]">
-                    <svg className="h-4 w-4 text-brand" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                    Verified
-                  </span>
-                </div>
-
-                <div className="space-y-2 text-sm text-[#6B7280]">
-                  <p>Senior Machine Learning Engineer - 5 years experience</p>
-                  <p>Domain / Specialization: AI Researcher, Data Engineer, NLP</p>
-                </div>
+            {/* Detailed Stats Block */}
+            <div className="flex-1 space-y-5 w-full">
+              <div className="flex flex-wrap items-center gap-3">
+                <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">
+                  Nguyen Van A
+                </h2>
+                <span className="font-mono text-sm font-bold bg-slate-100 border-2 border-slate-900 px-3 py-1 rounded-md shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                  @alex.nguyen
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-bold bg-emerald-100 text-emerald-800 border-2 border-emerald-500 px-3 py-1 rounded-md shadow-[2px_2px_0px_#10b981] text-xs uppercase tracking-wider">
+                  <CheckCircle2 className="w-4 h-4" />
+                  Verified
+                </span>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <button className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-hover">
-                  Follow
+              <div className="space-y-2 text-sm font-medium text-slate-600 font-sans border-l-4 border-yellow-400 pl-4 py-1">
+                <p><strong className="text-slate-900 font-black">Role:</strong> Senior Machine Learning Engineer - 5 years experience</p>
+                <p><strong className="text-slate-900 font-black">Specialization:</strong> AI Researcher, Data Engineer, NLP</p>
+              </div>
+
+              <div className="flex flex-wrap gap-4 pt-2">
+                <button className="flex items-center gap-2 rounded-lg border-2 border-slate-900 bg-yellow-400 px-6 py-2.5 text-sm font-black text-slate-900 transition-all shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-[1px_1px_0px_rgba(0,0,0,1)] cursor-pointer">
+                  <Plus className="w-4 h-4" /> Follow
                 </button>
-                <button className="rounded-lg border border-[#E0E0E0] bg-transparent px-5 py-2.5 text-sm font-medium text-[#000000E6] transition hover:border-brand hover:text-brand">
-                  Message
+                <button className="flex items-center gap-2 rounded-lg border-2 border-slate-900 bg-white px-6 py-2.5 text-sm font-black text-slate-900 transition-all shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-[1px_1px_0px_rgba(0,0,0,1)] cursor-pointer hover:bg-slate-50">
+                  <MessageSquare className="w-4 h-4" /> Message
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <section className="rounded-[26px] border border-[#E0E0E0] bg-[#FFFFFF] p-6 sm:p-8">
-            <div className="mb-5 flex items-center justify-between gap-4">
+        {/* Info Grids */}
+        <div className="grid gap-8 lg:grid-cols-2">
+          
+          {/* Experience Timeline */}
+          <section className="rounded-xl border-2 border-slate-900 bg-amber-50 p-6 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+            <div className="mb-6 flex items-center gap-3 border-b-2 border-slate-900 pb-4">
+              <div className="p-2 bg-amber-400 rounded-lg border-2 border-slate-900 shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                <Briefcase className="w-5 h-5 text-slate-900" />
+              </div>
               <div>
-                <p className="text-sm font-semibold text-[#000000E6]">Experience</p>
-                <p className="mt-1 text-sm text-[#9CA3AF]">Selected roles and contributions</p>
+                <h3 className="text-lg font-black text-slate-900">Experience</h3>
+                <p className="text-[10px] font-bold text-amber-800 font-mono uppercase tracking-widest mt-0.5">Selected roles & contributions</p>
               </div>
             </div>
 
-            <div className="space-y-5">
-              {experienceItems.map((item) => (
-                <div key={item.company} className="rounded-3xl border border-[#E0E0E0] bg-[#F8F9FA] p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="space-y-4">
+              {experienceItems.map((item, idx) => (
+                <div key={idx} className="rounded-lg border-2 border-slate-900 bg-white p-5 shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5">
+                  <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                     <div>
-                      <p className="text-sm font-semibold text-[#000000E6]">{item.company}</p>
-                      <p className="mt-1 text-sm text-[#6B7280]">{item.title}</p>
+                      <h4 className="text-base font-black text-slate-900 leading-tight">{item.company}</h4>
+                      <p className="text-sm font-bold text-blue-600 mt-1">{item.title}</p>
                     </div>
-                    <div className="text-right text-xs text-[#9CA3AF]">
-                      <p>{item.period}</p>
-                      <p className="mt-1">{item.duration}</p>
+                    <div className="text-right text-[10px] font-mono font-bold bg-slate-100 px-2 py-1.5 rounded border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a]">
+                      <span className="block text-slate-800 uppercase tracking-wider">{item.period}</span>
+                      <span className="block text-slate-500 mt-0.5 border-t border-slate-300 pt-0.5">{item.duration}</span>
                     </div>
                   </div>
-                  <p className="mt-4 text-sm leading-6 text-[#6B7280]">{item.description}</p>
+                  <p className="text-sm font-medium leading-relaxed text-slate-600">{item.description}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="rounded-[26px] border border-[#E0E0E0] bg-[#FFFFFF] p-6 sm:p-8">
-            <div className="mb-5 flex items-center justify-between gap-4">
+          {/* Education Timeline */}
+          <section className="rounded-xl border-2 border-slate-900 bg-emerald-50 p-6 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+            <div className="mb-6 flex items-center gap-3 border-b-2 border-slate-900 pb-4">
+              <div className="p-2 bg-emerald-400 rounded-lg border-2 border-slate-900 shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                <GraduationCap className="w-5 h-5 text-slate-900" />
+              </div>
               <div>
-                <p className="text-sm font-semibold text-[#000000E6]">Education</p>
-                <p className="mt-1 text-sm text-[#9CA3AF]">Academic background and certifications</p>
+                <h3 className="text-lg font-black text-slate-900">Education</h3>
+                <p className="text-[10px] font-bold text-emerald-800 font-mono uppercase tracking-widest mt-0.5">Academic & certifications</p>
               </div>
             </div>
 
-            <div className="space-y-5">
-              {educationItems.map((item) => (
-                <div key={item.institution} className="rounded-3xl border border-[#E0E0E0] bg-[#F8F9FA] p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-[#000000E6]">{item.institution}</p>
-                      <p className="mt-1 text-sm text-[#6B7280]">{item.degree}</p>
+            <div className="space-y-4">
+              {educationItems.map((item, idx) => (
+                <div key={idx} className="rounded-lg border-2 border-slate-900 bg-white p-5 shadow-[3px_3px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5">
+                  <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+                    <div className="flex-1 pr-4">
+                      <h4 className="text-base font-black text-slate-900 leading-tight">{item.institution}</h4>
+                      <p className="text-sm font-bold text-emerald-600 mt-1">{item.degree}</p>
                     </div>
-                    <p className="text-xs text-[#9CA3AF]">{item.period}</p>
+                    <div className="text-[10px] font-mono font-bold bg-emerald-100 px-2 py-1.5 rounded border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a] shrink-0 uppercase tracking-wider">
+                      <span className="text-emerald-900">{item.period}</span>
+                    </div>
                   </div>
-                  <p className="mt-4 text-sm leading-6 text-[#6B7280]">{item.description}</p>
+                  <p className="text-sm font-medium leading-relaxed text-slate-600">{item.description}</p>
                 </div>
               ))}
             </div>
           </section>
+
         </div>
       </section>
     </main>

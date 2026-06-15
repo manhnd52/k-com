@@ -8,10 +8,26 @@ type RoadmapNodeProps = {
   y: number;
 };
 
-const statusClasses = {
-  done: "border-[#057642] bg-[#F0FFF7] text-[#057642]",
-  learning: "border-[#0A66C2] bg-[#E8F3FF] text-[#0A66C2]",
-  pending: "border-[#9CA3AF] bg-[#F8F9FA] text-[#6B7280]",
+const getNodeClasses = (status: string, isSelected: boolean) => {
+  const base =
+    "absolute z-10 flex h-[86px] w-[204px] flex-col justify-between rounded-md border-2 border-black px-4 py-3 text-left shadow-[4px_4px_0_0_#000] transition-all duration-200 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] focus:outline-none";
+  const selectedClass = isSelected ? "ring-4 ring-blue-500 ring-offset-2" : "";
+
+  switch (status) {
+    case "done":
+      return `${base} bg-[#86efac] text-black ${selectedClass}`; // Green
+    case "learning":
+      return `${base} bg-[#fde047] text-black ${selectedClass}`; // Yellow
+    case "pending":
+    default:
+      return `${base} bg-white text-black ${selectedClass}`; // White
+  }
+};
+
+const pillClasses = {
+  done: "border-black bg-white text-black",
+  learning: "border-black bg-white text-black",
+  pending: "border-gray-400 bg-gray-100 text-gray-500",
 };
 
 export default function RoadmapNode({
@@ -28,22 +44,21 @@ export default function RoadmapNode({
       type="button"
       onClick={() => onSelect(step.id)}
       style={{ left: x, top: y }}
-      className={`absolute z-10 flex h-[86px] w-[204px] flex-col justify-between rounded-lg border-2 px-4 py-3 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
-        isSelected
-          ? "border-[#0A66C2] bg-[#FFF6CC] shadow-lg shadow-brand/15"
-          : "border-[#1F2937] bg-white hover:border-[#0A66C2]"
-      }`}
+      className={getNodeClasses(status, isSelected)}
       aria-pressed={isSelected}
     >
-      <span className="line-clamp-2 text-sm font-bold leading-snug text-[#111827]">
+      <span className="line-clamp-2 text-sm font-bold leading-snug">
         {step.title}
       </span>
       <span className="flex items-center justify-between gap-2">
-        <span className="truncate text-xs font-medium text-[#6B7280]">
+        <span className="truncate text-xs font-semibold opacity-80">
           {step.stage ?? "Topic"}
         </span>
         <span
-          className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-normal ${statusClasses[status]}`}
+          className={`shrink-0 rounded-full border-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-normal ${
+            pillClasses[status as keyof typeof pillClasses] ||
+            pillClasses.pending
+          }`}
         >
           {status}
         </span>
