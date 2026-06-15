@@ -7,17 +7,7 @@ type RoadmapDetailPanelProps = {
   onClose?: () => void;
 };
 
-const statusLabels = {
-  done: "Done",
-  learning: "Learning",
-  pending: "Pending",
-};
 
-const statusClasses = {
-  done: "border-[#057642] bg-[#F0FFF7] text-[#057642]",
-  learning: "border-[#0A66C2] bg-[#E8F3FF] text-[#0A66C2]",
-  pending: "border-[#E0E0E0] bg-[#F8F9FA] text-[#6B7280]",
-};
 
 type ParsedResource = {
   type: string;
@@ -146,7 +136,6 @@ export default function RoadmapDetailPanel({
     return null;
   }
 
-  const status = activeStep.status ?? "pending";
   const resources = activeStep.resources ?? [];
 
   return (
@@ -184,16 +173,9 @@ export default function RoadmapDetailPanel({
             Return
           </button>
 
-          <div className="flex items-center gap-2">
-            <span className="rounded-full border border-[#BFD7FF] bg-[#E8F3FF] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0A66C2]">
-              {activeStep.stage ?? roadmapLevel}
-            </span>
-            <span
-              className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${statusClasses[status]}`}
-            >
-              {statusLabels[status]}
-            </span>
-          </div>
+          <span className="rounded-full border border-[#BFD7FF] bg-[#E8F3FF] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0A66C2]">
+            {activeStep.stage ?? roadmapLevel}
+          </span>
         </div>
 
         {/* Panel Content (Scrollable) */}

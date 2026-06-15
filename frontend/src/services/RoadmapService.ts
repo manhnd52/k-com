@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  getMockRoadmapById,
-  getMockRoadmapCards,
-  type RoadmapDetail,
-} from "@/data/roadmaps";
+import type { RoadmapDetail } from "@/data/roadmaps";
 
 export type ThumbnailTone =
   | "ai"
@@ -53,25 +49,13 @@ const unwrapRoadmaps = (response: RoadmapsApiResponse): RoadmapCardData[] => {
 };
 
 export const getRoadmaps = async (): Promise<RoadmapCardData[]> => {
-  try {
-    const response = await api.get<RoadmapsApiResponse>("/roadmaps");
-    const roadmaps = unwrapRoadmaps(response.data);
-
-    return roadmaps.length > 0 ? roadmaps : getMockRoadmapCards();
-  } catch {
-    return getMockRoadmapCards();
-  }
+  const response = await api.get<RoadmapsApiResponse>("/roadmaps");
+  return unwrapRoadmaps(response.data);
 };
 
 export const getAllRoadmaps = getRoadmaps;
 
 export const getRoadmapById = async (id: string): Promise<RoadmapDetail> => {
-  const localRoadmap = getMockRoadmapById(id);
-
-  if (localRoadmap) {
-    return localRoadmap;
-  }
-
   const response = await api.get<RoadmapDetail>(`/roadmaps/${id}`);
   return response.data;
 };

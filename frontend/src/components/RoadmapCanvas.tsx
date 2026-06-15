@@ -1,5 +1,6 @@
 import type { RoadmapStep } from "@/data/roadmaps";
 import RoadmapNode from "@/components/RoadmapNode";
+import RoadmapEdge from "@/components/RoadmapEdge";
 
 type RoadmapCanvasProps = {
   steps: RoadmapStep[];
@@ -12,33 +13,110 @@ type PositionedStep = RoadmapStep & {
   y: number;
 };
 
-const NODE_WIDTH = 204;
-const NODE_HEIGHT = 86;
+const NODE_WIDTH = 160;
+const NODE_HEIGHT = 64;
 const CANVAS_PADDING = 48;
 
-const getFallbackPosition = (index: number) => {
-  const laneOffsets = [220, 110, 330];
-
-  return {
-    x: 32 + index * 256,
-    y: laneOffsets[index % laneOffsets.length] ?? 220,
-  };
-};
-
 const getStepKey = (id: string | number) => String(id);
+
+const getDependencies = (
+  step: RoadmapStep,
+  index: number,
+  stepsList: RoadmapStep[],
+): Array<string | number> => {
+  if (step.dependsOn && step.dependsOn.length > 0) {
+    return step.dependsOn;
+  }
+  if (index > 0 && stepsList[index - 1]) {
+    return [stepsList[index - 1].id];
+  }
+  return [];
+};
 
 export default function RoadmapCanvas({
   steps,
   selectedStepId,
   onSelectStep,
 }: RoadmapCanvasProps) {
-  const positionedSteps: PositionedStep[] = steps.map((step, index) => {
-    const position = step.position ?? getFallbackPosition(index);
+  // 1. Calculate ranks based on dependencies
+  const ranks = new Map<string, number>();
+  const visited = new Set<string>();
+
+  const getRank = (stepId: string | number): number => {
+    const key = String(stepId);
+    if (ranks.has(key)) return ranks.get(key)!;
+    if (visited.has(key)) return 0; // Prevent infinite cycle loops
+
+    const stepIndex = steps.findIndex((s) => getStepKey(s.id) === key);
+    if (stepIndex === -1) return 0;
+    const step = steps[stepIndex];
+
+    visited.add(key);
+    const deps = getDependencies(step, stepIndex, steps);
+
+    let maxDepRank = -1;
+    for (const depId of deps) {
+      maxDepRank = Math.max(maxDepRank, getRank(depId));
+    }
+
+    visited.delete(key);
+
+    const rank = maxDepRank + 1;
+    ranks.set(key, rank);
+    return rank;
+  };
+
+  // Compute rank for all steps
+  steps.forEach((step) => getRank(step.id));
+
+  // Group steps by rank
+  const rankGroups: Record<number, RoadmapStep[]> = {};
+  steps.forEach((step) => {
+    const rank = ranks.get(getStepKey(step.id)) ?? 0;
+    if (!rankGroups[rank]) {
+      rankGroups[rank] = [];
+    }
+    rankGroups[rank].push(step);
+  });
+
+  const maxRank = Math.max(...Object.keys(rankGroups).map(Number), 0);
+  const maxGroupSize = Math.max(
+    ...Object.values(rankGroups).map((g) => g.length),
+    1,
+  );
+
+  // Spacing configurations
+  const HORIZONTAL_SPACING = 210; // Width (160) + gap (50)
+  const VERTICAL_SPACING = 120; // Height (64) + gap (56)
+
+  const canvasWidth = Math.max(
+    maxGroupSize * HORIZONTAL_SPACING + CANVAS_PADDING * 2,
+    700,
+  );
+  const canvasHeight = (maxRank + 1) * VERTICAL_SPACING + CANVAS_PADDING * 2;
+  const canvasCenter = canvasWidth / 2;
+
+  const positionedSteps: PositionedStep[] = steps.map((step) => {
+    const key = getStepKey(step.id);
+    const rank = ranks.get(key) ?? 0;
+    const group = rankGroups[rank] ?? [];
+    const indexInGroup = group.findIndex((s) => getStepKey(s.id) === key);
+    const N = group.length;
+
+    // Calculate centered x coordinate
+    const x =
+      canvasCenter -
+      ((N - 1) * HORIZONTAL_SPACING) / 2 +
+      indexInGroup * HORIZONTAL_SPACING -
+      NODE_WIDTH / 2;
+
+    // Calculate vertical y coordinate
+    const y = CANVAS_PADDING + rank * VERTICAL_SPACING;
 
     return {
       ...step,
-      x: position.x,
-      y: position.y,
+      x,
+      y,
     };
   });
 
@@ -47,30 +125,17 @@ export default function RoadmapCanvas({
   );
 
   const edges = positionedSteps.flatMap((step, index) => {
-    const dependencies =
-      step.dependsOn && step.dependsOn.length > 0
-        ? step.dependsOn
-        : index > 0
-          ? [positionedSteps[index - 1]!.id]
-          : [];
+    const deps = getDependencies(step, index, steps);
 
-    return dependencies
+    return deps
       .map((sourceId) => {
         const source = stepMap.get(getStepKey(sourceId));
-
         return source ? { source, target: step } : null;
       })
       .filter((edge): edge is { source: PositionedStep; target: PositionedStep } =>
         Boolean(edge),
       );
   });
-
-  const canvasWidth =
-    Math.max(...positionedSteps.map((step) => step.x + NODE_WIDTH), 640) +
-    CANVAS_PADDING;
-  const canvasHeight =
-    Math.max(...positionedSteps.map((step) => step.y + NODE_HEIGHT), 420) +
-    CANVAS_PADDING;
 
   if (positionedSteps.length === 0) {
     return (
@@ -96,15 +161,19 @@ export default function RoadmapCanvas({
         </span>
       </div>
 
-      <div className="overflow-auto">
+      <div
+        className="overflow-auto w-full"
+        style={{
+          backgroundImage:
+            "linear-gradient(#E5EEF9 1px, transparent 1px), linear-gradient(90deg, #E5EEF9 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      >
         <div
-          className="relative"
+          className="relative mx-auto"
           style={{
             width: canvasWidth,
             height: canvasHeight,
-            backgroundImage:
-              "linear-gradient(#E5EEF9 1px, transparent 1px), linear-gradient(90deg, #E5EEF9 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
           }}
         >
           <svg
@@ -115,34 +184,47 @@ export default function RoadmapCanvas({
             aria-hidden="true"
           >
             <defs>
+              {/* Soft Slate arrowhead for standard lines */}
               <marker
                 id="roadmap-arrow"
-                markerWidth="10"
-                markerHeight="10"
-                refX="8"
-                refY="5"
+                markerWidth="8"
+                markerHeight="8"
+                refX="6"
+                refY="4"
                 orient="auto"
               >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0A66C2" />
+                <path d="M 0 1 L 6 4 L 0 7 z" fill="#94A3B8" />
+              </marker>
+              {/* Highlighted blue arrowhead for active lines */}
+              <marker
+                id="roadmap-arrow-active"
+                markerWidth="8"
+                markerHeight="8"
+                refX="6"
+                refY="4"
+                orient="auto"
+              >
+                <path d="M 0 1 L 6 4 L 0 7 z" fill="#0A66C2" />
               </marker>
             </defs>
 
             {edges.map(({ source, target }) => {
-              const startX = source.x + NODE_WIDTH;
-              const startY = source.y + NODE_HEIGHT / 2;
-              const endX = target.x;
-              const endY = target.y + NODE_HEIGHT / 2;
-              const curve = Math.max(70, Math.abs(endX - startX) / 2);
+              const startX = source.x + NODE_WIDTH / 2;
+              const startY = source.y + NODE_HEIGHT;
+              const endX = target.x + NODE_WIDTH / 2;
+              const endY = target.y; // Connect exactly to the node top edge
+
+              const isActive =
+                selectedStepId === source.id || selectedStepId === target.id;
 
               return (
-                <path
+                <RoadmapEdge
                   key={`${source.id}-${target.id}`}
-                  d={`M ${startX} ${startY} C ${startX + curve} ${startY}, ${endX - curve} ${endY}, ${endX} ${endY}`}
-                  fill="none"
-                  stroke="#0A66C2"
-                  strokeLinecap="round"
-                  strokeWidth="3"
-                  markerEnd="url(#roadmap-arrow)"
+                  startX={startX}
+                  startY={startY}
+                  endX={endX}
+                  endY={endY}
+                  isActive={isActive}
                 />
               );
             })}

@@ -20,6 +20,9 @@ export default function RoadmapDetailPage() {
       return;
     }
 
+    // Scroll to the top when roadmap ID changes
+    window.scrollTo(0, 0);
+
     let ignore = false;
     const timer = window.setTimeout(() => {
       setLoading(true);
@@ -109,13 +112,6 @@ export default function RoadmapDetailPage() {
     );
   }
 
-  const completedSteps = roadmap.steps.filter(
-    (step) => step.status === "done",
-  ).length;
-  const learningSteps = roadmap.steps.filter(
-    (step) => step.status === "learning",
-  ).length;
-
   return (
     <div className="flex flex-1 flex-col gap-6 bg-[#F3F2EF] p-4 sm:p-6 lg:p-8 w-full min-w-0">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -147,63 +143,35 @@ export default function RoadmapDetailPage() {
           <button
             type="button"
             onClick={() => setIsSaved((prev) => !prev)}
-            className={`rounded-lg px-5 py-2.5 text-sm font-semibold transition ${
-              isSaved
+            className={`rounded-lg px-5 py-2.5 text-sm font-semibold transition ${isSaved
                 ? "bg-[#057642] text-white hover:bg-[#045a38]"
                 : "border border-[#D1D5DB] bg-white text-[#111827] hover:border-[#0A66C2]"
-            }`}
+              }`}
           >
             {isSaved ? "Saved" : "Save"}
           </button>
         </div>
       </div>
 
-      <section className="rounded-lg border border-[#E0E0E0] bg-white p-5 shadow-sm sm:p-6">
-        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0F0F0] font-semibold text-[#6B7280] ring-1 ring-[#E0E0E0]">
-                {roadmap.authorAvatar}
-              </div>
-              <span className="text-sm text-[#6B7280]">by {roadmap.author}</span>
+      <section className="rounded-lg border border-[#E0E0E0] bg-white p-5 shadow-sm sm:p-6 flex flex-col gap-5">
+        {/* Header content: Author, Title, Description */}
+        <div className="max-w-4xl">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0F0F0] font-semibold text-[#6B7280] ring-1 ring-[#E0E0E0]">
+              {roadmap.authorAvatar}
             </div>
-            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-[#111827] sm:text-4xl">
-              {roadmap.title}
-            </h1>
-            <p className="mt-3 text-sm leading-6 text-[#4B5563] sm:text-base">
-              {roadmap.description}
-            </p>
+            <span className="text-sm text-[#6B7280]">by {roadmap.author}</span>
           </div>
-
-          <div className="grid min-w-full grid-cols-3 gap-3 text-center sm:min-w-[420px]">
-            <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
-              <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
-                Level
-              </p>
-              <p className="mt-1 text-sm font-bold text-[#111827]">
-                {roadmap.level}
-              </p>
-            </div>
-            <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
-              <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
-                Learning
-              </p>
-              <p className="mt-1 text-sm font-bold text-[#111827]">
-                {learningSteps}
-              </p>
-            </div>
-            <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
-              <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
-                Done
-              </p>
-              <p className="mt-1 text-sm font-bold text-[#111827]">
-                {completedSteps}/{roadmap.steps.length}
-              </p>
-            </div>
-          </div>
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[#111827] sm:text-4xl">
+            {roadmap.title}
+          </h1>
+          <p className="mt-3 text-sm leading-6 text-[#4B5563] sm:text-base">
+            {roadmap.description}
+          </p>
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        {/* Tags list */}
+        <div className="flex flex-wrap gap-2">
           {roadmap.tags.map((tag) => (
             <span
               key={tag}
@@ -212,6 +180,53 @@ export default function RoadmapDetailPage() {
               {tag}
             </span>
           ))}
+        </div>
+
+        {/* Thin divider line */}
+        <div className="border-t border-[#E0E0E0]/60 pt-1" />
+
+        {/* Consolidated stats grid spanning the full width */}
+        <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-3 md:grid-cols-5 w-full">
+          <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
+            <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
+              Level
+            </p>
+            <p className="mt-1 text-sm font-bold text-[#111827]">
+              {roadmap.level}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
+            <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
+              Steps
+            </p>
+            <p className="mt-1 text-sm font-bold text-[#111827]">
+              {roadmap.steps.length}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
+            <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
+              Duration
+            </p>
+            <p className="mt-1 text-sm font-bold text-[#111827]">
+              {roadmap.duration}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
+            <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
+              Views
+            </p>
+            <p className="mt-1 text-sm font-bold text-[#111827]">
+              {roadmap.views.toLocaleString()}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#E0E0E0] bg-[#F8F9FA] px-3 py-3">
+            <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
+              Likes
+            </p>
+            <p className="mt-1 text-sm font-bold text-[#111827]">
+              {roadmap.likes.toLocaleString()}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -228,32 +243,6 @@ export default function RoadmapDetailPage() {
         />
       </section>
 
-      <section className="grid gap-4 rounded-lg border border-[#E0E0E0] bg-white p-5 sm:grid-cols-3">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
-            Duration
-          </p>
-          <p className="mt-1 text-lg font-bold text-[#111827]">
-            {roadmap.duration}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
-            Views
-          </p>
-          <p className="mt-1 text-lg font-bold text-[#111827]">
-            {roadmap.views.toLocaleString()}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs font-bold uppercase tracking-normal text-[#6B7280]">
-            Likes
-          </p>
-          <p className="mt-1 text-lg font-bold text-[#111827]">
-            {roadmap.likes.toLocaleString()}
-          </p>
-        </div>
-      </section>
     </div>
   );
 }
