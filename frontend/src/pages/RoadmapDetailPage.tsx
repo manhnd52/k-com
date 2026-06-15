@@ -28,7 +28,6 @@ export default function RoadmapDetailPage() {
           if (ignore) return;
           setRoadmap(data);
           setError(null);
-          setSelectedStepId(data.steps[0]?.id);
         })
         .catch((err) => {
           if (ignore) return;
@@ -118,7 +117,7 @@ export default function RoadmapDetailPage() {
   ).length;
 
   return (
-    <div className="flex flex-1 flex-col gap-6 bg-[#F3F2EF] p-4 sm:p-6 lg:p-8">
+    <div className="flex flex-1 flex-col gap-6 bg-[#F3F2EF] p-4 sm:p-6 lg:p-8 w-full min-w-0">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <button
           type="button"
@@ -216,13 +215,17 @@ export default function RoadmapDetailPage() {
         </div>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <section className="relative w-full min-w-0">
         <RoadmapCanvas
           steps={roadmap.steps}
           selectedStepId={selectedStepId}
           onSelectStep={setSelectedStepId}
         />
-        <RoadmapDetailPanel step={selectedStep} roadmapLevel={roadmap.level} />
+        <RoadmapDetailPanel
+          step={selectedStep}
+          roadmapLevel={roadmap.level}
+          onClose={() => setSelectedStepId(undefined)}
+        />
       </section>
 
       <section className="grid gap-4 rounded-lg border border-[#E0E0E0] bg-white p-5 sm:grid-cols-3">
